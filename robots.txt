@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://qualitycareservices.in/sitemap.xml

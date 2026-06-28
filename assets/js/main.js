@@ -1,26 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // ========== BUSINESS CONFIGURATION ==========
-  const BUSINESS = {
-    phone: "+918302455482",
-    phoneDisplay: "+91 8302455482",
-    whatsapp: "918302455482",
-    email: "qualitycareserviceskota@gmail.com",
-    address: "Flat No. 221, Akansha Deep Homes Corner, Kota, Rajasthan 324005",
-    get phoneLink() { return `tel:${this.phone}`; },
-    get whatsappLink() { return `https://wa.me/${this.whatsapp}`; },
-    get whatsappMessage() { 
-      return encodeURIComponent("Hi Quality Care Services, I need some help at home. Can we talk?"); 
-    },
-    get whatsappUrl() { 
-      return `${this.whatsappLink}?text=${this.whatsappMessage}`; 
-    },
-    getEmailLink(subject = "") {
-      return subject 
-        ? `mailto:${this.email}?subject=${encodeURIComponent(subject)}`
-        : `mailto:${this.email}`;
-    }
-  };
-
   // ========== DOM ELEMENTS ==========
   const menuToggle = document.getElementById("menuToggle");
   const primaryNavigation = document.getElementById("primaryNavigation");
@@ -127,6 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     form.setAttribute("aria-busy", "true");
 
+    let submissionSucceeded = false;
+
     try {
       const response = await fetch(form.action, {
         method: "POST",
@@ -141,12 +121,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
       form.reset();
       setMessage("Thank you. We've received your request. Someone from our team will call you soon.", "success");
+      submissionSucceeded = true;
     } catch (error) {
       setMessage("Something went wrong. Please try again or call us directly — we're here to help.", "error");
     } finally {
       form.removeAttribute("aria-busy");
 
-      if (submitButton) {
+      if (submissionSucceeded && submitButton) {
+        let remaining = 60;
+        submitButton.textContent = `Sent — please wait ${remaining}s`;
+        const countdown = setInterval(() => {
+          remaining -= 1;
+          if (remaining <= 0) {
+            clearInterval(countdown);
+            submitButton.disabled = false;
+            submitButton.innerHTML = originalButtonHTML;
+          } else {
+            submitButton.textContent = `Sent — please wait ${remaining}s`;
+          }
+        }, 1000);
+      } else if (submitButton) {
         submitButton.disabled = false;
         submitButton.innerHTML = originalButtonHTML;
       }
@@ -325,7 +319,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // ========== FADE-IN ANIMATION ==========
   const revealTargets = document.querySelectorAll(
-    ".section-header, .trust-card, .service-card, .process-card, .testimonial-card, .about-placeholder, .area-card, .contact-form, .local-seo-card"
+    ".section-header, .trust-card, .service-card, .process-card, .testimonial-card, .about-placeholder, .area-card, .contact-form"
   );
   revealTargets.forEach((el) => el.classList.add("fade-in"));
 

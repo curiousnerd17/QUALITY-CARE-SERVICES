@@ -121,7 +121,7 @@ button {
   gap: 14px;
   min-width: 0;
   margin-right: auto;
-  font-weight: 850;
+  font-weight: 900;
   color: var(--text);
 }
 
@@ -151,7 +151,7 @@ button {
   border-radius: var(--radius);
   color: var(--muted);
   font-size: 0.93rem;
-  font-weight: 750;
+  font-weight: 700;
 }
 
 .nav-links a:hover,
@@ -203,7 +203,7 @@ button {
   min-height: 50px;
   padding: 12px 18px;
   border-radius: var(--radius);
-  font-weight: 850;
+  font-weight: 900;
   cursor: pointer;
   text-align: center;
   transition: transform .2s ease, background .2s ease, box-shadow .2s ease;
@@ -246,7 +246,7 @@ button {
   border-radius: var(--radius);
   color: #ffffff;
   background: var(--primary);
-  font-weight: 850;
+  font-weight: 900;
   transition: background .2s ease;
 }
 
@@ -273,7 +273,7 @@ button {
   margin: 0 0 10px;
   color: var(--primary-dark);
   font-size: 0.82rem;
-  font-weight: 850;
+  font-weight: 900;
   letter-spacing: 0;
   text-transform: uppercase;
 }
@@ -282,7 +282,6 @@ button {
 .section-header h2,
 .inquiry-copy h2,
 .contact-details h2,
-.local-seo-card h2,
 .about-content h2 {
   margin: 0;
   color: var(--text);
@@ -339,7 +338,7 @@ button {
   color: var(--text);
   background: #ffffff;
   font-size: 0.88rem;
-  font-weight: 750;
+  font-weight: 700;
   box-shadow: var(--shadow-sm);
   transition: transform .2s ease, box-shadow .2s ease;
 }
@@ -401,7 +400,7 @@ button {
   padding-left: 14px;
   border-left: 4px solid var(--primary);
   color: var(--muted);
-  font-weight: 750;
+  font-weight: 700;
 }
 
 /* ========== SECTIONS ========== */
@@ -416,7 +415,7 @@ button {
 
 .trust-section,
 .process-section,
-.local-seo-section {
+.prefooter-section {
   background: var(--section);
 }
 
@@ -451,15 +450,13 @@ button {
 .section-header h2,
 .inquiry-copy h2,
 .contact-details h2,
-.local-seo-card h2,
 .about-content h2 {
   font-size: clamp(1.75rem, 3.4vw, 2.45rem);
 }
 
 .section-header p,
 .inquiry-copy p,
-.contact-details p,
-.local-seo-card p {
+.contact-details p {
   margin: 12px 0 0;
   color: var(--muted);
 }
@@ -505,8 +502,7 @@ button {
 .process-card,
 .testimonial-card,
 .contact-form,
-.map-frame,
-.local-seo-card {
+.map-frame {
   border: 1px solid var(--line);
   border-radius: var(--radius);
   background: #ffffff;
@@ -631,7 +627,7 @@ button {
   min-height: 40px;
   padding: 9px 11px;
   border-radius: var(--radius);
-  font-weight: 850;
+  font-weight: 900;
   font-size: 0.88rem;
   text-align: center;
   flex: 1;
@@ -956,7 +952,7 @@ button {
 
 .contact-form label {
   color: var(--text);
-  font-weight: 750;
+  font-weight: 700;
   font-size: 0.92rem;
 }
 
@@ -1013,7 +1009,7 @@ button {
   margin: 0;
   padding: 9px 11px;
   border-radius: var(--radius);
-  font-weight: 850;
+  font-weight: 900;
 }
 
 .form-message.is-error {
@@ -1122,15 +1118,52 @@ button {
   border: 0;
 }
 
-.local-seo-card {
-  max-width: 860px;
-  padding: clamp(20px, 3vw, 30px);
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+/* ========== PRE-FOOTER ========== */
+
+.prefooter-section {
+  padding: 44px 0;
 }
 
-.local-seo-card:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
+.prefooter-inner {
+  max-width: 680px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.prefooter-inner h2 {
+  margin: 0;
+  color: var(--text);
+  font-size: clamp(1.5rem, 2.8vw, 1.95rem);
+  line-height: 1.25;
+  letter-spacing: 0;
+}
+
+.prefooter-inner > p {
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+
+.prefooter-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.prefooter-trust {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 16px 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  font-weight: 700;
+}
+
+.prefooter-trust i {
+  color: var(--primary);
 }
 
 /* ========== FOOTER ========== */
@@ -1241,7 +1274,6 @@ button {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity .5s ease, transform .5s ease;
-  will-change: opacity, transform;
 }
 
 .fade-in.is-visible {
@@ -1250,6 +1282,9 @@ button {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
   .fade-in {
     opacity: 1;
     transform: none;
@@ -1400,7 +1435,7 @@ button {
   }
 
   .service-card {
-    min-height: auto;
+    min-height: 0;
   }
 
   .trust-card {
@@ -1452,5 +1487,17 @@ button {
 
   .sticky-call-mobile:hover {
     background: var(--primary-dark);
+  }
+
+  .prefooter-inner {
+    text-align: left;
+  }
+
+  .prefooter-actions {
+    justify-content: stretch;
+  }
+
+  .prefooter-trust {
+    justify-content: flex-start;
   }
 }
