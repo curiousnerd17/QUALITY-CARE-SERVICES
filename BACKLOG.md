@@ -36,7 +36,7 @@ to* this baseline.
 
 **Standing constraints (apply to every task):** no framework; no redesign; no invented
 services; no secrets committed; existing URLs/anchors preserved; only the canonical seven
-services (Patient Care, Elder Care, Child Care, Newborn & Baby Care, Maid Services, Home
+services (Patient Care, Elder Care, Mother & Newborn Care, Child Care, Maid Services, Home
 Cook Services, Housekeeping / Dusting & Cleaning).
 
 **Open business decisions that gate content tasks** (owner: business; must be resolved
@@ -46,9 +46,7 @@ before the dependent task's copy is finalized):
   boundary. Reconciles legacy "Home Nursing / ICU Care at Home / Patient Attendant."
 - **D2 — Legacy service mapping.** Fate of "Caretakers" and "Full-Time Domestic Helpers"
   (retire, or absorb into Elder Care / Maid Services).
-- **D3 — Mother-support framing.** How much post-delivery mother support is genuinely
-  offered and stated on the Newborn & Baby Care page (note: "Mother Care" is not one of the
-  canonical seven).
+- **D3 — Mother-support framing. ✅ RESOLVED (Amendment v1.1).** Mother & Newborn Care is a single canonical service that includes post-delivery mother support and newborn care. "Mother Care" and "Newborn Care" are not separate services.
 - **D4 — Home-services boundaries.** Where Maid Services, Home Cook Services, and
   Housekeeping/Cleaning stop and start, so the three pages differentiate honestly.
 - **D5 — Short-notice/one-off availability.** Real or not, per service.
@@ -93,7 +91,7 @@ architectural risk.*
 
 ### E1-T3 — Reconcile homepage service cards to the canonical seven
 - **Description:** Update the homepage services section so the displayed services are
-  exactly the canonical seven (grouped Care vs Home), renaming/merging/retiring per the
+  exactly the canonical seven (grouped Care Services vs Home Support Services), renaming/merging/retiring per the
   approved E1-T2 mapping. Sub-capabilities appear inside their parent service, not as
   standalone cards. No new services invented.
 - **Priority:** Critical
@@ -185,9 +183,9 @@ architectural risk.*
 *Goal: sharpen the homepage as a hub + fast conversion funnel, per PROJECT.md §7–§8, §12.
 No redesign — refinement only.*
 
-### E2-T1 — Regroup services into Care vs Home clusters
-- **Description:** Present the seven services under the two approved groupings (Care:
-  Patient, Elder, Child, Newborn & Baby; Home: Maid, Cook, Housekeeping) using the existing
+### E2-T1 — Regroup services into Care Services and Home Support Services clusters
+- **Description:** Present the seven services under the two approved groupings (Care Services:
+  Patient, Elder, Mother & Newborn, Child; Home Support Services: Maid, Cook, Housekeeping) using the existing
   `service-group` pattern.
 - **Priority:** High
 - **Effort:** S
@@ -430,15 +428,13 @@ independently deployable.
 - **Priority:** High · **Effort:** L · **Dependencies:** E3 template certified
 - **Files Affected:** new page; sitemap
 - **Regression Risk:** Low
-- **Acceptance Criteria:** Safety-forward trust; age band clearly differentiated from Newborn
-  & Baby Care; links to Newborn & Baby Care; valid schema; DoD passed.
+- **Acceptance Criteria:** Safety-forward trust; age band clearly differentiated from Mother & Newborn Care; links to Mother & Newborn Care; valid schema; DoD passed.
 
-### E4-T4 — Newborn & Baby Care page (`/services/newborn-baby-care`)
-- **Priority:** High · **Effort:** L · **Dependencies:** E3 template certified; **D3**
+### E4-T4 — Mother & Newborn Care page (`/services/mother-newborn-care`)
+- **Priority:** High · **Effort:** L · **Dependencies:** E3 template certified
 - **Files Affected:** new page; sitemap
 - **Regression Risk:** Low
-- **Acceptance Criteria:** Unified newborn+baby entity; highest trust register; mother-support
-  framing only as far as D3 confirms; differentiated from Child Care; valid schema; DoD passed.
+- **Acceptance Criteria:** Combined mother + newborn service (post-delivery mother support + newborn care); highest trust register; differentiated from Child Care; valid schema; DoD passed.
 
 ### E4-T5 — Maid Services page (`/services/maid-services`)
 - **Priority:** High · **Effort:** L · **Dependencies:** E3 template certified; **D4**
@@ -828,7 +824,7 @@ deployable task and as a suite before each production push.*
 2. **Epic 2** (homepage refinement) — hub/funnel sharpening on the cleaned base.
 3. **Epic 3** (Patient Care) — builds and *certifies* the reusable service-page template.
 4. **Epic 4** (remaining pages) — fills the certified template; order: Elder Care & Home Cook
-   Services first (Critical), then Child, Newborn & Baby, Maid, Housekeeping.
+   Services first (Critical), then Child, Mother & Newborn, Maid, Housekeeping.
 5. **Epic 5 / 6** — run alongside 3–4 (each page ships with SEO + analytics wired).
 6. **Epic 7 / 8 / 9** — optimization and hardening, largely parallelizable; E9-T1 (CSP) after
    analytics is final.

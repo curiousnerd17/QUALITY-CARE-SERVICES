@@ -87,8 +87,8 @@ team — not a distant call center.
 
 - Patient Care
 - Elder Care
+- Mother & Newborn Care
 - Child Care
-- Newborn & Baby Care
 - Maid Services
 - Home Cook Services
 - Housekeeping / Dusting & Cleaning
@@ -150,15 +150,19 @@ These principles govern *how* work is done in this repository.
 
 These are the **official, canonical services**. This list is the single source of truth.
 
+> **v1.1 Amendment (Governance Update):** "Newborn & Baby Care" consolidated into "Mother & Newborn Care" as a single combined service; cluster names updated to "Care Services" and "Home Support Services"; reordered per business finalization.
+
 | # | Canonical Service | Cluster |
 |---|---|---|
-| 1 | Patient Care | Care |
-| 2 | Elder Care | Care |
-| 3 | Child Care | Care |
-| 4 | Newborn & Baby Care | Care |
-| 5 | Maid Services | Home |
-| 6 | Home Cook Services | Home |
-| 7 | Housekeeping / Dusting & Cleaning | Home |
+| 1 | Patient Care | Care Services |
+| 2 | Elder Care | Care Services |
+| 3 | Mother & Newborn Care | Care Services |
+| 4 | Child Care | Care Services |
+| 5 | Maid Services | Home Support Services |
+| 6 | Home Cook Services | Home Support Services |
+| 7 | Housekeeping / Dusting & Cleaning | Home Support Services |
+
+**Mother & Newborn Care** is a single combined service covering post-delivery support for mothers and care for newborn babies — never split into two services. **Child Care** is a separate service for young children whose parents are at work and need dependable care at home. The two services do not overlap.
 
 ### Binding Constraint
 
@@ -268,8 +272,8 @@ Future service pages follow one flat, readable, permanent convention under `/ser
 |---|---|
 | Patient Care | `/services/patient-care` |
 | Elder Care | `/services/elder-care` |
+| Mother & Newborn Care | `/services/mother-newborn-care` |
 | Child Care | `/services/child-care` |
-| Newborn & Baby Care | `/services/newborn-baby-care` |
 | Maid Services | `/services/maid-services` |
 | Home Cook Services | `/services/home-cook-services` |
 | Housekeeping / Dusting & Cleaning | `/services/housekeeping-cleaning` |
@@ -561,7 +565,7 @@ The business is positioned around one central promise:
 
 "Reliable, verified support for families at home."
 
-Healthcare services and domestic services are two service clusters under one trusted local brand.
+Care Services and Home Support Services are two service clusters under one trusted local brand.
 
 All future content, navigation, and SEO must reinforce this positioning consistently.
 
