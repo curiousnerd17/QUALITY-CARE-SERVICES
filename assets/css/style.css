@@ -75,8 +75,40 @@
   --blue: #2563eb;
   --section-blue: #f4f8ff;
 
-  --radius: 8px;
-  
+  /* ===================================================================
+     RADIUS SCALE (DS-1) — FOUNDATION ONLY
+     The existing --radius token (below) remains the active compatibility
+     token that components consume. The DS-1 radius scale is introduced
+     here for future component migration. No component consumes the new
+     scale yet.
+     =================================================================== */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-pill: 999px;
+  --radius-circle: 50%;
+
+  --radius: 8px; /* active compatibility token — consumed by components */
+
+  /* ===================================================================
+     SPACING SCALE (DS-1, 4px base) — FOUNDATION ONLY
+     Not yet consumed by any component.
+     =================================================================== */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-48: 48px;
+  --space-56: 56px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-96: 96px;
+
   /* Reusable shadow tokens */
   --shadow-sm: 0 2px 8px rgba(23, 50, 77, 0.04);
   --shadow-md: 0 5px 16px rgba(23, 50, 77, 0.05);
@@ -87,6 +119,18 @@
   --shadow-btn-whatsapp: 0 8px 16px rgba(22, 163, 74, 0.2);
   --shadow-floating-wa: 0 10px 24px rgba(22, 163, 74, 0.26);
   --shadow-mobile-call: 0 10px 24px rgba(15, 118, 110, 0.2);
+
+  /* ===================================================================
+     ELEVATION SCALE (DS-1) — FOUNDATION ONLY
+     Existing components continue using the legacy --shadow-* tokens
+     above. These new elevation tokens are foundation only and are not
+     consumed by any component yet; migration will occur in later
+     component tickets.
+     =================================================================== */
+  --elevation-e1: 0 1px 2px rgba(23, 50, 77, 0.04), 0 6px 16px rgba(23, 50, 77, 0.06);
+  --elevation-e2: 0 2px 6px rgba(23, 50, 77, 0.06), 0 16px 32px rgba(23, 50, 77, 0.10);
+  --elevation-e3: 0 4px 12px rgba(23, 50, 77, 0.08), 0 24px 48px rgba(23, 50, 77, 0.12);
+  --elevation-e4: 0 12px 32px rgba(23, 50, 77, 0.16);
 }
 
 * {
