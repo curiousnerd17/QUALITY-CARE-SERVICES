@@ -1,17 +1,80 @@
 :root {
-  --bg: #ffffff;
-  --section: #f2fbf9;
-  --section-blue: #f4f8ff;
-  --text: #17324d;
-  --muted: #5b6c7a;
-  --line: #dce8ec;
-  --primary: #0f766e;
-  --primary-dark: #0b5f59;
+  /* ===================================================================
+     DESIGN SYSTEM — COLOR FOUNDATION (DS-2A)
+     New color architecture. Existing tokens are re-pointed to these
+     scales as value-identical compatibility aliases (see below), so
+     every component renders exactly as before.
+     =================================================================== */
+
+  /* --- Primary teal scale (brand) --- */
+  --primary-50: #f2fbf9;
+  --primary-100: #d7ede9;
+  --primary-200: #a9d8d0;
+  --primary-300: #6fbcb0;
+  --primary-400: #2f9c8d;
+  --primary-500: #0f766e;
+  --primary-600: #0b5f59;
+  --primary-700: #094c47;
+  --primary-800: #073b38;
+  --primary-900: #052b29;
+
+  /* --- Neutral scale --- */
+  --neutral-0: #ffffff;
+  --neutral-50: #f6f9fa;
+  --neutral-100: #eef3f5;
+  --neutral-200: #dce8ec;
+  --neutral-300: #c3d2d9;
+  --neutral-400: #9aa7b1;
+  --neutral-500: #5b6c7a;
+  --neutral-600: #40525f;
+  --neutral-700: #2b3d4b;
+  --neutral-800: #17324d;
+  --neutral-900: #12313a;
+
+  /* --- Surface colors --- */
+  --surface-base: var(--neutral-0);
+  --surface-tint: var(--primary-50);
+  --surface-inverse: var(--neutral-900);
+
+  /* --- Semantic colors --- */
+  --color-success: #15803d;
+  --color-error: #dc2626;
+  --color-warning: #b45309; /* defined for the semantic set; not yet consumed by any component */
+
+  /* --- Brand colors --- */
+  --brand-primary: var(--primary-500);
+  --brand-whatsapp: #16a34a;
+
+  /* ===================================================================
+     COMPATIBILITY ALIASES
+     Existing tokens re-pointed to the new scales. Values are identical
+     to the previous literals, so existing components are unaffected.
+     =================================================================== */
+  --bg: var(--surface-base);
+  --section: var(--surface-tint);
+  --text: var(--neutral-800);
+  --muted: var(--neutral-500);
+  --line: var(--neutral-200);
+  --primary: var(--primary-500);
+  --primary-dark: var(--primary-600);
+  --whatsapp: var(--brand-whatsapp);
+  --danger: var(--color-error);
+  --success: var(--color-success);
+  --footer: var(--surface-inverse);
+
+  /* ===================================================================
+     DEPRECATED — legacy blue accent.
+     Retained (unchanged values) ONLY because existing components still
+     consume them: --blue powers the process-card step icons and
+     --section-blue tints the inquiry section background. Removing them
+     now would cause a visual regression. They are excluded from the
+     forward DS palette (which uses teal + a future warm accent) and
+     will be retired during the process/inquiry component migration.
+     Do NOT reference these in new work.
+     =================================================================== */
   --blue: #2563eb;
-  --whatsapp: #16a34a;
-  --danger: #dc2626;
-  --success: #15803d;
-  --footer: #12313a;
+  --section-blue: #f4f8ff;
+
   --radius: 8px;
   
   /* Reusable shadow tokens */
