@@ -8,10 +8,10 @@
 
 ## 2026-07-03
 
-- *(Approved — recorded by this documentation commit)* — docs(architecture): `SERVICE_PAGE_SPEC.md`
+- `19aad71` — docs(architecture): `SERVICE_PAGE_SPEC.md`
   frozen as **v1.2** — the approved, canonical service-page architecture
   specification for Epics 3–4 and EPIC SP
-- *(Approved — recorded by this documentation commit)* — docs(sync): project documentation synchronized
+- `19aad71` — docs(sync): project documentation synchronized
   with the frozen spec — PROJECT.md **v1.3 amendment** (§10 template updated to the
   frozen slot order; SERVICE_PAGE_SPEC.md added to the Documentation Hierarchy);
   BACKLOG.md architecture milestone recorded complete and **EPIC SP — Service Page
