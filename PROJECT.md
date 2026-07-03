@@ -297,19 +297,36 @@ Every service page inherits one identical structural skeleton. Only the content 
 each block changes per service. This is what makes pages cheap to build, consistent for
 users, and coherent for crawlers.
 
-**Approved service-page section order:**
+> **v1.3 Amendment (2026-07-03):** the service-page architecture is fully specified
+> in **`SERVICE_PAGE_SPEC.md` (FROZEN v1.2)** — the canonical specification for all
+> future service pages, covering the component contracts, SEO, trust, conversion,
+> content, imagery, accessibility, performance, scalability, and decision-gate
+> detail. This section is the constitutional summary; on detail, the frozen spec
+> governs. On conflict, this document wins.
 
-1. **Hero** — H1, one-line value proposition, primary Call + WhatsApp CTAs (WhatsApp
-   pre-filled for that service), local coverage line.
-2. **What the service includes** — the honest, concrete scope of what is delivered.
-3. **Who it is for** — situational profiles so visitors self-identify.
-4. **How it works** — the genuine 3–4 step engagement process.
-5. **Why choose us** — service-specific trust points (not the generic homepage set).
-6. **FAQ** — service-specific questions; visible content mirrored in `FAQPage` schema.
-7. **Areas served** — Kota + localities, stated honestly.
-8. **Related services** — internal links to 2–3 genuinely adjacent services.
-9. **CTA** — matched conversion block (Call, WhatsApp, and inquiry-form path).
-10. **Footer** — global footer, identical across the site, linking to real service URLs.
+**Approved service-page section order (per `SERVICE_PAGE_SPEC.md` v1.2):**
+
+1. **Breadcrumb** — Home › Services › {Service}; mirrored by `BreadcrumbList` schema.
+2. **Hero** — H1, one-line value proposition, primary Call + WhatsApp CTAs (WhatsApp
+   pre-filled for that service), local coverage line. May carry an optional, calm
+   **Emergency Assistance band** directly below (per-service, D5-gated, default OFF).
+3. **What the service includes** — the honest, concrete scope of what is delivered.
+4. **Who it is for** — situational profiles so visitors self-identify; ends with the
+   embedded **Service Decision Aid** ("not sure which service you need?").
+5. **How it works — what to expect** — the genuine engagement journey: first contact,
+   assessment, staff matching, scheduling & start, ongoing support.
+6. **How pricing works** — transparency only: the honest factors (service, duration,
+   shift, requirements). Never prices.
+7. **Why choose us** — service-specific trust points (not the generic homepage set),
+   carrying the **Evidence Block** (business-verified proof only).
+8. **Mid-page CTA** — Call + WhatsApp; trust precedes the ask.
+9. **FAQ** — service-specific questions; visible content mirrored in `FAQPage` schema.
+10. **Areas served** — Kota + localities, stated honestly.
+11. **Related services** — internal links to 2–3 genuinely adjacent services.
+    (Reserved dormant slots: service-tagged testimonials — Phase 5; Related
+    Resources — only if/when a blog exists.)
+12. **CTA** — matched conversion block (Call, WhatsApp, and inquiry-form path).
+13. **Footer** — global footer, identical across the site, linking to real service URLs.
 
 **Template rules:**
 
@@ -320,6 +337,9 @@ users, and coherent for crawlers.
   `LocalBusiness` by `@id`, and a `FAQPage` mirroring its visible FAQ.
 - If a section does not apply, it still occupies its slot with honest content, preserving
   structural consistency.
+- Component contracts, the CTA priority hierarchy, and the imagery/photography
+  standards follow `SERVICE_PAGE_SPEC.md` (FROZEN v1.2); every component consumes
+  the Design System tokens only (§11 binding rules).
 
 ---
 
@@ -645,6 +665,9 @@ Consistency is preferred over creativity.
 PROJECT.md
 Permanent Constitution
 
+SERVICE_PAGE_SPEC.md
+Frozen Service Page Architecture Specification (v1.2)
+
 BACKLOG.md
 Current Tasks
 
@@ -654,7 +677,9 @@ Release History
 README.md
 Repository Overview
 
-Architecture decisions always belong inside PROJECT.md.
+Architecture decisions belong inside PROJECT.md, or inside a frozen specification
+that PROJECT.md explicitly references (currently `SERVICE_PAGE_SPEC.md`). On
+conflict, PROJECT.md wins.
 
 Temporary work never belongs here.
 

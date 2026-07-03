@@ -326,8 +326,9 @@ No redesign — refinement only.*
 # EPIC 3 — Patient Care Page
 
 *Goal: build the first service page under `/services/patient-care` using the approved
-template (PROJECT.md §10). This epic also establishes the reusable service-page template
-consumed by Epic 4. Highest-intent service — build first.*
+template (PROJECT.md §10; canonical detail in `SERVICE_PAGE_SPEC.md`, **FROZEN
+v1.2**). This epic also establishes the reusable service-page template consumed by
+Epic 4. Highest-intent service — build first.*
 
 > **Content gate:** copy for the scope, "who it's for," and FAQ blocks cannot be finalized
 > until **D1** (and shift/relief structure) is resolved. Structural tasks may proceed;
@@ -466,7 +467,8 @@ consumed by Epic 4. Highest-intent service — build first.*
 *Goal: build the remaining six service pages by filling the template certified in Epic 3.
 No structural re-invention — reuse. Build order follows PROJECT.md priority.*
 
-> **Reusable components (do not duplicate):** the certified service-page template (E3-T1),
+> **Reusable components (do not duplicate):** the certified service-page template
+> (E3-T1, per `SERVICE_PAGE_SPEC.md` FROZEN v1.2),
 > global header/footer, floating WhatsApp, sticky Call, button components, card/section CSS
 > classes, breadcrumb pattern, and the `Service`/`Breadcrumb`/`FAQPage` schema pattern.
 > Each task below = fill the template with that service's real content + schema + links +
@@ -1028,6 +1030,123 @@ Implements PROJECT.md §11 and the v1.2 Design Token System amendment.*
 
 ---
 
+# EPIC SP — Service Page Implementation
+
+*Goal: implement the service-page system against the frozen architecture.
+**Architecture milestone: ✅ Complete (2026-07-03)** — `SERVICE_PAGE_SPEC.md`
+**FROZEN v1.2** (approval: granted; repository record: the documentation freeze
+commit), the canonical specification for all service pages (PROJECT.md §10,
+v1.3 amendment).*
+
+> **Relationship to existing epics (no duplication, no renumbering):**
+> - **Epic 3** still builds and certifies the Patient Care page and the reusable
+>   template; **Epic 4** still fills the certified template for the remaining six.
+>   Both now build against `SERVICE_PAGE_SPEC.md` v1.2 — the "approved section
+>   order" in E3-T1 is the frozen spec's slot order (breadcrumb · hero + optional
+>   emergency band · scope · who-it's-for + decision aid · journey · pricing ·
+>   trust + evidence block · mid CTA · FAQ · areas · related · end CTA · footer).
+> - This epic holds only the **cross-cutting, spec-introduced work** that no
+>   existing task covers. Existing task IDs, scopes, and dependencies are unchanged.
+> - The spec's decision gates (SERVICE_PAGE_SPEC.md §12) bind every task below;
+>   E6-T1 (GA4 event taxonomy) should complete before Epic 3 ships (spec gate 5).
+
+### SP-T1 — Canonical URL file & trailing-slash strategy
+- **Description:** Decide the service-page file strategy (`/services/{slug}.html`
+  vs `/services/{slug}/index.html`) and the canonical trailing-slash form;
+  configure Netlify so exactly one URL form returns 200 and all variants 301;
+  record the decision. Canonical tags, sitemap entries, schema `url`s, breadcrumbs,
+  and every internal link use the single chosen form (spec §4.3, gate 3).
+- **Priority:** Critical · **Effort:** S · **Dependencies:** None — **gates E3-T1**
+- **Files Affected:** `netlify.toml` (at implementation)
+- **Regression Risk:** Low (additive config; no existing URL touched)
+- **Acceptance Criteria:** Decision recorded; on a preview deploy exactly one form
+  serves 200 and all variants 301; settled before the first service page ships.
+
+### SP-T2 — Cross-page form pre-select mechanism
+- **Description:** Additive `main.js` reader for a service parameter on `/#contact`
+  (e.g. `?service=Patient%20Care`) that pre-selects the matching form `<option>`,
+  enabling service-page end CTAs (spec §6, gate 4). Existing same-page
+  `data-service` behaviour unchanged.
+- **Priority:** High · **Effort:** S · **Dependencies:** E1-T5 — **gates E3-T11**
+- **Files Affected:** `main.js`
+- **Regression Risk:** Medium — touches lead-path JS.
+- **Acceptance Criteria:** Parameterized link pre-selects the service; same-page
+  autofill unchanged; submission unaffected; unknown values no-op gracefully.
+
+### SP-T3 — Pricing factors block ("How Pricing Works")
+- **Description:** Build the shared pricing-transparency component per spec §3.3 —
+  the four factors (service, duration, shift, requirements), no figures, no price
+  schema; shared copy with service-adjusted examples.
+- **Priority:** High · **Effort:** S · **Dependencies:** E3-T1 (template slot)
+- **Files Affected:** service-page template/pages; `style.css` only if a strictly
+  needed additive, token-only class (spec §3.0)
+- **Regression Risk:** Low
+- **Acceptance Criteria:** Contract §3.3 satisfied on every page; consistent with
+  the charges FAQ; no price figure anywhere.
+
+### SP-T4 — Service Decision Aid component
+- **Description:** Embedded "Not sure which service you need?" per spec §3.2 —
+  ≤ 60 words plus one sibling link, pair-mapped. Care-cluster pairs
+  (Patient ↔ Elder; Mother & Newborn ↔ Child) can ship now; Home Support pair
+  copy is **D4-gated**.
+- **Priority:** Medium · **Effort:** S · **Dependencies:** E3-T1; **D4** (Home
+  Support pairs only)
+- **Files Affected:** service pages
+- **Regression Risk:** Low
+- **Acceptance Criteria:** Contract §3.2 honored; pair mapping per the spec table;
+  never a comparison table.
+
+### SP-T5 — Emergency Assistance band + D5 activation ledger
+- **Description:** Build the calm urgent-path band per spec §3.1 (ships OFF on
+  every page); establish the per-service ON/OFF ledger; activate per service only
+  on a recorded D5 confirmation (Patient Care is the expected first candidate).
+- **Priority:** Medium · **Effort:** S · **Dependencies:** E3-T1; **D5** per
+  activation (spec gates 2 and 7)
+- **Files Affected:** service pages
+- **Regression Risk:** Low
+- **Acceptance Criteria:** Contract §3.1 honored (≤ 30 words, Call only, no
+  urgency marketing, no response-time guarantees); all-OFF default; ledger entry
+  recorded before any activation.
+
+### SP-T6 — Evidence Block + evidence ledger
+- **Description:** Build the structured trust-proof component per spec §3.4 inside
+  the trust section; establish the evidence ledger (claim · source · verified-on).
+  Only ledger-backed items ship; unverifiable numbers become qualitative statements
+  of real practice.
+- **Priority:** High · **Effort:** M · **Dependencies:** E3-T1; business
+  verification of every claim (spec gate 8)
+- **Files Affected:** service pages
+- **Regression Risk:** Low
+- **Acceptance Criteria:** Every shipped figure ledger-backed; no ratings/awards
+  markup; calm presentation (no animated counters or invented seals).
+
+### SP-T7 — Imagery standards adoption
+- **Description:** Apply spec §8 to service-page imagery: staff photo consent
+  process; hero aspect ratio fixed at template certification; E7-T1 technical
+  pattern; the existing honest hero reused until real photography exists — never
+  stock or AI imagery as a bridge.
+- **Priority:** Medium · **Effort:** M · **Dependencies:** coordinate with E7-T1;
+  aspect ratio fixed at E3-T12
+- **Files Affected:** image assets; service pages
+- **Regression Risk:** Low
+- **Acceptance Criteria:** Spec §8 rules verifiably met on every shipped page;
+  written consent recorded for every identifiable staff member shown.
+
+### SP-T8 — Content freshness governance operationalization
+- **Description:** Stand up the spec §7 review cycle: 6-month cadence plus event
+  triggers; Reviewed/Updated outcomes recorded via CHANGELOG.md and commit
+  history; the optional honest "Content reviewed" line convention; sitemap
+  `lastmod` refresh on Updated outcomes.
+- **Priority:** Medium · **Effort:** S · **Dependencies:** first service page live
+- **Files Affected:** none initially (process); `sitemap.xml`/pages on Updated
+  outcomes
+- **Regression Risk:** Low
+- **Acceptance Criteria:** First review date scheduled as each page ships;
+  Reviewed/Updated convention visible in practice (CHANGELOG lines); no
+  decorative freshness stamps.
+
+---
+
 ## Suggested Execution Order (dependency-aware)
 
 1. **Epic 1** (foundation cleanup) — resolves D1/D2 gates, fixes assets, truth-aligns the
@@ -1045,10 +1164,23 @@ Implements PROJECT.md §11 and the v1.2 Design Token System amendment.*
    (e.g. DS-3A on the services section, DS-3C accent retirement) queue behind Epic 1
    completion for the affected section and behind explicit §19 approval.
 
+> **2026-07-03 amendment (spec freeze):** the Service Page Architecture milestone
+> is complete — `SERVICE_PAGE_SPEC.md` **FROZEN v1.2** is the canonical
+> specification. **EPIC SP** joins the order as follows: SP-T1 (URL strategy) and
+> E6-T1 (event taxonomy) precede E3-T1; SP-T2…SP-T6 interleave with Epic 3 and
+> certify with the template (E3-T12); SP-T7 coordinates with E7-T1; SP-T8 begins
+> when the first page goes live. Epics 3–4 build against the frozen spec.
+
 ---
 
 ## In-Flight / Parked Work (as of 2026-07-03)
 
+- **Service Page Architecture milestone ✅ complete (2026-07-03):**
+  `SERVICE_PAGE_SPEC.md` **FROZEN v1.2** — approval: granted; canonical
+  specification for all service-page work. Documentation synchronized
+  (PROJECT.md §10 v1.3 amendment + Documentation Hierarchy; EPIC SP added to this
+  backlog; CHANGELOG.md entries); repository record: the documentation freeze
+  commit.
 - **E1-T2 completion and D1/D2 resolutions recorded 2026-07-03** (this document's status
   ledger); uncommitted pending review. No site code changed — analysis/decision task.
 - **E1-T3 reconciliation implemented 2026-07-03** (`index.html` services section +
