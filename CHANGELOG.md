@@ -6,6 +6,19 @@
 > governance amendments reference `PROJECT.md`. Created 2026-07-02 to close the
 > Documentation Hierarchy gap (PROJECT.md lists this file as the release history).
 
+## 2026-07-03
+
+- `3a52d41` — feat(homepage): reconcile canonical service architecture — the canonical
+  seven services implemented on the homepage; Patient Care established as the umbrella
+  service (qualified nurses + experienced caregivers, per **D1**); Home Cook Services
+  added as a first-class card; legacy Caretakers merged into contextual services and
+  Full-Time Domestic Helpers merged into Maid Services (per **D2**); homepage service
+  architecture aligned with business decisions D1 and D2 (**E1-T3**; partial **E1-T4**)
+- `eb6582e` — docs(project): synchronize roadmap and backlog — PROJECT.md roadmap
+  synchronization; BACKLOG.md status updates (E1-T2 ✅ with D1/D2 resolutions recorded,
+  Design System roadmap/DS-3A status updates); CHANGELOG.md created for
+  documentation-hierarchy synchronization
+
 ## 2026-07-01
 
 - `d628cd0` — refactor(design): radius, spacing, and elevation token foundation

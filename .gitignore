@@ -1,0 +1,12 @@
+# Local AI-assistant tooling (session-local settings and preview config)
+.claude/
+
+# Editor workspace settings (personal; not intentionally shared)
+.vscode/
+
+# OS artifacts
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
