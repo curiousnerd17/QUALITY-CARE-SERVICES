@@ -339,6 +339,31 @@ The visual identity is deliberate and must be respected. UI philosophy:
 > **Avoid visual clutter.** When in doubt, remove. Do not redesign the site or its visual
 > identity without explicit approval (see §19).
 
+### Design Token System (v1.2 Amendment)
+
+The visual identity is implemented through a token-based design system in
+`assets/css/style.css`. Four foundation scales exist and are the **single source of
+visual truth**:
+
+- **Color** — primitive scales (primary, neutral, semantic) plus surface and brand
+  aliases (DS-2A).
+- **Radius** — `--radius-sm/md/lg/xl/pill/circle` (DS-2B).
+- **Spacing** — 4px-base `--space-*` scale (DS-2B).
+- **Elevation** — `--elevation-e1…e4` shadow scale (DS-2B).
+
+**Binding rules:**
+
+- All future component work **must consume these tokens**. Introducing new hardcoded
+  visual values (colors, radii, spacing, shadows) is prohibited.
+- Legacy compatibility tokens (`--radius`, `--shadow-*`, `--blue`, `--section-blue`) are
+  **deprecated**: existing consumers keep working, but no new consumers may be added.
+  They are retired through the Design System epic in `BACKLOG.md`.
+- Token migrations that change rendered appearance are UI changes and require approval
+  per §19. Value-neutral tokenization (identical rendered output) proceeds as ordinary
+  refactoring under Engineering Principle 3 (§4).
+- Ticket-level design-system work is tracked in `BACKLOG.md` (EPIC DS), per the
+  Documentation Hierarchy.
+
 ---
 
 ## 12. Conversion Strategy
@@ -521,6 +546,35 @@ reviews, and honest social proof that compounds over time.
 ### Phase 6 — Continuous Improvement
 Ongoing measurement, iteration, and maintenance against this constitution — small,
 reviewed, reversible improvements, indefinitely.
+
+### High-Level Project Roadmap (v1.2 Amendment)
+
+The long-term execution strategy, one level above the phases above and the task-level
+detail in `BACKLOG.md`. Stages overlap where dependencies allow; **task-level sequencing
+is governed by `BACKLOG.md`'s dependency-aware Suggested Execution Order**, and each
+stage maps to existing epics — this view creates no new work items.
+
+1. **Engineering Foundation** — truth-align and stabilize the live homepage
+   (Epics 1–2; gated by business decisions D1/D2). *In progress.*
+2. **Design System** — token foundations: color, radius, spacing, elevation
+   (DS-2A/DS-2B ✅ complete; DS-2C typography remains *proposed only*, not approved).
+3. **Component Migration** — components adopt the tokens one at a time, value-neutral
+   by default (DS-3A…DS-3E, DS-4; DS-3A is parked pending visual review).
+4. **Premium UI** — reviewed, approved appearance refinements that realize the §11
+   identity: quiet confidence, clinical empathy, premium, minimal, calm, timeless.
+   Every visual change passes §19 approval; no flashy effects, gradients,
+   glassmorphism, neumorphism, or decorative animation.
+5. **Accessibility & Performance** — WCAG 2.2 AA and Core Web Vitals hardening
+   (Epics 7–8), with security hardening alongside (Epic 9).
+6. **SEO** — dedicated service pages on the certified template plus technical and
+   local SEO (Epics 3–5; Phases 2–3 above). Pages ship with their SEO and analytics
+   wiring per epic dependencies.
+7. **Launch** — the full target architecture live: seven service pages, wired internal
+   links, validated schema, per-service analytics attribution, Definition-of-Done and
+   Search Console verification (Epic 10 gates every release).
+8. **Future Platform** — authority building and continuous improvement (Phases 5–6),
+   and any expansion beyond the current scope — which requires a constitutional
+   amendment before work begins.
 
 ---
 

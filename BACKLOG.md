@@ -28,6 +28,11 @@
 **Regression Risk:** Low / Medium / High — the chance a change breaks existing, working
 production behaviour.
 
+**Status:** ✅ Completed (with commit and date) · 🔶 Partial (done slices enumerated) ·
+⬜ Pending. A task without a Status line is Pending. Status lines are updated as work
+ships (living-document rule). A task is only marked ✅ when its Acceptance Criteria *and*
+the standing Definition of Done are both satisfied and the change is production-reviewed.
+
 **Standing Definition of Done (applies to _every_ task, not repeated per task):** works on
 desktop; works on mobile; Lighthouse checked; accessibility checked (WCAG 2.2 AA); SEO
 checked; analytics verified where relevant; no regression to existing pages, anchors, or
@@ -42,10 +47,20 @@ Cook Services, Housekeeping / Dusting & Cleaning).
 **Open business decisions that gate content tasks** (owner: business; must be resolved
 before the dependent task's copy is finalized):
 
-- **D1 — Patient Care scope.** Exact delivered capabilities and the medical/non-medical
-  boundary. Reconciles legacy "Home Nursing / ICU Care at Home / Patient Attendant."
-- **D2 — Legacy service mapping.** Fate of "Caretakers" and "Full-Time Domestic Helpers"
-  (retire, or absorb into Elder Care / Maid Services).
+- **D1 — Patient Care scope. ✅ RESOLVED (2026-07-03, recorded at E1-T2 sign-off).**
+  Patient Care is a combined service: clinical nursing by qualified nurses where
+  required, plus non-clinical care by experienced attendants. The clinical/non-clinical
+  distinction must remain clear throughout the website. Legacy "Home Nursing" and
+  "Patient Attendant" reconcile into Patient Care as its clinical and non-clinical
+  sides ("Bedridden Patient Care" / "Post Hospitalization Care" form options fold in
+  likewise). "ICU Care at Home" branding is **not** auto-carried: high-dependency
+  wording requires a final business honesty confirmation at E1-T3 copy review before
+  any such claim ships.
+- **D2 — Legacy service mapping. ✅ RESOLVED (2026-07-03, recorded at E1-T2 sign-off).**
+  "Caretaker" is a role, not a standalone service: its scope is absorbed contextually
+  into Patient Care, Elder Care, Mother & Newborn Care, and Child Care. "Full-Time
+  Domestic Helpers" is absorbed into Maid Services (full-time as an engagement mode).
+  Neither remains a standalone card, form option, or schema offer.
 - **D3 — Mother-support framing. ✅ RESOLVED (Amendment v1.1).** Mother & Newborn Care is a single canonical service that includes post-delivery mother support and newborn care. "Mother Care" and "Newborn Care" are not separate services.
 - **D4 — Home-services boundaries.** Where Maid Services, Home Cook Services, and
   Housekeeping/Cleaning stop and start, so the three pages differentiate honestly.
@@ -60,6 +75,11 @@ canonical seven services before any new pages are built. Highest business impact
 architectural risk.*
 
 ### E1-T1 — Resolve logo/image reference mismatch (`.png` vs `.jpg`)
+- **Status:** ✅ Completed (audited 2026-07-02) — every icon/OG/Twitter/manifest reference
+  now points to `images/logo-optimized.png`, which exists in the repository (`index.html`
+  head, JSON-LD, and header logo; `404.html`; `manifest.webmanifest`; `browserconfig.xml`).
+  No `.jpg` logo reference remains. Residual action: verify the deployed asset and social
+  preview per the Deployment Notes on the next production deploy.
 - **Description:** `index.html` references `logo-optimized.jpg` for favicons and OG/Twitter
   images, while `manifest.webmanifest`, `browserconfig.xml`, and `404.html` reference
   `logo-optimized.png`. Determine which asset actually exists, then standardize every
@@ -76,6 +96,22 @@ architectural risk.*
   snapshot. Purge/re-share a link to confirm the social preview updates.
 
 ### E1-T2 — Inventory current vs canonical services (decision-support, no code)
+- **Status:** ✅ Completed (2026-07-03) — six-surface inventory produced (service cards,
+  form `<select>` options, hero service tags, footer service links, JSON-LD `makesOffer`,
+  title/meta/OG) and mapped to the canonical seven; business sign-off recorded, resolving
+  D1 and D2 (see Open Business Decisions above). Mapping outcome:
+  **keep** — Elder Care, Mother & Newborn Care, Child Care, Maid Services,
+  Housekeeping / Dusting & Cleaning (residual legacy labels — "Mother Care",
+  "Child Care / Baby Care", "House Maids", "Housekeeping Workers" — persist in
+  `data-service` values, form options, hero tags, footer, WhatsApp texts, and schema
+  and are renamed via E1-T3/E1-T5/E1-T6);
+  **merge into Patient Care** — Home Nursing, ICU Care at Home (branding subject to the
+  D1 honesty check), Patient Attendant, Bedridden Patient Care, Post Hospitalization Care;
+  **retire as standalone, absorb** — Caretakers (role absorbed contextually per D2),
+  Full-Time Domestic Helpers (into Maid Services);
+  **missing, to create** — Patient Care card (E1-T3), Home Cook Services card (E1-T4);
+  group headings "Healthcare Services" / "Domestic Support Services" rename to
+  "Care Services" / "Home Support Services" (E1-T3).
 - **Description:** Produce a mapping table of every service currently shown on the homepage
   (Home Nursing, ICU Care at Home, Patient Attendant, Caretakers, Full-Time Domestic
   Helpers, plus existing care/domestic cards) against the canonical seven. Flag each as
@@ -90,6 +126,30 @@ architectural risk.*
 - **Deployment Notes:** Not deployable; a planning gate for the rest of Epic 1.
 
 ### E1-T3 — Reconcile homepage service cards to the canonical seven
+- **Status:** 🔶 Partial (updated 2026-07-03) —
+  **Done slices:** Mother & Newborn Care and Child Care cards reconciled (commit
+  `b6ab352`, 2026-07-01); domestic card titles aligned to "Maid Services" and
+  "Housekeeping / Dusting & Cleaning" (commit `163e2b9`, 2026-07-01).
+  **Reconciliation implemented 2026-07-03** (uncommitted, on `ds-3a-service-card`,
+  pending review): Patient Care umbrella card created per D1 (bullets "Qualified
+  Nurses" / "Experienced Attendants" / "Recovery Support" keep the clinical/non-clinical
+  distinction visible; no ICU claims remain); Home Nursing, ICU Care at Home, and
+  Patient Attendant cards removed (merged into Patient Care); Caretakers card retired
+  (role, per D2); Full-Time Domestic Helpers card retired and absorbed into Maid
+  Services ("part-time or full-time" in description, per D2); group headings renamed to
+  "Care Services" / "Home Support Services"; card order aligned to PROJECT.md §5;
+  in-section WhatsApp texts/aria-labels canonicalized. One additive form option
+  ("Patient Care") added so the new card's Call-back preselect works per this task's
+  acceptance criteria — the full option sweep remains E1-T5. Kept cards' `data-service`
+  values stay pinned to existing legacy option names until E1-T5's 1:1 rename.
+  **Review corrections applied 2026-07-03** (business direction during E1-T3 review):
+  Patient Care description set to "Qualified Nurses and Experienced Patient Attendants,
+  matched according to the patient's needs." with bullets "Qualified Nurses" /
+  "Experienced Patient Attendants" / "Recovery & Daily Care"; Home Cook Services card
+  pulled forward from E1-T4 so all seven canonical services are displayed (see E1-T4
+  status); Home Support order fixed as Maid → Home Cook → Housekeeping.
+  **Remaining scope:** E1-T5 canonical form/`data-service` sweep; Home Cook copy
+  finalization (D4); production review + DoD pass.
 - **Description:** Update the homepage services section so the displayed services are
   exactly the canonical seven (grouped Care Services vs Home Support Services), renaming/merging/retiring per the
   approved E1-T2 mapping. Sub-capabilities appear inside their parent service, not as
@@ -108,6 +168,13 @@ architectural risk.*
   E1-T5).
 
 ### E1-T4 — Surface Home Cook Services as a first-class card
+- **Status:** 🔶 Card implemented 2026-07-03 per business direction during E1-T3 review
+  (uncommitted, on `ds-3a-service-card`): card added between Maid Services and
+  Housekeeping (canonical §5 order) with working Call-back
+  (`data-service="Home Cook Services"` plus matching additive form option) and
+  pre-filled WhatsApp. Card copy is a conservative draft — "Daily Meal Preparation /
+  Home-Style Cooking / Regular Schedules", no boundary or short-notice claims — final
+  wording still gated on **D4** (and D5 for any availability claims).
 - **Description:** Ensure Home Cook Services (currently only implied under "Kitchen Work")
   has its own visible service card in the Home cluster, matching the existing card pattern.
 - **Priority:** Critical
@@ -165,6 +232,9 @@ architectural risk.*
 - **Deployment Notes:** Pure cleanup; safe to batch with another small Epic 1 task.
 
 ### E1-T8 — Correct `sitemap.xml` `lastmod` to a real date
+- **Status:** ✅ Completed (audited 2026-07-02) — `lastmod` is a real, non-future date
+  (2026-06-28). Note: homepage content changed on 2026-07-01 (commit `b6ab352`); refresh
+  `lastmod` with the next content deploy, per the habit this task establishes.
 - **Description:** The sitemap currently carries a placeholder/future `lastmod`. Set it to
   the genuine last-modified date and establish the habit of updating it on content change.
 - **Priority:** Medium
@@ -550,6 +620,10 @@ structure and accuracy only (PROJECT.md §7).*
 *Goal: measure the actions that represent leads (PROJECT.md §16), consistently across
 homepage and every service page.*
 
+> **Baseline note (2026-07-02 audit):** the GA4 base tag was installed pre-backlog
+> (commit `850f5eb`). No event tracking exists yet — `main.js` contains no
+> `gtag`/`dataLayer` calls. The tasks below cover the event layer only.
+
 ### E6-T1 — Define GA4 event taxonomy
 - **Description:** Specify event names/parameters for call clicks, WhatsApp clicks, form
   submissions, and a `service` parameter for attribution. Documented before implementation.
@@ -817,6 +891,143 @@ deployable task and as a suite before each production push.*
 
 ---
 
+# EPIC DS — Design System Foundation & Component Migration
+
+*Goal: a token-based design system (color, radius, spacing, elevation) that is the single
+source of visual truth, adopted component-by-component with zero unreviewed visual change.
+Implements PROJECT.md §11 and the v1.2 Design Token System amendment.*
+
+> **Governing rules for this epic:**
+> - Components consume tokens; new work never introduces new hardcoded visual values.
+> - **Value-neutral** tokenization (identical rendered output) is low-risk refactoring
+>   under Engineering Principle 3 and may interleave with other epics.
+> - Any migration that **changes appearance** is a UI change requiring explicit approval
+>   per PROJECT.md §19 before it ships.
+> - **Epic 1 (Rule of Truth) outranks DS polish.** DS work touching the services section
+>   must coordinate with E1-T3/E1-T4, whose card set will change.
+> - **ID mapping note:** in-code CSS comments label the foundation scales "DS-1"; the
+>   canonical task IDs are DS-2A/DS-2B below. Align the comments in the next
+>   CSS-touching DS ticket — not as a standalone edit.
+
+### DS-2A — Color token foundation
+- **Status:** ✅ Completed (commit `30bf463`, 2026-07-01)
+- **Description:** Introduce primitive color scales (`--primary-50…900`, neutrals,
+  semantic status colors), surface tokens, and brand aliases; re-point existing
+  compatibility tokens (`--bg`, `--text`, `--primary`, …) value-identically. Legacy
+  `--blue` / `--section-blue` marked deprecated in-code (no new consumers; retired in
+  DS-3C).
+- **Priority:** High · **Effort:** M · **Dependencies:** None
+- **Files Affected:** `assets/css/style.css` (`:root` only)
+- **Regression Risk:** Low (value-identical re-pointing)
+- **Acceptance Criteria:** Rendered output unchanged; all legacy tokens resolve to
+  identical values; deprecation policy documented in-code. *(Delivered value-neutral.)*
+
+### DS-2B — Radius / Spacing / Elevation token foundation
+- **Status:** ✅ Completed (commit `d628cd0`, 2026-07-01)
+- **Description:** Introduce the `--radius-*` scale, the 4px-base `--space-*` scale, and
+  `--elevation-e1…e4`. Foundation only: the compatibility token `--radius: 8px` remains
+  the active consumer token; no component consumed the new scales at completion time.
+- **Priority:** High · **Effort:** S · **Dependencies:** DS-2A
+- **Files Affected:** `assets/css/style.css` (`:root` only)
+- **Regression Risk:** Low (additive, unconsumed)
+- **Acceptance Criteria:** Rendered output unchanged; scales documented in-code as
+  foundation-only. *(Delivered value-neutral.)*
+
+### DS-2C — Typography scale foundation *(proposed — not yet approved)*
+- **Status:** ⬜ Proposed — requires explicit approval before any work begins; listed so
+  the foundation stream is complete.
+- **Description:** Introduce a type-scale token set (sizes, weights, line-heights)
+  following the DS-2A/DS-2B foundation-only pattern (additive, unconsumed at delivery).
+- **Priority:** Low · **Effort:** S · **Dependencies:** None (foundation-only, additive)
+- **Files Affected:** `assets/css/style.css` (`:root` only)
+- **Regression Risk:** Low
+- **Acceptance Criteria:** Rendered output unchanged; scale documented as foundation-only.
+
+### DS-3A — Service Card token migration
+- **Status:** 🔶 In progress — **Direction A "Conservative Premium Healthcare" approved
+  2026-07-02** after a three-direction design review (A Conservative Premium / B Modern
+  Home Care / C Luxury Concierge). Work moved off `main` to feature branch
+  `ds-3a-service-card` and amended per the approved spec:
+  **kept** — token adoption, `--space-24` padding, 44px `--primary-50` tinted icon chip,
+  `--elevation-e1` at rest, `:focus-within` (`--primary-500` border), `--space-20` grid
+  gap; **amended** — radius `--radius-lg`→`--radius-md`, hover lift+border → shadow-only
+  deepen to `--elevation-e2`; **extended** — typography hierarchy (service-card h4
+  1.03→1.14rem, bullets weight 700→600, CTAs weight 900→700 with 44px min-height,
+  service-card-scoped selectors only). In-code "DS-1" comment IDs aligned to DS-2B.
+  Awaiting §19 visual sign-off and DoD pass; certification still waits for E1-T3/E1-T4
+  per the dependency note below.
+- **Description:** Migrate `.service-card` (icon, points list, actions, and grid context)
+  to the DS token scales. Appearance changes require §19 approval before ship.
+- **Priority:** Medium · **Effort:** M
+- **Dependencies:** DS-2A, DS-2B; **coordinate with E1-T3/E1-T4** — the card set will
+  change; do not certify this migration until the canonical seven are in place.
+- **Files Affected:** `assets/css/style.css`
+- **Regression Risk:** Medium — highest-traffic section; hover/focus and responsive grid
+  behaviour must hold at all breakpoints.
+- **Acceptance Criteria:** No hardcoded visual values remain in service-card scope;
+  approved visual deltas documented; all breakpoints verified; focus states accessible;
+  DoD passed.
+- **Deployment Notes:** Continuation moves to a feature branch per PROJECT.md §17.
+
+### DS-3B — Buttons & CTA components migration
+- **Status:** ⬜ Pending
+- **Description:** Migrate header/hero/service/CTA buttons (including WhatsApp variants,
+  floating WhatsApp, sticky mobile Call) to token scales; value-neutral unless deltas
+  are explicitly approved.
+- **Priority:** Medium · **Effort:** M · **Dependencies:** DS-2A, DS-2B
+- **Files Affected:** `assets/css/style.css`
+- **Regression Risk:** Medium — buttons are the conversion surface (§12); above-the-fold
+  CTA layout must not shift.
+- **Acceptance Criteria:** All button styles token-driven; conversion surfaces visually
+  and behaviourally unchanged unless approved; DoD passed.
+
+### DS-3C — Trust / process / testimonial cards migration (+ legacy blue retirement)
+- **Status:** ⬜ Pending
+- **Description:** Migrate trust, process, and testimonial cards to tokens; retire the
+  deprecated `--blue` / `--section-blue` by mapping process-step icons and the inquiry
+  section tint to the forward palette. This is a deliberate visual change — the
+  replacement colors require §19 approval.
+- **Priority:** Medium · **Effort:** M · **Dependencies:** DS-2A, DS-2B
+- **Files Affected:** `assets/css/style.css`
+- **Regression Risk:** Medium — visible accent change on process/inquiry sections.
+- **Acceptance Criteria:** No `--blue`/`--section-blue` consumers remain; deprecated
+  tokens removed from `:root`; approved replacement documented; DoD passed.
+
+### DS-3D — Form & inquiry section migration
+- **Status:** ⬜ Pending
+- **Description:** Migrate the inquiry form (fields, validation states, status messages)
+  to tokens, preserving validation behaviour and accessibility roles.
+- **Priority:** Medium · **Effort:** M · **Dependencies:** DS-2A, DS-2B; coordinate with
+  E2-T4 (validation change) and E8-T4 (form a11y) to avoid double-touching.
+- **Files Affected:** `assets/css/style.css`
+- **Regression Risk:** Medium — inside the lead-capture path.
+- **Acceptance Criteria:** Form fully token-driven; submission, validation, and
+  error/success states unchanged; DoD passed.
+
+### DS-3E — Header / footer migration
+- **Status:** ⬜ Pending
+- **Description:** Migrate header, nav, and footer to tokens; verify footer text contrast
+  on `--surface-inverse` (feeds E8-T3).
+- **Priority:** Low · **Effort:** M · **Dependencies:** DS-2A, DS-2B; coordinate with
+  E2-T3 (nav trim).
+- **Files Affected:** `assets/css/style.css`
+- **Regression Risk:** Medium — global chrome on every page.
+- **Acceptance Criteria:** Header/footer token-driven; contrast ≥ AA on the dark footer;
+  no layout shift; DoD passed.
+
+### DS-4 — Legacy compatibility-token retirement
+- **Status:** ⬜ Pending
+- **Description:** Once DS-3A…DS-3E land, remove legacy compatibility tokens
+  (`--radius`, `--shadow-sm/md/lg/xl`, and special-purpose shadows that gained elevation
+  equivalents) or re-point them as thin aliases, leaving a single token vocabulary.
+- **Priority:** Low · **Effort:** S · **Dependencies:** DS-3A…DS-3E all complete
+- **Files Affected:** `assets/css/style.css`
+- **Regression Risk:** Low if truly unconsumed — verify with a full-file audit first.
+- **Acceptance Criteria:** No orphaned tokens; no visual change; single coherent scale
+  vocabulary in `:root`; DoD passed.
+
+---
+
 ## Suggested Execution Order (dependency-aware)
 
 1. **Epic 1** (foundation cleanup) — resolves D1/D2 gates, fixes assets, truth-aligns the
@@ -829,6 +1040,33 @@ deployable task and as a suite before each production push.*
 6. **Epic 7 / 8 / 9** — optimization and hardening, largely parallelizable; E9-T1 (CSP) after
    analytics is final.
 7. **Epic 10** — gates every deployable task and every production release.
+8. **Epic DS** (design system) — runs as a *parallel, subordinate* stream: value-neutral
+   token migrations may interleave with any phase; appearance-changing migrations
+   (e.g. DS-3A on the services section, DS-3C accent retirement) queue behind Epic 1
+   completion for the affected section and behind explicit §19 approval.
+
+---
+
+## In-Flight / Parked Work (as of 2026-07-03)
+
+- **E1-T2 completion and D1/D2 resolutions recorded 2026-07-03** (this document's status
+  ledger); uncommitted pending review. No site code changed — analysis/decision task.
+- **E1-T3 reconciliation implemented 2026-07-03** (`index.html` services section +
+  additive form options); uncommitted on `ds-3a-service-card`, pending review. After
+  review corrections (Patient Care wording, Home Cook card pulled forward from E1-T4,
+  Home Support order), the section shows all 7 canonical services. Home Cook copy is
+  draft pending D4.
+
+- **DS-3A working diff** now lives on feature branch `ds-3a-service-card` (2026-07-02):
+  Direction A approved and the diff amended per the approved spec (see DS-3A Status).
+  Still uncommitted, awaiting §19 visual sign-off; nothing merges to `main` until review
+  and the DoD pass. The prior "parked on `main`" state is resolved.
+- **Documentation amendments** (BACKLOG.md status ledger + EPIC DS, PROJECT.md v1.2
+  token amendment + High-Level Roadmap, new CHANGELOG.md) are approved but uncommitted
+  in the same working tree, pending a commit decision.
+- **Process reminder:** recent work was committed directly to `main`. PROJECT.md §17
+  requires feature branches with review before merge; all subsequent tasks — including
+  DS-3A's continuation — follow the branch → review → deploy flow.
 
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
