@@ -1,0 +1,43 @@
+# .gitattributes — repository line-ending policy (P0-6)
+#
+# These in-repo rules OVERRIDE every contributor's local core.autocrlf /
+# core.eol configuration. They exist because two CRLF incidents (2026-07-19)
+# produced multi-thousand-line phantom diffs with zero content change.
+# Policy: LF everywhere — in blobs AND in the working tree — because this
+# repository's working copy is shared between Windows tooling and Linux
+# tooling on the same physical folder; a single materialized form is the only
+# configuration in which both sides agree byte-for-byte.
+
+# ── Default: treat detected text as LF in repo and working tree ─────────────
+# text=auto lets git detect text vs binary for anything not matched below;
+# eol=lf pins the working-tree form so no git operation on any OS can
+# rematerialize files as CRLF.
+* text=auto eol=lf
+
+# ── Explicit text types (never rely on detection for known formats) ─────────
+*.html        text eol=lf
+*.css         text eol=lf
+*.js          text eol=lf
+*.md          text eol=lf
+*.toml        text eol=lf
+*.json        text eol=lf
+*.webmanifest text eol=lf
+*.xml         text eol=lf
+*.svg         text eol=lf
+*.txt         text eol=lf
+.gitignore    text eol=lf
+.gitattributes text eol=lf
+
+# ── Binary: never subject to any conversion or diffing as text ──────────────
+# Explicit even though detection would usually get these right — the cost of
+# a mis-detected "text" image is silent corruption; the cost of a rule is one line.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.webp  binary
+*.avif  binary
+*.gif   binary
+*.ico   binary
+*.woff  binary
+*.woff2 binary
+*.pdf   binary

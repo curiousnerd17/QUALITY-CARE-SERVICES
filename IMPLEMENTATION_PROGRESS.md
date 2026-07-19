@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 75% | 2026-07-19 | — | `ds-3a-service-card` | P0-1…P0-4 ✅ · **P0-5 ✅ eng / ⬜ owner accounts** (MONITORING.md) · next: P0-6 |
+| P0 Production Stabilization | In Progress | 85% | 2026-07-19 | — | `ds-3a-service-card` | P0-1…P0-4 ✅ · P0-5 ✅ eng/⬜ owner · **P0-6 ✅** · next: P0-7, P0-8 |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-5 ✅ engineering complete / ⬜ owner setup pending** (monitoring designed + runbook `MONITORING.md`; UptimeRobot + cron-job.org accounts = owner action, ~10 min). Next: **P0-6** |
+| **Current task** | **P0-6 ✅ complete** (`.gitattributes` + one-time renormalization; CRLF drift permanently neutralized). Next: **P0-7** runbook/account inventory · P0-5 owner setup still pending |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -108,7 +108,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - [ ] **P0-3** Cache-busting for `/assets/*` (before any CSS/JS deploy)
 - [x] **P0-5 (engineering)** Monitoring designed + full runbook `MONITORING.md` (UptimeRobot keyword monitor · cron-job.org weekly synthetic form POST · alert paths · weekly 30-second owner routine · setup ledger); publish-blocked per P0-4 convention ✅
 - [ ] **P0-5 (OWNER, ~10 min)** Create the two free accounts and configure per MONITORING.md; confirm test alert + first Monday TEST email; tick the four ledger rows — P0-5 closes then
-- [ ] **P0-6** `.gitattributes` + land CRLF normalization commit
+- [x] **P0-6** `.gitattributes` (LF pinned repo+worktree, binary rules) + one-time renormalization of the 3 CRLF blobs, content-identical (verified) ✅ — owner one-time step after pull if status shows the 3 files: `git checkout -- .`
 - [ ] **P0-7** Runbook + account inventory (undeployed); escrow second-person access
 - [ ] **P0-8** Verify deploy branch mapping + live headers once
 - [ ] Then: P1 review session for the truth release
@@ -141,6 +141,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | P0-3 cache-busting | ✅ | ✅ (4-line diff reviewed) | ✅ Byte-identical serving verified across cache keys; no CSS/JS content touched | ⬜ Post-deploy check: view-source shows `?v=` on live (rides truth-release deploy; P0-8 habit) | ⬜ Awaits branch deploy |
 | P0-4 publish restriction | ✅ | ✅ (additive-only diff; TOML parse-validated; 7/7 root docs covered, 0 uncovered) | ✅ Site files unaffected (rules match doc paths only; publish/headers unchanged) | ⬜ Post-deploy check: fetch each doc URL, expect 404 | ⬜ Awaits branch deploy |
 | P0-5 monitoring | ✅ eng (runbook + rule) | ✅ (payload urldecode + phone-regex validated; TOML 8/8 docs covered) | — (no site code touched) | ⬜ Owner: test alert + first TEST email per MONITORING.md ledger | n/a |
+| P0-6 git hygiene | ✅ | ✅ (staged `diff -w` = attributes file only; per-file staged==pre-CR-strip verified) | ✅ Binaries unstaged; site files' blobs already LF, unchanged | — (repo-internal) | ✅ (repo policy active on commit) |
 | P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
 | *(append as tasks complete)* | | | | | |
 
@@ -222,6 +223,15 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - **STOP boundary honored — owner actions required (accounts need the business email):** create UptimeRobot account + monitor; test its alert; create cron-job.org account + weekly job; confirm first TEST email in inbox. ~10 minutes total; P0-5 closes when the MONITORING.md ledger shows 4/4 ✅.
 - ⚠️ Environment note: mid-session, 9 tracked files appeared modified (~±4,600 lines) — diagnosed as Windows-side LF→CRLF re-saves with **zero content change** (`git diff -w` = netlify.toml +6 only; per-file md5 verified). Files restored to committed LF endings, byte-identical to HEAD (verified). Second CRLF event today — **P0-6 (.gitattributes) is now urgent.**
 - Next session goal: P0-6 (.gitattributes + normalization commit).
+
+**2026-07-19 — Session 7 (P0-6 git hygiene — complete)**
+- Objective: permanently eliminate CRLF/LF drift after two same-day incidents.
+- Root cause (required analysis, delivered pre-implementation): event 1 = Windows editor re-saves (CRLF worktree vs LF blobs); event 2 = untouched files flipping en masse — signature of a Windows-git rematerialization (global `core.autocrlf=true` most likely; Windows global config not inspectable from the sandbox), on a worktree physically shared by two differently-configured gits.
+- Implemented: `.gitattributes` — `* text=auto eol=lf` default (LF in blobs AND worktree, so both gits agree on the shared folder; in-repo attributes override every local autocrlf) + explicit rules per type (html/css/js/md/toml/json/webmanifest/xml/svg/txt + dotfiles) + explicit `binary` for png/jpg/jpeg/webp/avif/gif/ico/woff/woff2/pdf (mis-detection cost = corruption; rule cost = one line). Rationale documented in-file.
+- One-time renormalization: exactly the three CRLF blobs (BACKLOG.md, PROJECT.md, README.md — the P0-1 capture) rewritten LF, all other blobs already LF and untouched.
+- Verified: staged `git diff --cached -w --stat` = `.gitattributes` +43 only (zero content change); per-file assertion staged-bytes == pre-normalization-bytes-minus-CR (3/3 VERIFIED); no image/binary staged; post-commit `git ls-files --eol` all `i/lf`, worktree clean.
+- Future-Windows-checkout proof: `eol=lf` attribute governs materialization on every OS regardless of local config — a CRLF re-save by any tool is normalized away at `add`/`diff`, so phantom diffs are structurally impossible. Contributors with stale clones run `git add --renormalize . && git checkout -- .` once; owner post-pull: if the 3 files show modified, `git checkout -- .`.
+- Next session goal: P0-7 (runbook + account inventory) — the last engineering item of P0 alongside P0-8 verification.
 
 **2026-07-19 — Official Postmortem: Production Form Outage (issued by owner)**
 - **Root cause:** placeholder access key accidentally deployed after credential scrubbing (`caffdea` scrubbed the key per §15 policy with no key-delivery mechanism in place; the next deploy shipped the placeholder).

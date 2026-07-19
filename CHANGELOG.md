@@ -8,6 +8,11 @@
 
 ## 2026-07-19
 
+- chore(git): repository line endings normalized (**P0-6**) — `.gitattributes`
+  pins LF in blobs and working tree with explicit text/binary rules, overriding
+  all local autocrlf configs; one-time renormalization rewrote the only three
+  CRLF blobs (BACKLOG.md, PROJECT.md, README.md) content-identically (verified);
+  the two 2026-07-19 CRLF phantom-diff incidents cannot recur.
 - feat(ops): minimum production monitoring designed and documented (**P0-5**) —
   `MONITORING.md` runbook (UptimeRobot homepage keyword monitor · cron-job.org
   weekly synthetic form POST · alert delivery · owner routine · setup ledger)

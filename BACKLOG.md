@@ -1252,6 +1252,15 @@ v1.3 amendment).*
   4/4. Note: second Windows-side CRLF churn event handled this session —
   P0-6 (.gitattributes) escalated to urgent.
 
+- **P0-6 git hygiene — ✅ Completed 2026-07-19** (IMPLEMENTATION_MASTER_PLAN.md
+  Phase P0): `.gitattributes` added — LF pinned in blobs and working tree
+  (`* text=auto eol=lf` + explicit text/binary rules), overriding all local
+  autocrlf configs; one-time renormalization rewrote the only three CRLF blobs
+  (this file, PROJECT.md, README.md) content-identically. Root cause of both
+  2026-07-19 CRLF incidents (Windows-side git/editor rematerialization on the
+  shared worktree) is permanently neutralized. Contributors with stale clones:
+  `git add --renormalize . && git checkout -- .` once.
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.
