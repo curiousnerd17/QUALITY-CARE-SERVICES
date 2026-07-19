@@ -1209,7 +1209,11 @@ v1.3 amendment).*
   credentials (`git push -u origin ds-3a-service-card`). The "uncommitted"
   wording in earlier In-Flight notes above is superseded by these commits.
 
-- **P0-2 production form recovery — ⛔ BLOCKED on owner 2026-07-19**
+- **P0-2 production form recovery — ✅ RESOLVED 2026-07-19** (owner-executed:
+  fresh rotated key, `index.html` updated as `a78c43e`, deployed, live browser
+  test + email delivery confirmed — lead pipeline operational; incident window
+  ~2026-07-01→2026-07-19; ongoing protection lands in P0-5). Original blocked
+  record retained below for history:
   (IMPLEMENTATION_MASTER_PLAN.md Phase P0; details in IMPLEMENTATION_PROGRESS.md
   blocker B1): investigation complete — access key is a placeholder on every
   branch and (by deploy-state match) in production since the ~2026-07-01 deploy;

@@ -8,6 +8,14 @@
 
 ## 2026-07-19
 
+- `a78c43e` — fix(forms): production Web3Forms access key configured by owner —
+  fresh rotated key (old exposed keys revoked, owner-attested), deployed, and
+  **verified end-to-end in production** (live browser submission, success
+  message, cooldown, inquiry email received). **P0-2 complete; form-outage
+  incident RESOLVED** (window ~2026-07-01 → 2026-07-19; official record:
+  IMPLEMENTATION_PROGRESS.md Session 2 log). Hotfix shipped the key line only;
+  homepage content unchanged pending P1 review.
+
 - `ef4bd6c` — feat(design): DS-3A service-card token migration committed to
   `ds-3a-service-card` for repository safety (**P0-1**, IMPLEMENTATION_MASTER_PLAN.md);
   §19 visual sign-off and DoD still pending — not merged, not deployed

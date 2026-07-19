@@ -17,13 +17,13 @@
 
 | Field | Value |
 |---|---|
-| **Overall status** | 🔴 P0 In Progress — active production incident (form) remains |
-| **Overall completion** | ~2% of master plan (P0-1 done pending push) |
+| **Overall status** | 🟡 P0 In Progress — **form incident RESOLVED 2026-07-19**; lead pipeline operational |
+| **Overall completion** | ~4% of master plan (P0-1 ✅, P0-2 ✅) |
 | **Current phase** | P0 — Production Stabilization (In Progress) |
 | **Current milestone** | M1 — Production Stabilization |
-| **Current branch** | `ds-3a-service-card` — clean, ✅ pushed (`origin/ds-3a-service-card` @ `55476af`); new docs commits need re-push |
+| **Current branch** | `ds-3a-service-card` — clean, ✅ pushed (`origin/ds-3a-service-card` @ `a78c43e`) |
 | **Live production** | `main` @ `d628cd0` (pre-truth-release state) |
-| **Last update** | 2026-07-19 (Session 2 — P0-2 investigation, ⛔ blocked on owner inputs) |
+| **Last update** | 2026-07-19 (Session 3 — P0-2 CLOSED; incident resolved) |
 | **Current release target** | R1 "Stabilization" = P0 complete, deployed, verified |
 
 ---
@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 20% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ (pushed); P0-2 investigated, ⛔ **blocked — owner must supply a fresh Web3Forms key + §15 decision** (see B1) |
+| P0 Production Stabilization | In Progress | 35% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ · **P0-2 ✅ (incident resolved; owner-verified end-to-end)** · next: P0-3 (not started) |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-2** — ⛔ **Blocked (Owner Action Required)** — owner decision 2026-07-19: owner personally performs key generation, revocation, `index.html` update, deploy, and live browser test. **P0-3 is on hold until owner confirms.** No workaround, no key commit by engineering, no §15 change |
+| **Current task** | **P0-3 — Cache-busting** (Not Started; awaiting implementation session — do not begin without one) |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -82,7 +82,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 
 | # | Description | Severity | Owner | Dependency | Resolution plan | Status |
 |---|---|---|---|---|---|---|
-| B1 | Production form key is placeholder → live lead loss since the post-`caffdea` deploy (~2026-07-01). Full findings in the Session 2 log (the official incident record). **Owner decision 2026-07-19:** STOP approved; no engineering workaround; no key committed by engineering; §15 unchanged. Owner personally executes: (1) Web3Forms dashboard login → (2) fresh key generated → (3) old key(s) revoked → (4) placeholder in `index.html` replaced by owner → (5) deploy → (6) live browser submission test + email-delivery confirmation. | 🔴 Critical | **Owner (all 6 steps)** | Web3Forms dashboard | Engineering resumes P0-2 **only after owner confirms steps 1–6**; then: closure verification (see Session 3 resume checklist in Session Log) → incident closed → P0-3 unlocked | ⛔ Blocked (Owner Action Required) |
+| B1 | ~~Production form key placeholder → lead loss~~ **INCIDENT RESOLVED 2026-07-19.** Owner executed all six recovery steps: fresh UUID key generated (verified: valid format, ≠ leaked `f42cd3…`, ≠ placeholder), old key(s) revoked (owner-attested), `index.html` updated by owner (commit `a78c43e`), deployed, **live browser submission test passed — success message ✓, cooldown ✓, inquiry email received ✓**. Incident window: ~2026-07-01 → 2026-07-19 (~18 days). Session 2 log remains the official incident record. | 🔴 Critical | Owner | — | Follow-up protection lands in P0-5 (synthetic form test + alerting) | ✅ **Resolved 2026-07-19** |
 | B2 | Truth-release work unreviewed/unmerged on `ds-3a-service-card` | 🔴 Critical | Owner (review) | P1 review session (72h SLA) | ✅ Pushed 2026-07-19 (`origin/ds-3a-service-card`); only review + merge remain | Open — review only |
 | B3 | Internal docs publicly served (`/PROJECT.md` confirmed live) | 🟠 High | Owner | Netlify config | P0-4 publish-dir restriction | Open |
 | B4 | D4 (Home Support boundaries) unresolved — gates 3 of 7 service pages | 🟠 High | Business | Owner decision | Escalate at P7 start; time-box | Open |
@@ -98,9 +98,10 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 
 - [x] **P0-1** Protect work: DS-3A diff + docs committed (`ef4bd6c`, `69f53fe`, `55476af`) ✅
 - [x] **P0-1** Branch pushed — `origin/ds-3a-service-card` exists ✅ (2026-07-19)
-- [ ] **P0-2 (OWNER — in progress)** Steps 1–6 per B1: fresh key → revoke old → edit `index.html` → deploy → browser test → confirm email delivery
-- [ ] **P0-2 (engineering, on owner confirmation)** Resume-and-close checklist: sync repo state (expect owner's `index.html` change — do not overwrite), verify placeholder gone repo+live, record owner's test result, add incident-closure line to CHANGELOG, mark P0-2 ✅, unlock P0-3
-- [ ] ⏸ **P0-3 through P0-8 — ON HOLD** per owner instruction until P0-2 confirmed closed
+- [x] **P0-2** Owner recovery steps 1–6 complete; engineering closure checklist run ✅ (2026-07-19)
+- [ ] **P0-3** Cache-busting for `/assets/*` — next implementation session (hold established: not yet begun)
+- [ ] **P0-4** Restrict publish directory
+- [ ] **P0-5** Uptime + weekly synthetic form test with alerting (now the standing protection for the closed B1 incident)
 - [ ] **P0-3** Cache-busting for `/assets/*` (before any CSS/JS deploy)
 - [ ] **P0-4** Restrict publish directory (docs + unused images out)
 - [ ] **P0-5** Uptime check + weekly synthetic form test with alerting
@@ -134,7 +135,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | E1-T3/T4 homepage reconciliation | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
 | DS-3A service-card migration | ✅ (`ef4bd6c`) | ⬜ (§19 pending) | ⬜ | ⬜ | ⬜ |
 | P0-1 repository safety | ✅ | ✅ | — (no user-facing change) | — | ✅ Pushed |
-| P0-2 form pipeline recovery | ⛔ Blocked (owner inputs) | — | ✅ Code-level: validation / network-failure / honeypot / cooldown paths verified | ⛔ Awaits key fix + owner browser test | ⬜ |
+| P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
 | *(append as tasks complete)* | | | | | |
 
 ---
@@ -144,7 +145,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Release | Date | Phases included | Deployment | Post-deploy verification | Issues found |
 |---|---|---|---|---|---|
 | (pre-plan) `d628cd0` | 2026-07-01 | Baseline (DS-2B tip) | Live | ⚠️ Never formally verified | Form key placeholder shipped; docs publicly served |
-| R1 "Stabilization" | *target: TBD* | P0 | — | — | — |
+| Hotfix "Form key recovery" | 2026-07-19 | P0-2 only (key line; homepage content unchanged — truth release still pending review) | ✅ Deployed by owner | ✅ Live browser submission + success message + cooldown + email delivery (owner-verified) | None |
+| R1 "Stabilization" | *target: TBD* | P0 (remaining: P0-3…P0-8) | — | — | — |
 | *(append per release)* | | | | | |
 
 ---
@@ -181,13 +183,21 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Note for the record (per §21 surfacing duty, decision remains the owner's): if the owner's `index.html` edit is committed to the public repo, §15's current wording and repo reality will differ; a future reconciliation note is available whenever the owner wishes — none required now.
 - Next session goal: execute the resume checklist on owner confirmation. No code changes until then.
 
+**2026-07-19 — Session 3 (P0-2 closure — INCIDENT RESOLVED)**
+- Objective: documentation closure of P0-2 on owner confirmation.
+- Owner confirmation received: production deployed; live browser submission successful; success message displayed; cooldown behaved correctly; inquiry email received in the production inbox. **Lead pipeline verified end-to-end and operational.**
+- Engineering closure checklist results: (1) repo synced — owner committed the fix as `a78c43e fix(forms): configure production Web3Forms access key` and pushed; tree clean; (2) placeholder gone — new key verified valid UUID format, ≠ leaked `f42cd3…`, ≠ placeholder (value never echoed); (3) owner test recorded as the success-path verification; (4) old-key revocation owner-attested; (5) CHANGELOG closure entry added; (6) P0-2 marked ✅ everywhere; (7) P0-3 unlocked as Current Task (not begun, per instruction).
+- **Incident summary (official record = Session 2 log):** placeholder key deployed ~2026-07-01 (`caffdea` scrub without a key-delivery mechanism) → all form submissions failed ~18 days → detected by audit 2026-07-19 → resolved same day by owner with fresh rotated key. Leads lost: unbounded (inbox check optional, owner discretion). Root-cause protection: P0-5 synthetic form test + alerting.
+- Live-state note: the hotfix deployed **only** the key line — live homepage remains the pre-truth-release version (verified by fetch); P1 content correctly still gated behind review (B2). Local `main` ref may be behind its remote if the fix was also applied there — run `git fetch` at P1 start.
+- Next session goal: P0-3 (cache-busting) — first implementation session of the remaining P0 items.
+
 ---
 
 ## Milestone Tracker
 
 | Milestone | Maps to | Status | Progress |
 |---|---|---|---|
-| **M1 · Production Stabilization** | P0 | 🟡 In Progress (P0-1 ✅, push = owner) | 15% |
+| **M1 · Production Stabilization** | P0 | 🟡 In Progress (P0-1 ✅, P0-2 ✅) | 35% |
 | **M2 · Truth Release** | P1 | 🟡 Pre-work on branch, unreviewed | 0% (impl. ~60% staged) |
 | **M3 · Trust & Privacy** | P2 | ⬜ Not Started | 0% |
 | **M4 · Measurement** | P3 | ⬜ Not Started | 0% |
@@ -204,7 +214,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 
 | Area | Health |
 |---|---|
-| Production Stability | 🔴 Red |
+| Production Stability | 🟡 Yellow (lead pipeline restored; monitoring still absent) |
 | Documentation | 🟢 Green |
 | Testing | 🔴 Red |
 | Verification | 🔴 Red |
@@ -214,7 +224,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Performance | 🟡 Yellow |
 | Security | 🟡 Yellow |
 | Business Readiness | 🟡 Yellow |
-| **Overall Health** | 🔴 **Red** (expected 🟡 after P0, 🟢 after P1–P3) |
+| **Overall Health** | 🟡 **Yellow** (active incident resolved 2026-07-19; expected 🟢 after P0 complete + P1–P3) |
 
 ---
 
