@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 65% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ · P0-2 ✅ · P0-3 ✅ · **P0-4 ✅ (doc-publishing blocked; live on next deploy)** · next: P0-5 |
+| P0 Production Stabilization | In Progress | 75% | 2026-07-19 | — | `ds-3a-service-card` | P0-1…P0-4 ✅ · **P0-5 ✅ eng / ⬜ owner accounts** (MONITORING.md) · next: P0-6 |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-4 ✅ implemented** (forced-404 rules for all 7 repo docs in `netlify.toml`; live on next deploy). Next: **P0-5** monitoring |
+| **Current task** | **P0-5 ✅ engineering complete / ⬜ owner setup pending** (monitoring designed + runbook `MONITORING.md`; UptimeRobot + cron-job.org accounts = owner action, ~10 min). Next: **P0-6** |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -76,7 +76,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | 2026-07-19 | P0 | **P0-2** investigation: form flow documented; placeholder confirmed repo+live; key history mapped (junk value → real UUID key → placeholder); repo confirmed public; code-level verification of validation/failure/cooldown paths | (docs commit) | ✅ Investigation verified; ⛔ success-path verification blocked (no valid key) | ⛔ Blocked on owner (B1) |
 | 2026-07-19 | P0 | **P0-2 closure**: owner deployed fresh rotated key; live browser test + email delivery confirmed; incident resolved | `a78c43e` (owner) | ✅ End-to-end (owner-verified) | ✅ Live |
 | 2026-07-19 | P0 | **P0-3** cache-busting: query-version tokens on CSS/JS in both HTML files | `95e504a` | ✅ Local serve test + minimal-diff review | ⬜ Rides next branch deploy |
-| 2026-07-19 | P0 | **P0-4** publish restriction: 7 forced-404 doc rules in netlify.toml | (this session) | ✅ TOML validated; full .md coverage confirmed | ⬜ Rides next branch deploy |
+| 2026-07-19 | P0 | **P0-4** publish restriction: 7 forced-404 doc rules in netlify.toml | `4e0ba80` | ✅ TOML validated; full .md coverage confirmed | ⬜ Rides next branch deploy |
+| 2026-07-19 | P0 | **P0-5** monitoring runbook (MONITORING.md) + its publish rule; payload validated; uptime target verified live | (this session) | ✅ Engineering; ⬜ owner account setup per ledger | n/a (external services) |
 | — | — | *(append new rows here)* | — | — | — |
 
 ---
@@ -105,7 +106,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - [x] **P0-3** Cache-busting: `?v=20260719` query-version tokens on `style.css`/`main.js` in `index.html` + `404.html`; convention comment added; verified byte-identical serving across cache keys ✅ (deploys with the truth release)
 - [x] **P0-4** Publish restriction: forced-404 rules for all 7 repo-root docs in `netlify.toml` (necessity proven — PROJECT.md and BACKLOG.md both fetched live pre-change); convention: every new root doc gets a rule in its creating commit ✅ (deploys with the truth release; owner may cherry-pick sooner)
 - [ ] **P0-3** Cache-busting for `/assets/*` (before any CSS/JS deploy)
-- [ ] **P0-5** Uptime check + weekly synthetic form test with alerting (standing protection for the closed B1 incident)
+- [x] **P0-5 (engineering)** Monitoring designed + full runbook `MONITORING.md` (UptimeRobot keyword monitor · cron-job.org weekly synthetic form POST · alert paths · weekly 30-second owner routine · setup ledger); publish-blocked per P0-4 convention ✅
+- [ ] **P0-5 (OWNER, ~10 min)** Create the two free accounts and configure per MONITORING.md; confirm test alert + first Monday TEST email; tick the four ledger rows — P0-5 closes then
 - [ ] **P0-6** `.gitattributes` + land CRLF normalization commit
 - [ ] **P0-7** Runbook + account inventory (undeployed); escrow second-person access
 - [ ] **P0-8** Verify deploy branch mapping + live headers once
@@ -138,6 +140,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | P0-1 repository safety | ✅ | ✅ | — (no user-facing change) | — | ✅ Pushed |
 | P0-3 cache-busting | ✅ | ✅ (4-line diff reviewed) | ✅ Byte-identical serving verified across cache keys; no CSS/JS content touched | ⬜ Post-deploy check: view-source shows `?v=` on live (rides truth-release deploy; P0-8 habit) | ⬜ Awaits branch deploy |
 | P0-4 publish restriction | ✅ | ✅ (additive-only diff; TOML parse-validated; 7/7 root docs covered, 0 uncovered) | ✅ Site files unaffected (rules match doc paths only; publish/headers unchanged) | ⬜ Post-deploy check: fetch each doc URL, expect 404 | ⬜ Awaits branch deploy |
+| P0-5 monitoring | ✅ eng (runbook + rule) | ✅ (payload urldecode + phone-regex validated; TOML 8/8 docs covered) | — (no site code touched) | ⬜ Owner: test alert + first TEST email per MONITORING.md ledger | n/a |
 | P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
 | *(append as tasks complete)* | | | | | |
 
@@ -211,6 +214,14 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Verified: TOML parses; 7/7 repo-root `.md` files covered, 0 uncovered (scripted cross-check); site-file serving unaffected (rules match doc paths only). Production verification deferred to the deploy it rides: fetch each doc URL, expect 404 with the styled 404 page.
 - ⚠️ Exposure note: the live site remains exposed until this branch deploys. Owner option to close it sooner: cherry-pick this commit onto the deployed branch.
 - Next session goal: P0-5 (uptime + synthetic form monitoring).
+
+**2026-07-19 — Session 6 (P0-5 minimum monitoring — engineering complete; owner setup itemized)**
+- Objective: uptime check + weekly synthetic form test + owner alerting, smallest production-grade solution.
+- Approaches compared (before implementing): hosted uptime (UptimeRobot-class) ✓ · hosted cron with POST (cron-job.org-class) ✓ · GitHub Actions ✗ (excluded by scope; not required) · Netlify functions ✗ (adds build surface to a buildless site). **Chosen: two free hosted services, zero code, zero repo infrastructure.** The weekly TEST email doubles as a human-detectable heartbeat — the exact failure mode of the July incident (silent form death) becomes visible within one week worst-case, minutes best-case.
+- Implemented (engineering): `MONITORING.md` runbook — exact UptimeRobot keyword-monitor settings; exact cron-job.org weekly POST job with a validated synthetic payload (urldecode + site phone-regex checked; `service=Other Requirement` keeps lead data clean; key referenced by location in index.html, never duplicated); alert-delivery paths (UptimeRobot email/app-push; cron-job.org failure email; Monday heartbeat); weekly 30-second owner routine; escalation notes; 4-row setup ledger. Plus the mandatory P0-4-convention publish rule for the new doc (8/8 root docs now covered — TOML revalidated).
+- **STOP boundary honored — owner actions required (accounts need the business email):** create UptimeRobot account + monitor; test its alert; create cron-job.org account + weekly job; confirm first TEST email in inbox. ~10 minutes total; P0-5 closes when the MONITORING.md ledger shows 4/4 ✅.
+- ⚠️ Environment note: mid-session, 9 tracked files appeared modified (~±4,600 lines) — diagnosed as Windows-side LF→CRLF re-saves with **zero content change** (`git diff -w` = netlify.toml +6 only; per-file md5 verified). Files restored to committed LF endings, byte-identical to HEAD (verified). Second CRLF event today — **P0-6 (.gitattributes) is now urgent.**
+- Next session goal: P0-6 (.gitattributes + normalization commit).
 
 **2026-07-19 — Official Postmortem: Production Form Outage (issued by owner)**
 - **Root cause:** placeholder access key accidentally deployed after credential scrubbing (`caffdea` scrubbed the key per §15 policy with no key-delivery mechanism in place; the next deploy shipped the placeholder).

@@ -8,6 +8,12 @@
 
 ## 2026-07-19
 
+- feat(ops): minimum production monitoring designed and documented (**P0-5**) —
+  `MONITORING.md` runbook (UptimeRobot homepage keyword monitor · cron-job.org
+  weekly synthetic form POST · alert delivery · owner routine · setup ledger)
+  plus its forced-404 publish rule; zero code, zero infrastructure, free tiers
+  only. Owner account setup (~10 min) itemized in the runbook ledger; P0-5
+  closes at 4/4.
 - fix(security): publish restriction — forced-404 redirect rules for all seven
   repository-root documentation files in `netlify.toml` (**P0-4**); necessity
   proven by pre-change live fetches of PROJECT.md and BACKLOG.md from

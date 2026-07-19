@@ -1241,6 +1241,17 @@ v1.3 amendment).*
   any new root doc gets a rule in its creating commit. Live exposure closes
   when this branch deploys.
 
+- **P0-5 minimum monitoring — ✅ Engineering complete 2026-07-19; ⬜ owner
+  account setup pending** (IMPLEMENTATION_MASTER_PLAN.md Phase P0): monitoring
+  runbook `MONITORING.md` created — UptimeRobot homepage keyword monitor,
+  cron-job.org weekly synthetic form POST (payload validated against the
+  site's own phone regex), alert paths, weekly owner routine, and a 4-row
+  setup ledger; publish-blocked per the P0-4 convention (8/8 root docs
+  covered). Zero code, zero infrastructure, both services free. P0-5 closes
+  when the owner completes the ~10-minute account setup and the ledger reads
+  4/4. Note: second Windows-side CRLF churn event handled this session —
+  P0-6 (.gitattributes) escalated to urgent.
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.
