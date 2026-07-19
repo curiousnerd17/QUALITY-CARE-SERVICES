@@ -24,12 +24,22 @@ Account: create with the business email.
 |---|---|
 | Monitor type | HTTP(s) — Keyword |
 | URL | `https://qualitycareservices.in/` |
-| Keyword | `Quality Care Services` (alert when **missing**) |
+| Keyword | `id="main-content"` (alert when **missing**) |
 | Interval | 5 minutes |
 | Alert contact | Owner email (and install the free UptimeRobot mobile app for push; SMS is paid — not needed) |
 
 Why keyword and not plain HTTP: a 200 serving an error shell would pass a
-status-only check; the keyword proves the real page rendered.
+status-only check; the keyword proves the real page markup rendered.
+
+**CONVENTION — uptime marker (binding):** the check matches the structural
+attribute `id="main-content"` (the skip-link target on `<main>`), **never
+visible copy**. Rationale: copy (headlines, brand phrasing, meta text) is
+scheduled to change across P1/P9 and would false-alarm; `id="main-content"`
+is constitutionally protected — existing anchors and the skip link must keep
+working (PROJECT.md §4/§13/§19) — so it survives every planned change, and it
+appears only in genuine page markup, never in an error shell. If this ID is
+ever renamed (it should not be), the monitor keyword must be updated in the
+same commit.
 
 **Verification after setup:** dashboard shows the monitor "Up"; use
 "Test notification" to confirm the alert email arrives.
@@ -52,8 +62,19 @@ Request body (one line; **replace `ACCESS_KEY_FROM_INDEX_HTML` with the
 `access_key` value from `index.html` — do not store it anywhere else**):
 
 ```
-access_key=ACCESS_KEY_FROM_INDEX_HTML&subject=SYNTHETIC%20TEST%20%E2%80%94%20website%20monitor%20(ignore)&from_name=QCS%20Monitoring&name=TEST%20%E2%80%94%20Synthetic%20Monitor%20(ignore)&phone=9999999999&location=TEST%20%E2%80%94%20monitoring&service=Other%20Requirement&urgency=Just%20Exploring%20Options&message=Automated%20weekly%20test%20of%20the%20inquiry%20pipeline%20(P0-5).%20Please%20ignore.%20If%20this%20email%20stops%20arriving%20on%20Mondays%2C%20investigate%20the%20form.
+access_key=ACCESS_KEY_FROM_INDEX_HTML&subject=SYNTHETIC%20TEST%20%E2%80%94%20IGNORE&from_name=QCS%20Monitoring&name=TEST%20%E2%80%94%20Synthetic%20Monitor%20(ignore)&phone=9999999999&location=TEST%20%E2%80%94%20monitoring&service=Other%20Requirement&urgency=Just%20Exploring%20Options&message=This%20is%20an%20automated%20monitoring%20submission.%20Do%20not%20contact%20the%20customer.
 ```
+
+**CONVENTION — synthetic submission identity (binding):** every synthetic
+submission, from any tool, now or in the future, MUST carry exactly:
+
+- **Subject:** `SYNTHETIC TEST — IGNORE`
+- **Message:** `This is an automated monitoring submission. Do not contact the customer.`
+
+Rationale: a fixed, exact subject makes inbox filtering/labeling reliable and
+lead reports clean, and the message removes any chance that staff treat the
+test as a real family and call the number. Never vary this wording; if it must
+ever change, update this runbook and every configured job in the same change.
 
 Notes: the phone value passes the site's `[6-9]\d{9}` validation shape;
 `service=Other Requirement` keeps lead reports clean; the honeypot field is
