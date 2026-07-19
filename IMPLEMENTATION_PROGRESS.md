@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-2** — investigation complete; ⛔ blocked on owner inputs (fresh key, §15 decision, browser test). No code changed |
+| **Current task** | **P0-2** — ⛔ **Blocked (Owner Action Required)** — owner decision 2026-07-19: owner personally performs key generation, revocation, `index.html` update, deploy, and live browser test. **P0-3 is on hold until owner confirms.** No workaround, no key commit by engineering, no §15 change |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -82,7 +82,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 
 | # | Description | Severity | Owner | Dependency | Resolution plan | Status |
 |---|---|---|---|---|---|---|
-| B1 | Production form key is placeholder → live lead loss since the post-`caffdea` deploy (~2026-07-01). P0-2 findings: repo is **public** on GitHub; a real UUID-format key (prefix `f42cd3…`, commit `77901b0`) and an earlier junk value are both world-readable in history; placeholder confirmed on `main`, branch, and working tree. Restoring a key to the repo conflicts with PROJECT.md §15 as written — constitutional decision required per §21. | 🔴 Critical | **Owner** | Web3Forms dashboard (`qualitycareserviceskota@gmail.com`); §15 decision | **Owner actions:** (1) approve one-line §15 amendment (Web3Forms keys are public client identifiers, committable) — or choose an injection mechanism; (2) log into web3forms.com, **create a fresh key** (= rotation; do not reuse `f42cd3…`), deactivate old keys if listed; (3) check inbox/dashboard to bound the lost-leads window; (4) provide the new key → next session commits it → owner does one browser test submission | ⛔ Blocked on owner |
+| B1 | Production form key is placeholder → live lead loss since the post-`caffdea` deploy (~2026-07-01). Full findings in the Session 2 log (the official incident record). **Owner decision 2026-07-19:** STOP approved; no engineering workaround; no key committed by engineering; §15 unchanged. Owner personally executes: (1) Web3Forms dashboard login → (2) fresh key generated → (3) old key(s) revoked → (4) placeholder in `index.html` replaced by owner → (5) deploy → (6) live browser submission test + email-delivery confirmation. | 🔴 Critical | **Owner (all 6 steps)** | Web3Forms dashboard | Engineering resumes P0-2 **only after owner confirms steps 1–6**; then: closure verification (see Session 3 resume checklist in Session Log) → incident closed → P0-3 unlocked | ⛔ Blocked (Owner Action Required) |
 | B2 | Truth-release work unreviewed/unmerged on `ds-3a-service-card` | 🔴 Critical | Owner (review) | P1 review session (72h SLA) | ✅ Pushed 2026-07-19 (`origin/ds-3a-service-card`); only review + merge remain | Open — review only |
 | B3 | Internal docs publicly served (`/PROJECT.md` confirmed live) | 🟠 High | Owner | Netlify config | P0-4 publish-dir restriction | Open |
 | B4 | D4 (Home Support boundaries) unresolved — gates 3 of 7 service pages | 🟠 High | Business | Owner decision | Escalate at P7 start; time-box | Open |
@@ -98,8 +98,9 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 
 - [x] **P0-1** Protect work: DS-3A diff + docs committed (`ef4bd6c`, `69f53fe`, `55476af`) ✅
 - [x] **P0-1** Branch pushed — `origin/ds-3a-service-card` exists ✅ (2026-07-19)
-- [ ] **P0-2 (owner)** §15 decision + fresh Web3Forms key + inbox timeline check — see blocker B1
-- [ ] **P0-2 (next session)** Commit new key → deploy → owner browser test → close incident with postmortem note
+- [ ] **P0-2 (OWNER — in progress)** Steps 1–6 per B1: fresh key → revoke old → edit `index.html` → deploy → browser test → confirm email delivery
+- [ ] **P0-2 (engineering, on owner confirmation)** Resume-and-close checklist: sync repo state (expect owner's `index.html` change — do not overwrite), verify placeholder gone repo+live, record owner's test result, add incident-closure line to CHANGELOG, mark P0-2 ✅, unlock P0-3
+- [ ] ⏸ **P0-3 through P0-8 — ON HOLD** per owner instruction until P0-2 confirmed closed
 - [ ] **P0-3** Cache-busting for `/assets/*` (before any CSS/JS deploy)
 - [ ] **P0-4** Restrict publish directory (docs + unused images out)
 - [ ] **P0-5** Uptime check + weekly synthetic form test with alerting
@@ -172,6 +173,13 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Remaining: key restoration + live success-path test — ⛔ **stopped per stop conditions**: correct production key unavailable, rotation requires the owner's Web3Forms dashboard, and committing a key conflicts with PROJECT.md §15 as written (constitutional decision surfaced per §21, not overridden).
 - Decisions: do **not** reuse the leaked `f42cd3…` key (public history + rotation mandate); no placeholder shipped; no code modified; blocked state documented in B1 with a 4-step owner unblock checklist.
 - Next session goal: on receipt of fresh key + §15 decision — commit key, deploy, owner browser test, close incident with postmortem note.
+
+**2026-07-19 — Session 2b (owner decision recorded; standing by)**
+- Objective: record the owner's P0-2 decision and prepare for resumption.
+- Owner decision: STOP approved. No workaround; no key committed by engineering; §15 unchanged; deployment architecture unchanged. Owner personally executes all six recovery steps (key generation → revocation → `index.html` edit → deploy → browser test → email confirmation). P0-3 explicitly on hold. Session 2's investigation stands as the official incident record.
+- **Session 3 resume checklist (run when owner confirms):** (1) pull/sync — expect an owner-authored `index.html` change (or a dirty working tree); never overwrite it; (2) verify no placeholder remains on any branch or, by fresh fetch, on the live site; (3) record the owner's browser-test result and email confirmation as the success-path verification; (4) confirm old keys revoked (owner attestation — dashboard is owner-only); (5) CHANGELOG incident-closure entry with lost-leads window if the owner's inbox check bounded it; (6) mark P0-2 ✅ Complete in all trackers; (7) unlock P0-3.
+- Note for the record (per §21 surfacing duty, decision remains the owner's): if the owner's `index.html` edit is committed to the public repo, §15's current wording and repo reality will differ; a future reconciliation note is available whenever the owner wishes — none required now.
+- Next session goal: execute the resume checklist on owner confirmation. No code changes until then.
 
 ---
 
