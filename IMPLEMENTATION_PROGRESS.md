@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 35% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ · **P0-2 ✅ (incident resolved; owner-verified end-to-end)** · next: P0-3 (not started) |
+| P0 Production Stabilization | In Progress | 50% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ · P0-2 ✅ (incident resolved) · **P0-3 ✅ (cache-busting implemented; live on next deploy)** · next: P0-4 |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-3 — Cache-busting** (Not Started; awaiting implementation session — do not begin without one) |
+| **Current task** | **P0-3 ✅ implemented** (`?v=20260719` on CSS/JS in both HTML files; ships with the next deploy of this branch). Next: **P0-4** publish-directory restriction |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -74,6 +74,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | 2026-07-19 | Planning | 10 audits + IMPLEMENTATION_MASTER_PLAN.md + this tracker | (P0-1 docs commit) | n/a (docs) | — |
 | 2026-07-19 | P0 | **P0-1** repo safety: DS-3A diff committed; CRLF state captured; planning docs committed | `ef4bd6c`, `69f53fe`, `55476af` | ✅ Local verification (clean status) | ✅ Pushed to origin |
 | 2026-07-19 | P0 | **P0-2** investigation: form flow documented; placeholder confirmed repo+live; key history mapped (junk value → real UUID key → placeholder); repo confirmed public; code-level verification of validation/failure/cooldown paths | (docs commit) | ✅ Investigation verified; ⛔ success-path verification blocked (no valid key) | ⛔ Blocked on owner (B1) |
+| 2026-07-19 | P0 | **P0-2 closure**: owner deployed fresh rotated key; live browser test + email delivery confirmed; incident resolved | `a78c43e` (owner) | ✅ End-to-end (owner-verified) | ✅ Live |
+| 2026-07-19 | P0 | **P0-3** cache-busting: query-version tokens on CSS/JS in both HTML files | (this session) | ✅ Local serve test + minimal-diff review | ⬜ Rides next branch deploy |
 | — | — | *(append new rows here)* | — | — | — |
 
 ---
@@ -99,7 +101,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - [x] **P0-1** Protect work: DS-3A diff + docs committed (`ef4bd6c`, `69f53fe`, `55476af`) ✅
 - [x] **P0-1** Branch pushed — `origin/ds-3a-service-card` exists ✅ (2026-07-19)
 - [x] **P0-2** Owner recovery steps 1–6 complete; engineering closure checklist run ✅ (2026-07-19)
-- [ ] **P0-3** Cache-busting for `/assets/*` — next implementation session (hold established: not yet begun)
+- [x] **P0-3** Cache-busting: `?v=20260719` query-version tokens on `style.css`/`main.js` in `index.html` + `404.html`; convention comment added; verified byte-identical serving across cache keys ✅ (deploys with the truth release)
 - [ ] **P0-4** Restrict publish directory
 - [ ] **P0-5** Uptime + weekly synthetic form test with alerting (now the standing protection for the closed B1 incident)
 - [ ] **P0-3** Cache-busting for `/assets/*` (before any CSS/JS deploy)
@@ -135,6 +137,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | E1-T3/T4 homepage reconciliation | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
 | DS-3A service-card migration | ✅ (`ef4bd6c`) | ⬜ (§19 pending) | ⬜ | ⬜ | ⬜ |
 | P0-1 repository safety | ✅ | ✅ | — (no user-facing change) | — | ✅ Pushed |
+| P0-3 cache-busting | ✅ | ✅ (4-line diff reviewed) | ✅ Byte-identical serving verified across cache keys; no CSS/JS content touched | ⬜ Post-deploy check: view-source shows `?v=` on live (rides truth-release deploy; P0-8 habit) | ⬜ Awaits branch deploy |
 | P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
 | *(append as tasks complete)* | | | | | |
 
@@ -190,6 +193,15 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - **Incident summary (official record = Session 2 log):** placeholder key deployed ~2026-07-01 (`caffdea` scrub without a key-delivery mechanism) → all form submissions failed ~18 days → detected by audit 2026-07-19 → resolved same day by owner with fresh rotated key. Leads lost: unbounded (inbox check optional, owner discretion). Root-cause protection: P0-5 synthetic form test + alerting.
 - Live-state note: the hotfix deployed **only** the key line — live homepage remains the pre-truth-release version (verified by fetch); P1 content correctly still gated behind review (B2). Local `main` ref may be behind its remote if the fix was also applied there — run `git fetch` at P1 start.
 - Next session goal: P0-3 (cache-busting) — first implementation session of the remaining P0 items.
+
+**2026-07-19 — Session 4 (P0-3 cache-busting — implemented)**
+- Objective: eliminate stale-asset risk under the 1-year `immutable` cache on `/assets/*`.
+- Strategy chosen: **manual query-string versioning** (`?v=20260719`) — justified against filename fingerprinting (manual renames, error-prone, breaks "no renaming"), build-time hashing (build systems prohibited), and versioned filenames (renames break old URLs). Query tokens: 5-line diff, filenames stable (old URLs keep working), RFC 9111 cache keys include the query so browser + Netlify CDN both fetch fresh on token bump, and the existing `immutable` header becomes correct per-URL. `netlify.toml` deliberately untouched — headers work as-is with this scheme.
+- Implemented: `?v=20260719` on `style.css` + `main.js` references in `index.html` and `404.html`; one convention comment at the index.html reference site. **Convention: bump the token in BOTH files in any deploy that changes the referenced asset.**
+- Verified: full diff = 4 reference lines + 1 comment (nothing else); local HTTP serve test — versioned and unversioned URLs return byte-identical content (md5-matched) across distinct cache keys → zero visual/functional change, guaranteed cache invalidation on token change. CSS/JS file contents untouched.
+- Deployment note: production gets cache-busting when this branch deploys (truth release) — correct sequencing, since that deploy is also the first CSS-changing deploy; interim `main` hotfixes don't change CSS/JS and remain safe.
+- Residual discipline: token bumps are manual — added to the review convention here and enforced via the P0-8/P10 post-deploy verification habit.
+- Next session goal: P0-4 (publish-directory restriction).
 
 **2026-07-19 — Official Postmortem: Production Form Outage (issued by owner)**
 - **Root cause:** placeholder access key accidentally deployed after credential scrubbing (`caffdea` scrubbed the key per §15 policy with no key-delivery mechanism in place; the next deploy shipped the placeholder).

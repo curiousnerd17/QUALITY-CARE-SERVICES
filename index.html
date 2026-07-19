@@ -36,7 +36,8 @@
   <!-- Font Awesome loaded asynchronously — eliminates render-blocking -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-  <link rel="stylesheet" href="assets/css/style.css">
+  <!-- Cache-busting: bump ?v= in BOTH index.html and 404.html on any deploy that changes the referenced asset (P0-3) -->
+  <link rel="stylesheet" href="assets/css/style.css?v=20260719">
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <link rel="icon" type="image/png" sizes="32x32" href="images/logo-optimized.png">
@@ -863,6 +864,6 @@
     Call Now
   </a>
 
-  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/main.js?v=20260719" defer></script>
 </body>
 </html>

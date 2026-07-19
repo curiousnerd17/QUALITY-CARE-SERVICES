@@ -8,6 +8,12 @@
 
 ## 2026-07-19
 
+- feat(deploy): cache-busting query-version tokens (`?v=20260719`) on
+  `style.css`/`main.js` in `index.html` and `404.html` (**P0-3**) — deployed
+  CSS/JS changes now reliably reach returning browsers despite the 1-year
+  `immutable` cache; filenames and old URLs unchanged; zero visual or
+  behavioural change (verified byte-identical across cache keys). Convention:
+  bump the token in both files on any asset-changing deploy.
 - `a78c43e` — fix(forms): production Web3Forms access key configured by owner —
   fresh rotated key (old exposed keys revoked, owner-attested), deployed, and
   **verified end-to-end in production** (live browser submission, success

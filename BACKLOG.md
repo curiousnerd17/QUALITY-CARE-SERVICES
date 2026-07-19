@@ -1223,6 +1223,15 @@ v1.3 amendment).*
   decision + inbox timeline check, then implementation resumes. No site code
   changed this session.
 
+- **P0-3 cache-busting — ✅ Implemented 2026-07-19** (IMPLEMENTATION_MASTER_PLAN.md
+  Phase P0): query-version tokens (`?v=20260719`) added to the `style.css` and
+  `main.js` references in `index.html` and `404.html`; filenames unchanged (old
+  URLs keep working); verified byte-identical serving across cache keys with
+  zero visual/functional change; `netlify.toml` untouched — the existing
+  immutable header is now correct per versioned URL. Convention: bump the token
+  in both HTML files on any deploy that changes the referenced asset. Reaches
+  production with the next deploy of this branch.
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.
