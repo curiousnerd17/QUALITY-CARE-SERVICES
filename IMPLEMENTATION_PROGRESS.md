@@ -21,9 +21,9 @@
 | **Overall completion** | ~2% of master plan (P0-1 done pending push) |
 | **Current phase** | P0 — Production Stabilization (In Progress) |
 | **Current milestone** | M1 — Production Stabilization |
-| **Current branch** | `ds-3a-service-card` — working tree clean; ⚠️ push pending owner credentials (`git push -u origin ds-3a-service-card`) |
+| **Current branch** | `ds-3a-service-card` — clean, ✅ pushed (`origin/ds-3a-service-card` @ `55476af`); new docs commits need re-push |
 | **Live production** | `main` @ `d628cd0` (pre-truth-release state) |
-| **Last update** | 2026-07-19 (Session 1 — P0-1) |
+| **Last update** | 2026-07-19 (Session 2 — P0-2 investigation, ⛔ blocked on owner inputs) |
 | **Current release target** | R1 "Stabilization" = P0 complete, deployed, verified |
 
 ---
@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 15% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ (commits `ef4bd6c`, `69f53fe`, docs commit); push = owner action; next P0-2 |
+| P0 Production Stabilization | In Progress | 20% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ (pushed); P0-2 investigated, ⛔ **blocked — owner must supply a fresh Web3Forms key + §15 decision** (see B1) |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | P0-1 ✅ complete (push pending owner). Next: **P0-2** form verify/fix |
+| **Current task** | **P0-2** — investigation complete; ⛔ blocked on owner inputs (fresh key, §15 decision, browser test). No code changed |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -72,7 +72,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | 2026-07-02 | ⬅ baseline | E1-T1 asset refs, E1-T8 sitemap date (audited ✅) | (audit) | Verified in repo | Live |
 | 2026-07-03 | ⬅ baseline | E1-T2 + D1/D2/D3 resolutions; E1-T3/T4 homepage reconciliation; spec freeze v1.2 | `3a52d41`, `19aad71`, `b8315ba` | ⚠️ Not production-reviewed; **not deployed** | Branch only |
 | 2026-07-19 | Planning | 10 audits + IMPLEMENTATION_MASTER_PLAN.md + this tracker | (P0-1 docs commit) | n/a (docs) | — |
-| 2026-07-19 | P0 | **P0-1** repo safety: DS-3A diff committed; CRLF state captured; planning docs committed | `ef4bd6c`, `69f53fe`, + docs commit | ✅ Local verification (clean status) | ⬜ Push pending owner |
+| 2026-07-19 | P0 | **P0-1** repo safety: DS-3A diff committed; CRLF state captured; planning docs committed | `ef4bd6c`, `69f53fe`, `55476af` | ✅ Local verification (clean status) | ✅ Pushed to origin |
+| 2026-07-19 | P0 | **P0-2** investigation: form flow documented; placeholder confirmed repo+live; key history mapped (junk value → real UUID key → placeholder); repo confirmed public; code-level verification of validation/failure/cooldown paths | (docs commit) | ✅ Investigation verified; ⛔ success-path verification blocked (no valid key) | ⛔ Blocked on owner (B1) |
 | — | — | *(append new rows here)* | — | — | — |
 
 ---
@@ -81,8 +82,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 
 | # | Description | Severity | Owner | Dependency | Resolution plan | Status |
 |---|---|---|---|---|---|---|
-| B1 | Production form key is placeholder → live lead loss (~since 2026-07-01) | 🔴 Critical | Owner | Web3Forms account | P0-2: test, fix, rotate | Open |
-| B2 | Truth-release work unreviewed/unmerged on `ds-3a-service-card`; **push blocked from sandbox (no GitHub credentials)** | 🔴 Critical | Owner (push + review) | Owner runs `git push -u origin ds-3a-service-card`; then P1 review (72h SLA) | Work fully committed locally (P0-1); one command remains | Open — reduced |
+| B1 | Production form key is placeholder → live lead loss since the post-`caffdea` deploy (~2026-07-01). P0-2 findings: repo is **public** on GitHub; a real UUID-format key (prefix `f42cd3…`, commit `77901b0`) and an earlier junk value are both world-readable in history; placeholder confirmed on `main`, branch, and working tree. Restoring a key to the repo conflicts with PROJECT.md §15 as written — constitutional decision required per §21. | 🔴 Critical | **Owner** | Web3Forms dashboard (`qualitycareserviceskota@gmail.com`); §15 decision | **Owner actions:** (1) approve one-line §15 amendment (Web3Forms keys are public client identifiers, committable) — or choose an injection mechanism; (2) log into web3forms.com, **create a fresh key** (= rotation; do not reuse `f42cd3…`), deactivate old keys if listed; (3) check inbox/dashboard to bound the lost-leads window; (4) provide the new key → next session commits it → owner does one browser test submission | ⛔ Blocked on owner |
+| B2 | Truth-release work unreviewed/unmerged on `ds-3a-service-card` | 🔴 Critical | Owner (review) | P1 review session (72h SLA) | ✅ Pushed 2026-07-19 (`origin/ds-3a-service-card`); only review + merge remain | Open — review only |
 | B3 | Internal docs publicly served (`/PROJECT.md` confirmed live) | 🟠 High | Owner | Netlify config | P0-4 publish-dir restriction | Open |
 | B4 | D4 (Home Support boundaries) unresolved — gates 3 of 7 service pages | 🟠 High | Business | Owner decision | Escalate at P7 start; time-box | Open |
 | B5 | D5 (short-notice availability per service) unresolved | 🟡 Medium | Business | Owner decision | Same escalation as B4 | Open |
@@ -95,9 +96,10 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 
 *(Immediate only — the roadmap lives in the master plan.)*
 
-- [x] **P0-1** Protect work: DS-3A diff + docs committed (`ef4bd6c`, `69f53fe`, docs commit) ✅
-- [ ] **P0-1 (owner, 10s)** Run `git push -u origin ds-3a-service-card` — sandbox has no GitHub credentials
-- [ ] **P0-2** Live form test → fix key → rotate leaked key → postmortem note
+- [x] **P0-1** Protect work: DS-3A diff + docs committed (`ef4bd6c`, `69f53fe`, `55476af`) ✅
+- [x] **P0-1** Branch pushed — `origin/ds-3a-service-card` exists ✅ (2026-07-19)
+- [ ] **P0-2 (owner)** §15 decision + fresh Web3Forms key + inbox timeline check — see blocker B1
+- [ ] **P0-2 (next session)** Commit new key → deploy → owner browser test → close incident with postmortem note
 - [ ] **P0-3** Cache-busting for `/assets/*` (before any CSS/JS deploy)
 - [ ] **P0-4** Restrict publish directory (docs + unused images out)
 - [ ] **P0-5** Uptime check + weekly synthetic form test with alerting
@@ -130,7 +132,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 |---|---|---|---|---|---|
 | E1-T3/T4 homepage reconciliation | ✅ | ⬜ | ⬜ | ⬜ | ⬜ |
 | DS-3A service-card migration | ✅ (`ef4bd6c`) | ⬜ (§19 pending) | ⬜ | ⬜ | ⬜ |
-| P0-1 repository safety | ✅ | ✅ (verification below) | — (no user-facing change) | — | ⬜ (push = owner) |
+| P0-1 repository safety | ✅ | ✅ | — (no user-facing change) | — | ✅ Pushed |
+| P0-2 form pipeline recovery | ⛔ Blocked (owner inputs) | — | ✅ Code-level: validation / network-failure / honeypot / cooldown paths verified | ⛔ Awaits key fix + owner browser test | ⬜ |
 | *(append as tasks complete)* | | | | | |
 
 ---
@@ -162,6 +165,13 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Remaining: **push** — blocked in sandbox (HTTPS remote, no credentials). Owner runs `git push -u origin ds-3a-service-card`.
 - Decisions: commit (not stash) chosen — stashes are loss-prone and this is the work's designated feature branch; CRLF captured as-is rather than discarded ("never discard work"), proper normalization deferred to P0-6.
 - Next session goal: P0-2 (form verify/fix/rotate) after owner confirms push.
+
+**2026-07-19 — Session 2 (P0-2 form pipeline — investigation; STOP condition reached)**
+- Objective: verify and restore the production lead pipeline.
+- Completed: full form-flow assessment; key confirmed placeholder on `main`, feature branch, working tree, and (by deploy-state match) live production; key history mapped — non-UUID junk value (`f84fa54`) → real UUID-format key, prefix `f42cd3…` (`77901b0`) → placeholder (`caffdea`), bounding the incident start at the ~2026-07-01 deploy; GitHub repo confirmed **public**, so both historical keys are world-readable; code-level verification of validation, network-failure, honeypot, duplicate-protection, and cooldown paths (all correct); branch push confirmed done.
+- Remaining: key restoration + live success-path test — ⛔ **stopped per stop conditions**: correct production key unavailable, rotation requires the owner's Web3Forms dashboard, and committing a key conflicts with PROJECT.md §15 as written (constitutional decision surfaced per §21, not overridden).
+- Decisions: do **not** reuse the leaked `f42cd3…` key (public history + rotation mandate); no placeholder shipped; no code modified; blocked state documented in B1 with a 4-step owner unblock checklist.
+- Next session goal: on receipt of fresh key + §15 decision — commit key, deploy, owner browser test, close incident with postmortem note.
 
 ---
 

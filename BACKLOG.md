@@ -1209,6 +1209,16 @@ v1.3 amendment).*
   credentials (`git push -u origin ds-3a-service-card`). The "uncommitted"
   wording in earlier In-Flight notes above is superseded by these commits.
 
+- **P0-2 production form recovery — ⛔ BLOCKED on owner 2026-07-19**
+  (IMPLEMENTATION_MASTER_PLAN.md Phase P0; details in IMPLEMENTATION_PROGRESS.md
+  blocker B1): investigation complete — access key is a placeholder on every
+  branch and (by deploy-state match) in production since the ~2026-07-01 deploy;
+  a real key and an earlier junk value are world-readable in the public GitHub
+  history (rotation required, not reuse); committing a key requires a §15
+  amendment decision (surfaced per §21). Owner: fresh Web3Forms key + §15
+  decision + inbox timeline check, then implementation resumes. No site code
+  changed this session.
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.

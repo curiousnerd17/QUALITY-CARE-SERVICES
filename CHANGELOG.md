@@ -15,7 +15,12 @@
   content-identical per `git diff -w` (**P0-1**; LF normalization follows in P0-6)
 - docs(planning): IMPLEMENTATION_MASTER_PLAN.md and IMPLEMENTATION_PROGRESS.md
   added; P0-1 recorded across the tracker, backlog, and this changelog
-  (**P0-1** closing commit). Push to origin pending owner credentials.
+  (**P0-1** closing commit); branch subsequently pushed to origin.
+- docs(ops): **P0-2** production-form investigation recorded — placeholder key
+  confirmed repo-wide and (by deploy-state match) live; incident window bounded
+  at the ~2026-07-01 deploy; historical keys identified in public git history
+  (rotation required); work **stopped on owner inputs** (fresh Web3Forms key +
+  PROJECT.md §15 decision) per stop conditions. No site code changed.
 
 ## 2026-07-03
 
