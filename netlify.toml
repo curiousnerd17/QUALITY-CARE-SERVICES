@@ -74,6 +74,7 @@
   status = 404
   force = true
 
+<<<<<<< HEAD
 [[redirects]]
   from = "/MONITORING.md"
   to = "/404.html"
@@ -86,6 +87,8 @@
   status = 404
   force = true
 
+=======
+>>>>>>> origin/main
 # ── Security headers (all pages) ──────────────────────────────────────────────
 
 [[headers]]
