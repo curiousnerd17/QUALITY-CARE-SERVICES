@@ -1270,6 +1270,16 @@ v1.3 amendment).*
   per the P0-4 convention (9/9 root docs covered). Owner follow-up: fill
   ⬜ OWNER rows and run the escrow activation checklist (~20 min).
 
+- **P0-8 final verification — ✅ Completed 2026-07-19; PHASE P0 ENGINEERING
+  COMPLETE** (IMPLEMENTATION_MASTER_PLAN.md Phase P0): scripted verification
+  battery passed — all 9 root docs publish-protected (0 uncovered), Netlify
+  config clean (12 rules, no duplicates/conflicts/shadowing), all static files
+  present with 100% reference resolution, repository secret scan clean.
+  Verdict: **PASS WITH OWNER ACTIONS** — Netlify UI mapping verification,
+  P0-5 account setup, RUNBOOK owner rows/escrow, and the post-deploy checklist.
+  Production branch/trigger are not repo-verifiable and remain ⬜ OWNER VERIFY.
+  Next: P1 Truth Release review (E1-T3/T4 sign-off, 72h SLA).
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.

@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 92% | 2026-07-19 | — | `ds-3a-service-card` | P0-1…P0-4, P0-6, **P0-7 ✅** · P0-5 ✅ eng/⬜ owner · last: P0-8 verification |
+| P0 Production Stabilization | **Engineering Complete** | 100% eng / owner items open | 2026-07-19 | 2026-07-19 (eng) | `ds-3a-service-card` | All 8 items done or owner-queued; **P0-8 verdict: PASS WITH OWNER ACTIONS** (Session 9) |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-7 ✅ complete** (`RUNBOOK.md`: account inventory, deploy/rollback, incident response, escrow, maintenance cadence). Next: **P0-8** verification · owner fill-ins: RUNBOOK ⬜ rows + escrow checklist + P0-5 accounts |
+| **Current task** | **P0-8 ✅ — PHASE P0 ENGINEERING COMPLETE.** Verdict: **PASS WITH OWNER ACTIONS** (Netlify UI mapping verify · P0-5 accounts · RUNBOOK fill-ins · post-deploy checks). Next phase: **P1 Truth Release review** |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -111,7 +111,9 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - [x] **P0-6** `.gitattributes` (LF pinned repo+worktree, binary rules) + one-time renormalization of the 3 CRLF blobs, content-identical (verified) ✅ — **no contributor action needed in the normal case** (fresh clones and pulls are clean); see the clarified recipe in the Session 7 log
 - [x] **P0-7** `RUNBOOK.md`: 11-account inventory (purpose/owner/recovery/MFA/backup per account, ⬜ OWNER rows for owner-only facts) · deployment + one-click rollback runbook · 4-scenario incident response · no-secrets escrow design · weekly/monthly/quarterly maintenance cadence · publish-blocked (9/9 root docs covered) ✅
 - [ ] **P0-7 (OWNER, ~20 min)** Fill the ⬜ OWNER inventory rows (registrar!, MFA states, backup contacts) + run the §4 escrow activation checklist (add second person to GitHub/Netlify/GA4 + Google recovery contact)
-- [ ] **P0-8** Verify deploy branch mapping + live headers once
+- [x] **P0-8** Final verification battery run (Session 9): docs 9/9 protected · config clean (no duplicates/conflicts/shadowing) · static refs 100% resolved · secret scan clean · rollback/branch/preview documented ✅
+- [ ] **P0-8 (OWNER VERIFY, ~5 min)** In Netlify UI confirm: production branch (`main`?), deploy trigger (auto on push?), deploy previews enabled — record answers in RUNBOOK §2
+- [ ] **(OWNER) After next deploy:** run RUNBOOK §2 post-deploy checklist — incl. `/PROJECT.md` → 404 and `?v=` visible on CSS/JS
 - [ ] Then: P1 review session for the truth release
 
 ---
@@ -144,6 +146,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | P0-5 monitoring | ✅ eng (runbook + rule) | ✅ (payload urldecode + phone-regex validated; TOML 8/8 docs covered) | — (no site code touched) | ⬜ Owner: test alert + first TEST email per MONITORING.md ledger | n/a |
 | P0-6 git hygiene | ✅ | ✅ (staged `diff -w` = attributes file only; per-file staged==pre-CR-strip verified) | ✅ Binaries unstaged; site files' blobs already LF, unchanged | — (repo-internal) | ✅ (repo policy active on commit) |
 | P0-7 runbook | ✅ (doc + publish rule) | ✅ (TOML 9/9 docs covered; secret-scan clean — prose mentions only) | — (no site code touched) | ⬜ Post-deploy: `/RUNBOOK.md` → 404 | ⬜ Owner fill-ins + escrow activation |
+| P0-8 final verification | ✅ (report; trackers only) | ✅ (scripted battery: docs/config/static/security all pass) | — (read-only phase) | ⬜ Netlify UI mapping = OWNER VERIFY; post-deploy checklist = owner | ✅ (verdict recorded) |
 | P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
 | *(append as tasks complete)* | | | | | |
 
@@ -243,6 +246,13 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Verified: secret scan clean (matches are prose about secrets, no values); no site code touched.
 - Owner follow-ups: fill ⬜ OWNER rows (registrar identity + expiry is the most important fact in the file) and run the §4 escrow activation checklist.
 - Next session goal: P0-8 (deploy-mapping + live verification) — closes Phase P0 engineering.
+
+**2026-07-19 — Session 9 (P0-8 final verification — PHASE P0 ENGINEERING COMPLETE)**
+- Objective: final production audit closing Phase P0.
+- **Verification battery results (scripted, recorded):** ① Repo→Netlify mapping — publish `"."` ✓, no build command (correct for static) ✓; production branch / deploy trigger / preview enablement live in the Netlify UI, **not repo-verifiable → ⬜ OWNER VERIFY** (strong inference from deploy history: `main`, auto-on-push — confirm, don't assume). ② Documentation protection — all 7 required docs + all 9 root `.md` files covered by forced-404 rules, 0 uncovered; DESIGN_GUIDELINES.md not present (n/a); rules take live effect on this branch's deploy. ③ Deployment safety — rollback (one-click), branch workflow, production branch, and preview usage all documented in RUNBOOK §2 ✓. ④ Config review — 12 redirect rules, no duplicates, no conflicts; ordering correct (host 301s → doc 404s chains properly); no 404 rule shadows any site path (all `.md`-scoped); known minor: `/*.html` cache header may not match bare `/` (defaults cover it; owner confirms post-deploy). ⑤ Static validation — all 10 core files present; every local reference in `index.html` resolves (0 unresolved). ⑥ Security — credential-pattern scan across all tracked files: clean (single hit = RUNBOOK's own "no passwords" prose, false positive); Web3Forms key in `index.html` is public-by-design per owner decision, not a leak; docs unexposed in config (live exposure ends at deploy).
+- **Verdict: PASS WITH OWNER ACTIONS.** No blocking repository issues. Owner actions: Netlify UI mapping verification (record in RUNBOOK §2) · P0-5 accounts to ledger 4/4 · RUNBOOK ⬜ OWNER rows + escrow activation · post-deploy checklist after the next deploy.
+- **Phase P0 engineering: COMPLETE** — all 8 items done or owner-queued, in one day, including one resolved production incident. The branch now carries the full stabilization set (cache-busting, doc protection, monitoring runbook, git hygiene, ops runbook) and awaits the P1 review to reach production.
+- Next phase: **P1 Truth Release** — review + merge + deploy of the canonical-seven work (72h review SLA applies).
 
 **2026-07-19 — Official Postmortem: Production Form Outage (issued by owner)**
 - **Root cause:** placeholder access key accidentally deployed after credential scrubbing (`caffdea` scrubbed the key per §15 policy with no key-delivery mechanism in place; the next deploy shipped the placeholder).

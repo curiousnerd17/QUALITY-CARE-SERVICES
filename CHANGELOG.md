@@ -8,6 +8,11 @@
 
 ## 2026-07-19
 
+- chore(prod): deployment verification finalized (**P0-8**) — scripted battery
+  passed (9/9 docs publish-protected · config clean · static references 100%
+  resolved · secret scan clean · rollback/branch/preview documented). Verdict:
+  **PASS WITH OWNER ACTIONS**; **Phase P0 engineering complete** — all
+  stabilization work now rides `ds-3a-service-card` awaiting the P1 review.
 - docs(ops): operational runbook and account inventory added (**P0-7**) —
   `RUNBOOK.md`: 11-account inventory with recovery/MFA/backup columns
   (owner-only facts left as explicit fill-ins), deployment + rollback
