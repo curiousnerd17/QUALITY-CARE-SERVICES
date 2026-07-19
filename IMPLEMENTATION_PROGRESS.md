@@ -191,6 +191,14 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Live-state note: the hotfix deployed **only** the key line — live homepage remains the pre-truth-release version (verified by fetch); P1 content correctly still gated behind review (B2). Local `main` ref may be behind its remote if the fix was also applied there — run `git fetch` at P1 start.
 - Next session goal: P0-3 (cache-busting) — first implementation session of the remaining P0 items.
 
+**2026-07-19 — Official Postmortem: Production Form Outage (issued by owner)**
+- **Root cause:** placeholder access key accidentally deployed after credential scrubbing (`caffdea` scrubbed the key per §15 policy with no key-delivery mechanism in place; the next deploy shipped the placeholder).
+- **Impact:** production inquiries could not reach the business (window ~2026-07-01 → 2026-07-19, ~18 days; count unbounded).
+- **Detection:** P0-2 investigation (audit-driven; no monitoring existed to detect it earlier).
+- **Resolution:** fresh Web3Forms key generated (rotation — old exposed keys revoked); production deployment completed; live submission verified end-to-end (success message, cooldown, email delivery).
+- **Prevention (already scheduled in the master plan):** P0-5 weekly synthetic form test + alerting (detection); P0-8 post-deploy verification habit (would have caught the placeholder on deploy day); the §15 wording/reality reconciliation remains available at owner discretion.
+- Status: **CLOSED.**
+
 ---
 
 ## Milestone Tracker
