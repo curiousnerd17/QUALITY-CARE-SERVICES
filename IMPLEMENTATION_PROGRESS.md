@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 50% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ · P0-2 ✅ (incident resolved) · **P0-3 ✅ (cache-busting implemented; live on next deploy)** · next: P0-4 |
+| P0 Production Stabilization | In Progress | 65% | 2026-07-19 | — | `ds-3a-service-card` | P0-1 ✅ · P0-2 ✅ · P0-3 ✅ · **P0-4 ✅ (doc-publishing blocked; live on next deploy)** · next: P0-5 |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-3 ✅ implemented** (`?v=20260719` on CSS/JS in both HTML files; ships with the next deploy of this branch). Next: **P0-4** publish-directory restriction |
+| **Current task** | **P0-4 ✅ implemented** (forced-404 rules for all 7 repo docs in `netlify.toml`; live on next deploy). Next: **P0-5** monitoring |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -75,7 +75,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | 2026-07-19 | P0 | **P0-1** repo safety: DS-3A diff committed; CRLF state captured; planning docs committed | `ef4bd6c`, `69f53fe`, `55476af` | ✅ Local verification (clean status) | ✅ Pushed to origin |
 | 2026-07-19 | P0 | **P0-2** investigation: form flow documented; placeholder confirmed repo+live; key history mapped (junk value → real UUID key → placeholder); repo confirmed public; code-level verification of validation/failure/cooldown paths | (docs commit) | ✅ Investigation verified; ⛔ success-path verification blocked (no valid key) | ⛔ Blocked on owner (B1) |
 | 2026-07-19 | P0 | **P0-2 closure**: owner deployed fresh rotated key; live browser test + email delivery confirmed; incident resolved | `a78c43e` (owner) | ✅ End-to-end (owner-verified) | ✅ Live |
-| 2026-07-19 | P0 | **P0-3** cache-busting: query-version tokens on CSS/JS in both HTML files | (this session) | ✅ Local serve test + minimal-diff review | ⬜ Rides next branch deploy |
+| 2026-07-19 | P0 | **P0-3** cache-busting: query-version tokens on CSS/JS in both HTML files | `95e504a` | ✅ Local serve test + minimal-diff review | ⬜ Rides next branch deploy |
+| 2026-07-19 | P0 | **P0-4** publish restriction: 7 forced-404 doc rules in netlify.toml | (this session) | ✅ TOML validated; full .md coverage confirmed | ⬜ Rides next branch deploy |
 | — | — | *(append new rows here)* | — | — | — |
 
 ---
@@ -102,11 +103,9 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - [x] **P0-1** Branch pushed — `origin/ds-3a-service-card` exists ✅ (2026-07-19)
 - [x] **P0-2** Owner recovery steps 1–6 complete; engineering closure checklist run ✅ (2026-07-19)
 - [x] **P0-3** Cache-busting: `?v=20260719` query-version tokens on `style.css`/`main.js` in `index.html` + `404.html`; convention comment added; verified byte-identical serving across cache keys ✅ (deploys with the truth release)
-- [ ] **P0-4** Restrict publish directory
-- [ ] **P0-5** Uptime + weekly synthetic form test with alerting (now the standing protection for the closed B1 incident)
+- [x] **P0-4** Publish restriction: forced-404 rules for all 7 repo-root docs in `netlify.toml` (necessity proven — PROJECT.md and BACKLOG.md both fetched live pre-change); convention: every new root doc gets a rule in its creating commit ✅ (deploys with the truth release; owner may cherry-pick sooner)
 - [ ] **P0-3** Cache-busting for `/assets/*` (before any CSS/JS deploy)
-- [ ] **P0-4** Restrict publish directory (docs + unused images out)
-- [ ] **P0-5** Uptime check + weekly synthetic form test with alerting
+- [ ] **P0-5** Uptime check + weekly synthetic form test with alerting (standing protection for the closed B1 incident)
 - [ ] **P0-6** `.gitattributes` + land CRLF normalization commit
 - [ ] **P0-7** Runbook + account inventory (undeployed); escrow second-person access
 - [ ] **P0-8** Verify deploy branch mapping + live headers once
@@ -138,6 +137,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | DS-3A service-card migration | ✅ (`ef4bd6c`) | ⬜ (§19 pending) | ⬜ | ⬜ | ⬜ |
 | P0-1 repository safety | ✅ | ✅ | — (no user-facing change) | — | ✅ Pushed |
 | P0-3 cache-busting | ✅ | ✅ (4-line diff reviewed) | ✅ Byte-identical serving verified across cache keys; no CSS/JS content touched | ⬜ Post-deploy check: view-source shows `?v=` on live (rides truth-release deploy; P0-8 habit) | ⬜ Awaits branch deploy |
+| P0-4 publish restriction | ✅ | ✅ (additive-only diff; TOML parse-validated; 7/7 root docs covered, 0 uncovered) | ✅ Site files unaffected (rules match doc paths only; publish/headers unchanged) | ⬜ Post-deploy check: fetch each doc URL, expect 404 | ⬜ Awaits branch deploy |
 | P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
 | *(append as tasks complete)* | | | | | |
 
@@ -202,6 +202,15 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Deployment note: production gets cache-busting when this branch deploys (truth release) — correct sequencing, since that deploy is also the first CSS-changing deploy; interim `main` hotfixes don't change CSS/JS and remain safe.
 - Residual discipline: token bumps are manual — added to the review convention here and enforced via the P0-8/P10 post-deploy verification habit.
 - Next session goal: P0-4 (publish-directory restriction).
+
+**2026-07-19 — Session 5 (P0-4 publish restriction — implemented)**
+- Objective: ensure repository documentation can never be publicly served.
+- **Necessity assessment (required before changing anything):** NECESSARY — proven by live evidence, not assumption. `publish = "."` deploys the repo root; `https://…/PROJECT.md` (earlier today) and `https://…/BACKLOG.md` (this session, pre-change) both returned full document content from production. `netlify.toml` itself verified NOT served by Netlify (no rule needed).
+- Mechanism chosen: **forced-404 redirect rules per doc file** — Netlify redirects can't match by extension (`*.md` unsupported), and the fail-closed alternative (dedicated publish subdirectory) would restructure the repo, conflict with the review-pending truth-release branch, and cross the "no architecture changes" line. Blocklist chosen as the minimum change; its fail-open nature mitigated by an in-file convention ("every new root doc gets a rule in its creating commit") plus the quarterly cadence check (master plan R11). Allowlist restructure recorded as a deferred owner decision.
+- Implemented: 7 `[[redirects]]` rules (`status = 404`, `force = true`, → `/404.html`) covering PROJECT, BACKLOG, CHANGELOG, README, SERVICE_PAGE_SPEC, IMPLEMENTATION_MASTER_PLAN, IMPLEMENTATION_PROGRESS. Purely additive (+53 lines, 0 deletions); `publish`, headers, and existing redirects untouched.
+- Verified: TOML parses; 7/7 repo-root `.md` files covered, 0 uncovered (scripted cross-check); site-file serving unaffected (rules match doc paths only). Production verification deferred to the deploy it rides: fetch each doc URL, expect 404 with the styled 404 page.
+- ⚠️ Exposure note: the live site remains exposed until this branch deploys. Owner option to close it sooner: cherry-pick this commit onto the deployed branch.
+- Next session goal: P0-5 (uptime + synthetic form monitoring).
 
 **2026-07-19 — Official Postmortem: Production Form Outage (issued by owner)**
 - **Root cause:** placeholder access key accidentally deployed after credential scrubbing (`caffdea` scrubbed the key per §15 policy with no key-delivery mechanism in place; the next deploy shipped the placeholder).

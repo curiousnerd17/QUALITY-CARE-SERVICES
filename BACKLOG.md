@@ -1232,6 +1232,15 @@ v1.3 amendment).*
   in both HTML files on any deploy that changes the referenced asset. Reaches
   production with the next deploy of this branch.
 
+- **P0-4 publish restriction — ✅ Implemented 2026-07-19** (IMPLEMENTATION_MASTER_PLAN.md
+  Phase P0): necessity proven by live evidence (PROJECT.md and BACKLOG.md both
+  publicly fetchable from production before the change); 7 forced-404 redirect
+  rules added to `netlify.toml` covering every repository-root doc (extension
+  globs unsupported by Netlify redirects, hence per-file rules); purely
+  additive, publish/headers untouched, site serving unaffected. Convention:
+  any new root doc gets a rule in its creating commit. Live exposure closes
+  when this branch deploys.
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.

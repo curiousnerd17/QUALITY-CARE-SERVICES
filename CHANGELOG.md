@@ -8,6 +8,11 @@
 
 ## 2026-07-19
 
+- fix(security): publish restriction — forced-404 redirect rules for all seven
+  repository-root documentation files in `netlify.toml` (**P0-4**); necessity
+  proven by pre-change live fetches of PROJECT.md and BACKLOG.md from
+  production; purely additive, site serving and headers unchanged; exposure
+  closes when this branch deploys.
 - feat(deploy): cache-busting query-version tokens (`?v=20260719`) on
   `style.css`/`main.js` in `index.html` and `404.html` (**P0-3**) — deployed
   CSS/JS changes now reliably reach returning browsers despite the 1-year

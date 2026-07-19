@@ -21,6 +21,59 @@
   status = 301
   force  = true
 
+# ── Publish restriction: repository documentation is never public (P0-4) ──────
+# publish = "." deploys the repo root, so internal docs would otherwise be
+# served (confirmed live before this change). Netlify redirects cannot match
+# by extension (*.md is not a valid pattern), so each doc is blocked
+# explicitly with a forced 404 (serves the custom 404 page).
+# CONVENTION: any NEW repository-root documentation file MUST get a rule here
+# in the same commit that creates it. This is a fail-open blocklist; the
+# fail-closed alternative (a dedicated publish subdirectory) is a deliberate
+# architecture decision deferred to the owner (see IMPLEMENTATION_MASTER_PLAN.md).
+# netlify.toml itself is never served by Netlify (verified) and needs no rule.
+
+[[redirects]]
+  from = "/PROJECT.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/BACKLOG.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/CHANGELOG.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/README.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/SERVICE_PAGE_SPEC.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/IMPLEMENTATION_MASTER_PLAN.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/IMPLEMENTATION_PROGRESS.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # ── Security headers (all pages) ──────────────────────────────────────────────
 
 [[headers]]
