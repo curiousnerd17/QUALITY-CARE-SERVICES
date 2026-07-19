@@ -1200,6 +1200,15 @@ v1.3 amendment).*
   requires feature branches with review before merge; all subsequent tasks — including
   DS-3A's continuation — follow the branch → review → deploy flow.
 
+- **P0-1 repository safety — ✅ Completed 2026-07-19** (per
+  IMPLEMENTATION_MASTER_PLAN.md Phase P0): DS-3A working diff committed to
+  `ds-3a-service-card` as `ef4bd6c` (DS-3A task status otherwise unchanged —
+  §19 sign-off and DoD still pending); governance-doc line-ending state
+  captured content-identically as `69f53fe` (LF normalization deferred to P0-6);
+  implementation planning documents added. Push to origin pending owner
+  credentials (`git push -u origin ds-3a-service-card`). The "uncommitted"
+  wording in earlier In-Flight notes above is superseded by these commits.
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.

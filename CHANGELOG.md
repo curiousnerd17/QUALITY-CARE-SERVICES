@@ -6,6 +6,17 @@
 > governance amendments reference `PROJECT.md`. Created 2026-07-02 to close the
 > Documentation Hierarchy gap (PROJECT.md lists this file as the release history).
 
+## 2026-07-19
+
+- `ef4bd6c` — feat(design): DS-3A service-card token migration committed to
+  `ds-3a-service-card` for repository safety (**P0-1**, IMPLEMENTATION_MASTER_PLAN.md);
+  §19 visual sign-off and DoD still pending — not merged, not deployed
+- `69f53fe` — chore(docs): governance-doc line-ending state captured,
+  content-identical per `git diff -w` (**P0-1**; LF normalization follows in P0-6)
+- docs(planning): IMPLEMENTATION_MASTER_PLAN.md and IMPLEMENTATION_PROGRESS.md
+  added; P0-1 recorded across the tracker, backlog, and this changelog
+  (**P0-1** closing commit). Push to origin pending owner credentials.
+
 ## 2026-07-03
 
 - `19aad71` — docs(architecture): `SERVICE_PAGE_SPEC.md`
