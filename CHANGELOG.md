@@ -8,6 +8,13 @@
 
 ## 2026-07-19
 
+- docs(ops): operational runbook and account inventory added (**P0-7**) —
+  `RUNBOOK.md`: 11-account inventory with recovery/MFA/backup columns
+  (owner-only facts left as explicit fill-ins), deployment + rollback
+  procedures, incident-response playbook (form/outage/DNS/deploy), zero-secrets
+  escrow design, and the weekly/monthly/quarterly maintenance cadence;
+  publish-blocked via forced-404 rule (9/9 root docs covered). No secrets
+  stored; no site code changed.
 - chore(git): repository line endings normalized (**P0-6**) — `.gitattributes`
   pins LF in blobs and working tree with explicit text/binary rules, overriding
   all local autocrlf configs; one-time renormalization rewrote the only three

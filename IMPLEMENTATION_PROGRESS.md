@@ -32,7 +32,7 @@
 
 | Phase | Status | % | Started | Completed | Branch | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | In Progress | 85% | 2026-07-19 | — | `ds-3a-service-card` | P0-1…P0-4 ✅ · P0-5 ✅ eng/⬜ owner · **P0-6 ✅** · next: P0-7, P0-8 |
+| P0 Production Stabilization | In Progress | 92% | 2026-07-19 | — | `ds-3a-service-card` | P0-1…P0-4, P0-6, **P0-7 ✅** · P0-5 ✅ eng/⬜ owner · last: P0-8 verification |
 | P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
 | P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
 | P3 Measurement | Not Started | 0% | — | — | — | — |
@@ -53,7 +53,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | Field | Value |
 |---|---|
 | **Objective** | Execute Phase P0 — end the form incident, secure the pipeline |
-| **Current task** | **P0-6 ✅ complete** (`.gitattributes` + one-time renormalization; CRLF drift permanently neutralized). Next: **P0-7** runbook/account inventory · P0-5 owner setup still pending |
+| **Current task** | **P0-7 ✅ complete** (`RUNBOOK.md`: account inventory, deploy/rollback, incident response, escrow, maintenance cadence). Next: **P0-8** verification · owner fill-ins: RUNBOOK ⬜ rows + escrow checklist + P0-5 accounts |
 | **Files being modified** | P0-1 touched: `assets/css/style.css` (commit only), governance docs (line-ending capture), planning docs. Next expected: `index.html` (form key), `netlify.toml` |
 | **Expected deliverable** | Working, synthetically-monitored form; docs off production; cache-busting live; runbook |
 | **Risks** | R1 (cache pinning — fix before any CSS/JS deploy); R5 (form path regression) |
@@ -109,7 +109,8 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - [x] **P0-5 (engineering)** Monitoring designed + full runbook `MONITORING.md` (UptimeRobot keyword monitor · cron-job.org weekly synthetic form POST · alert paths · weekly 30-second owner routine · setup ledger); publish-blocked per P0-4 convention ✅
 - [ ] **P0-5 (OWNER, ~10 min)** Create the two free accounts and configure per MONITORING.md; confirm test alert + first Monday TEST email; tick the four ledger rows — P0-5 closes then
 - [x] **P0-6** `.gitattributes` (LF pinned repo+worktree, binary rules) + one-time renormalization of the 3 CRLF blobs, content-identical (verified) ✅ — **no contributor action needed in the normal case** (fresh clones and pulls are clean); see the clarified recipe in the Session 7 log
-- [ ] **P0-7** Runbook + account inventory (undeployed); escrow second-person access
+- [x] **P0-7** `RUNBOOK.md`: 11-account inventory (purpose/owner/recovery/MFA/backup per account, ⬜ OWNER rows for owner-only facts) · deployment + one-click rollback runbook · 4-scenario incident response · no-secrets escrow design · weekly/monthly/quarterly maintenance cadence · publish-blocked (9/9 root docs covered) ✅
+- [ ] **P0-7 (OWNER, ~20 min)** Fill the ⬜ OWNER inventory rows (registrar!, MFA states, backup contacts) + run the §4 escrow activation checklist (add second person to GitHub/Netlify/GA4 + Google recovery contact)
 - [ ] **P0-8** Verify deploy branch mapping + live headers once
 - [ ] Then: P1 review session for the truth release
 
@@ -142,6 +143,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | P0-4 publish restriction | ✅ | ✅ (additive-only diff; TOML parse-validated; 7/7 root docs covered, 0 uncovered) | ✅ Site files unaffected (rules match doc paths only; publish/headers unchanged) | ⬜ Post-deploy check: fetch each doc URL, expect 404 | ⬜ Awaits branch deploy |
 | P0-5 monitoring | ✅ eng (runbook + rule) | ✅ (payload urldecode + phone-regex validated; TOML 8/8 docs covered) | — (no site code touched) | ⬜ Owner: test alert + first TEST email per MONITORING.md ledger | n/a |
 | P0-6 git hygiene | ✅ | ✅ (staged `diff -w` = attributes file only; per-file staged==pre-CR-strip verified) | ✅ Binaries unstaged; site files' blobs already LF, unchanged | — (repo-internal) | ✅ (repo policy active on commit) |
+| P0-7 runbook | ✅ (doc + publish rule) | ✅ (TOML 9/9 docs covered; secret-scan clean — prose mentions only) | — (no site code touched) | ⬜ Post-deploy: `/RUNBOOK.md` → 404 | ⬜ Owner fill-ins + escrow activation |
 | P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
 | *(append as tasks complete)* | | | | | |
 
@@ -233,6 +235,14 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 - Future-Windows-checkout proof: `eol=lf` attribute governs materialization on every OS regardless of local config — a CRLF re-save by any tool is normalized away at `add`/`diff`, so phantom diffs are structurally impossible.
 - **Contributor-recipe clarification (2026-07-19, supersedes the broader wording in the `05582d9` commit message):** `git add --renormalize .` was the *maintainer's* one-time command, executed inside `05582d9` — nobody runs it again (Case C only). Fresh clones and normal pulls need **nothing** (not Case A). Only a working tree that *already* held stale CRLF copies (narrow Case B) may keep those bytes on disk — git's attribute-normalized comparison means they show clean and produce no phantom diffs even so; `git checkout -- <paths>` (or re-clone) is an optional cosmetic step to force LF on disk immediately, relevant here mainly because the worktree is shared with the sandbox git. Owner post-pull rule of thumb: unexplained "modified" files in `git status` → `git checkout -- .`; clean status → do nothing.
 - Next session goal: P0-7 (runbook + account inventory) — the last engineering item of P0 alongside P0-8 verification.
+
+**2026-07-19 — Session 8 (P0-7 runbook + account inventory — complete)**
+- Objective: operational documentation to run, recover, and transfer the project.
+- Implemented: `RUNBOOK.md` — §1 inventory of all 11 accounts (registrar, GitHub, Netlify, Web3Forms, GA4, GSC, GBP placeholder, business Gmail, reviews Apps Script, UptimeRobot, cron-job.org) with purpose/owner/recovery/MFA/backup per account; owner-only facts marked ⬜ OWNER rather than guessed; registrar and Gmail flagged as the two single-points-of-failure. §2 deployment runbook (branch flow per §17, deploy steps incl. the P0-3 token and P0-4 rule conventions, post-deploy 3-minute checklist, one-click Netlify rollback with roll-back-first doctrine). §3 incident response for form failure / outage / DNS / deploy failure (detection→action→escalation→verification each, built on MONITORING.md signals and the July incident precedent). §4 escrow: second person needs Gmail access path + GitHub collaborator + Netlify team + GA4 admin + this file — zero stored secrets by design (all credentials recoverable via accounts; the one "key" is public-by-design). §5 weekly/monthly/quarterly maintenance (quarterly = the master-plan P10 cadence).
+- Scope note (conflict surfaced, not silently expanded): the session's DO-NOT list includes Netlify config, but the DOCUMENT LOCATION requirement mandates the P0-4 convention, whose binding rule requires a forced-404 rule in the same commit that creates a root doc — without it the *account inventory* would deploy publicly. The single rule was added; publish/headers untouched; TOML revalidated (9/9 root docs covered, 0 uncovered).
+- Verified: secret scan clean (matches are prose about secrets, no values); no site code touched.
+- Owner follow-ups: fill ⬜ OWNER rows (registrar identity + expiry is the most important fact in the file) and run the §4 escrow activation checklist.
+- Next session goal: P0-8 (deploy-mapping + live verification) — closes Phase P0 engineering.
 
 **2026-07-19 — Official Postmortem: Production Form Outage (issued by owner)**
 - **Root cause:** placeholder access key accidentally deployed after credential scrubbing (`caffdea` scrubbed the key per §15 policy with no key-delivery mechanism in place; the next deploy shipped the placeholder).

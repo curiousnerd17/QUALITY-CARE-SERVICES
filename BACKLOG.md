@@ -1261,6 +1261,15 @@ v1.3 amendment).*
   shared worktree) is permanently neutralized. Contributors with stale clones:
   `git add --renormalize . && git checkout -- .` once.
 
+- **P0-7 runbook + account inventory — ✅ Completed 2026-07-19**
+  (IMPLEMENTATION_MASTER_PLAN.md Phase P0): `RUNBOOK.md` created — 11-account
+  inventory (owner-only facts marked ⬜ OWNER, never guessed; registrar and
+  business Gmail flagged as single points of failure), deployment + one-click
+  rollback procedures, 4-scenario incident response, zero-secrets escrow
+  design, and weekly/monthly/quarterly maintenance cadence. Publish-blocked
+  per the P0-4 convention (9/9 root docs covered). Owner follow-up: fill
+  ⬜ OWNER rows and run the escrow activation checklist (~20 min).
+
 > **Backlog status:** living document. Update task state as work ships; never mark a task done
 > until its Acceptance Criteria *and* the standing Definition of Done are both satisfied and the
 > change is production-reviewed.
