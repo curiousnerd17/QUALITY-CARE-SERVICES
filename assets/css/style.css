@@ -76,11 +76,10 @@
   --section-blue: #f4f8ff;
 
   /* ===================================================================
-     RADIUS SCALE (DS-1) — FOUNDATION ONLY
-     The existing --radius token (below) remains the active compatibility
-     token that components consume. The DS-1 radius scale is introduced
-     here for future component migration. No component consumes the new
-     scale yet.
+     RADIUS SCALE (DS-2B)
+     The --radius token (below) remains the compatibility token for
+     unmigrated components. Migrated components (service cards, DS-3A)
+     consume this scale directly.
      =================================================================== */
   --radius-sm: 8px;
   --radius-md: 12px;
@@ -92,8 +91,8 @@
   --radius: 8px; /* active compatibility token — consumed by components */
 
   /* ===================================================================
-     SPACING SCALE (DS-1, 4px base) — FOUNDATION ONLY
-     Not yet consumed by any component.
+     SPACING SCALE (DS-2B, 4px base)
+     Consumed by migrated components (service cards, DS-3A).
      =================================================================== */
   --space-4: 4px;
   --space-8: 8px;
@@ -121,11 +120,10 @@
   --shadow-mobile-call: 0 10px 24px rgba(15, 118, 110, 0.2);
 
   /* ===================================================================
-     ELEVATION SCALE (DS-1) — FOUNDATION ONLY
-     Existing components continue using the legacy --shadow-* tokens
-     above. These new elevation tokens are foundation only and are not
-     consumed by any component yet; migration will occur in later
-     component tickets.
+     ELEVATION SCALE (DS-2B)
+     Unmigrated components continue using the legacy --shadow-* tokens
+     above; migrated components (service cards, DS-3A) consume this
+     scale. Remaining migrations occur in later DS-3 tickets.
      =================================================================== */
   --elevation-e1: 0 1px 2px rgba(23, 50, 77, 0.04), 0 6px 16px rgba(23, 50, 77, 0.06);
   --elevation-e2: 0 2px 6px rgba(23, 50, 77, 0.06), 0 16px 32px rgba(23, 50, 77, 0.10);
@@ -588,6 +586,10 @@ button {
   grid-template-columns: repeat(4, 1fr);
 }
 
+.services-grid {
+  gap: var(--space-20);
+}
+
 .testimonial-grid {
   grid-template-columns: repeat(3, 1fr);
 }
@@ -629,12 +631,20 @@ button {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+  padding: var(--space-24);
+  background: var(--surface-base);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-e1);
+  transition: box-shadow .25s ease, border-color .25s ease;
 }
 
 .service-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--elevation-e2);
+}
+
+.service-card:focus-within {
+  border-color: var(--primary-500);
+  box-shadow: var(--elevation-e2);
 }
 
 .trust-card {
@@ -673,6 +683,15 @@ button {
   margin: 0;
 }
 
+.service-card > i {
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-12);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  background: var(--primary-50);
+}
+
 .trust-card h3,
 .service-card h4,
 .process-card h3 {
@@ -680,6 +699,10 @@ button {
   color: var(--text);
   font-size: 1.03rem;
   line-height: 1.3;
+}
+
+.service-card h4 {
+  font-size: 1.14rem;
 }
 
 .trust-card p,
@@ -698,19 +721,19 @@ button {
 .service-points {
   list-style: none;
   padding: 0;
-  margin: 12px 0 16px;
+  margin: var(--space-12) 0 var(--space-16);
   display: grid;
-  gap: 8px;
+  gap: var(--space-8);
   width: 100%;
 }
 
 .service-points li {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: var(--space-8);
   color: var(--text);
   font-size: 0.88rem;
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .service-points i {
@@ -721,7 +744,7 @@ button {
 /* Service card actions */
 .service-actions {
   display: flex;
-  gap: 8px;
+  gap: var(--space-8);
   margin-top: auto;
   width: 100%;
 }
@@ -731,10 +754,10 @@ button {
   align-items: center;
   justify-content: center;
   gap: 6px;
-  min-height: 40px;
+  min-height: 44px;
   padding: 9px 11px;
   border-radius: var(--radius);
-  font-weight: 900;
+  font-weight: 700;
   font-size: 0.88rem;
   text-align: center;
   flex: 1;
