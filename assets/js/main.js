@@ -159,14 +159,14 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       name: "Sunita Verma",
       city: "Vigyan Nagar, Kota",
-      service: "Mother Care",
+      service: "Mother & Newborn Care",
       review: "After delivery, I was exhausted and overwhelmed. The mother care attendant they sent was gentle, experienced, and understood what I needed without me having to explain everything. I could actually rest.",
       rating: 5,
     },
     {
       name: "Amit Jain",
       city: "Mahaveer Nagar, Kota",
-      service: "Baby Care",
+      service: "Child Care",
       review: "When my wife went back to work, we needed someone for our baby. The caregiver they sent was good with our child — fed her on time, put her to sleep, and we never had to worry while we were away.",
       rating: 5,
     },
@@ -180,14 +180,14 @@ document.addEventListener("DOMContentLoaded", () => {
     {
       name: "Vikram Singh",
       city: "Kunhari, Kota",
-      service: "Housekeeping",
+      service: "Housekeeping / Dusting & Cleaning",
       review: "We had guests coming and the house was a mess. Called them on short notice and they arranged a housekeeping worker the next day. She did a thorough job and we didn't have to stress about it.",
       rating: 5,
     },
     {
       name: "Deepak Agarwal",
       city: "Landmark City, Kota",
-      service: "Patient Attendant",
+      service: "Patient Care",
       review: "What I liked is that they followed up after the service started to check if everything was okay. Not many places do that. It gave me confidence that if something went wrong, they'd be there.",
       rating: 5,
     },
