@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Quality Care Services" />
+  <meta name="theme-color" content="#0f766e" />
+
+  <title>Care &amp; Home Support Services in Kota | Quality Care Services</title>
+  <meta name="description" content="Patient care, elder care, mother &amp; newborn care, child care, maid, cook and housekeeping services in Kota. Tell us the situation and we'll match the right help." />
+
+  <!-- Canonical form per SP-T1: the hub is a directory index and carries the
+       trailing slash. Leaf service pages (PROJECT.md §9) do not. -->
+  <link rel="canonical" href="https://qualitycareservices.in/services/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://qualitycareservices.in/services/" />
+  <meta property="og:title" content="Care &amp; Home Support Services in Kota | Quality Care Services" />
+  <meta property="og:description" content="Patient care, elder care, mother &amp; newborn care, child care, maid, cook and housekeeping services in Kota. Tell us the situation and we'll match the right help." />
+  <meta property="og:image" content="https://qualitycareservices.in/images/logo-optimized.png" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:site_name" content="Quality Care Services" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Care &amp; Home Support Services in Kota | Quality Care Services" />
+  <meta name="twitter:description" content="Patient care, elder care, mother &amp; newborn care, child care, maid, cook and housekeeping services in Kota. Tell us the situation and we'll match the right help." />
+  <meta name="twitter:image" content="https://qualitycareservices.in/images/logo-optimized.png" />
+
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  <!-- Root-relative asset paths: this page sits one level deep, so the relative
+       forms used by root pages would resolve to /services/assets/… (P0-3 rule
+       on the ?v= token still applies — bump it on every page together). -->
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260719">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-optimized.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-optimized.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-optimized.png">
+
+  <!-- Google tag (gtag.js) — MANDATORY on every page. main.js ships the event
+       layer but no-ops without this tag, so a page missing it collects nothing. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT5DDR1ET5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NT5DDR1ET5');
+  </script>
+
+  <!-- Breadcrumb — matches the visible breadcrumb exactly (spec §4.6). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://qualitycareservices.in/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Services",
+        "item": "https://qualitycareservices.in/services/"
+      }
+    ]
+  }
+  </script>
+
+  <!-- ItemList — the canonical seven, positions 1–7 in PROJECT.md §5 order.
+       No `url` on any item: the individual service pages do not exist yet and
+       schema must never point at a 404. Each item gains its `url` on the commit
+       that ships its page. LocalBusiness is NOT duplicated here — `provider`
+       references the homepage @id, which is the pattern spec §4.6 prescribes. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    "name": "Services offered by Quality Care Services",
+    "itemListOrder": "https://schema.org/ItemListOrderAscending",
+    "numberOfItems": 7,
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Patient Care",
+        "item": {
+          "@type": "Service",
+          "name": "Patient Care",
+          "serviceType": "Patient Care",
+          "provider": { "@id": "https://qualitycareservices.in/#business" },
+          "areaServed": { "@type": "City", "name": "Kota" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Elder Care",
+        "item": {
+          "@type": "Service",
+          "name": "Elder Care",
+          "serviceType": "Elder Care",
+          "provider": { "@id": "https://qualitycareservices.in/#business" },
+          "areaServed": { "@type": "City", "name": "Kota" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": "Mother & Newborn Care",
+        "item": {
+          "@type": "Service",
+          "name": "Mother & Newborn Care",
+          "serviceType": "Mother & Newborn Care",
+          "provider": { "@id": "https://qualitycareservices.in/#business" },
+          "areaServed": { "@type": "City", "name": "Kota" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": "Child Care",
+        "item": {
+          "@type": "Service",
+          "name": "Child Care",
+          "serviceType": "Child Care",
+          "provider": { "@id": "https://qualitycareservices.in/#business" },
+          "areaServed": { "@type": "City", "name": "Kota" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 5,
+        "name": "Maid Services",
+        "item": {
+          "@type": "Service",
+          "name": "Maid Services",
+          "serviceType": "Maid Services",
+          "provider": { "@id": "https://qualitycareservices.in/#business" },
+          "areaServed": { "@type": "City", "name": "Kota" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 6,
+        "name": "Home Cook Services",
+        "item": {
+          "@type": "Service",
+          "name": "Home Cook Services",
+          "serviceType": "Home Cook Services",
+          "provider": { "@id": "https://qualitycareservices.in/#business" },
+          "areaServed": { "@type": "City", "name": "Kota" }
+        }
+      },
+      {
+        "@type": "ListItem",
+        "position": 7,
+        "name": "Housekeeping / Dusting & Cleaning",
+        "item": {
+          "@type": "Service",
+          "name": "Housekeeping / Dusting & Cleaning",
+          "serviceType": "Housekeeping / Dusting & Cleaning",
+          "provider": { "@id": "https://qualitycareservices.in/#business" },
+          "areaServed": { "@type": "City", "name": "Kota" }
+        }
+      }
+    ]
+  }
+  </script>
+
+  <!-- Page-scoped layout only (404.html / privacy-policy.html precedent).
+       Shared style.css is untouched, so the homepage carries zero regression
+       risk from this page. Every value below resolves to an existing Design
+       System token (spec §3.0) — no new visual primitives are introduced.
+
+       Only genuinely new components are styled here: the breadcrumb, the hub
+       hero, and the two-path chooser. The service cards, grid, cluster titles,
+       area grid, prefooter, header and footer are reused byte-identically from
+       the homepage and are styled entirely by the shared stylesheet — including
+       their heading levels, which is why this page keeps the homepage's
+       h2 → h3 → h4 nesting inside the services section rather than remapping
+       tags and re-declaring the visuals. -->
+  <style>
+    /* ---- Breadcrumb ---- */
+    .breadcrumb {
+      background: var(--surface-base);
+      border-bottom: 1px solid var(--line);
+      padding: var(--space-12) 0;
+      font-size: 0.9rem;
+    }
+    .breadcrumb ol {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--space-8);
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .breadcrumb li {
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      color: var(--muted);
+    }
+    /* CSS-generated separator. Some screen readers announce `content`, so it
+       is held to the 4.5:1 text threshold rather than treated as decoration. */
+    .breadcrumb li + li::before {
+      content: "\203A";
+      color: var(--muted);
+    }
+    /* min-height meets WCAG 2.2 SC 2.5.8 (24px) without relying on the
+       line-height exception. */
+    .breadcrumb a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      color: var(--primary-dark);
+      font-weight: 600;
+    }
+    .breadcrumb a:hover,
+    .breadcrumb a:focus-visible {
+      text-decoration: underline;
+    }
+    .breadcrumb [aria-current="page"] {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* ---- Hub hero ---- */
+    .hub-hero {
+      padding: var(--space-48) 0 var(--space-40);
+      background: var(--section);
+    }
+    .hub-hero-inner {
+      max-width: 760px;
+    }
+    .hub-hero h1 {
+      margin: var(--space-8) 0 0;
+      font-size: clamp(1.9rem, 4vw, 2.7rem);
+      line-height: 1.15;
+    }
+    .hub-hero-lede {
+      margin: var(--space-16) 0 0;
+      color: var(--muted);
+      font-size: 1.06rem;
+      line-height: 1.7;
+    }
+    .hub-hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-12);
+      margin-top: var(--space-24);
+    }
+
+    /* ---- "Which service do I need?" chooser ---- */
+    .hub-chooser {
+      padding: var(--space-48) 0 var(--space-8);
+    }
+    .hub-paths {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-20);
+      margin-top: var(--space-24);
+    }
+    .hub-path {
+      display: flex;
+      flex-direction: column;
+      padding: var(--space-24);
+      border: 1px solid var(--line);
+      border-radius: var(--radius-md);
+      background: var(--surface-base);
+      box-shadow: var(--elevation-e1);
+      transition: box-shadow .25s ease, border-color .25s ease;
+    }
+    .hub-path:hover,
+    .hub-path:focus-within {
+      border-color: var(--primary-500);
+      box-shadow: var(--elevation-e2);
+    }
+    .hub-path > i {
+      display: inline-grid;
+      place-items: center;
+      width: 44px;
+      height: 44px;
+      margin-bottom: var(--space-12);
+      border-radius: var(--radius-md);
+      color: var(--primary);
+      background: var(--primary-50);
+      font-size: 1.05rem;
+    }
+    .hub-path h3 {
+      margin: 0;
+      color: var(--text);
+      font-size: 1.14rem;
+      line-height: 1.3;
+    }
+    .hub-path p {
+      margin: var(--space-8) 0 var(--space-16);
+      color: var(--muted);
+    }
+    /* Standalone card link, not inline in a sentence — so the SC 2.5.8 inline
+       exception does not apply. Sized to the 44px CTA rule (spec §9). */
+    .hub-path-link {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-8);
+      min-height: 44px;
+      margin-top: auto;
+      align-self: flex-start;
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+    .hub-path-link:hover,
+    .hub-path-link:focus-visible {
+      text-decoration: underline;
+    }
+    .hub-chooser-fallback {
+      margin: var(--space-20) 0 0;
+      padding: var(--space-16) var(--space-20);
+      border-left: 3px solid var(--primary-400);
+      border-radius: var(--radius-sm);
+      background: var(--section);
+      color: var(--muted);
+    }
+
+    /* ---- Responsive ---- */
+    @media (max-width: 980px) {
+      .hub-paths {
+        grid-template-columns: 1fr;
+      }
+    }
+    @media (max-width: 640px) {
+      .hub-hero {
+        padding: var(--space-32) 0 var(--space-24);
+      }
+      .hub-hero-actions .btn {
+        flex: 1 1 100%;
+        justify-content: center;
+      }
+      .hub-chooser {
+        padding-top: var(--space-32);
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="Quality Care Services home">
+        <img src="/images/logo-optimized.png" alt="Quality Care Services logo" width="68" height="68" decoding="async">
+        <span>Quality Care Services</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-controls="primaryNavigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-links" id="primaryNavigation" aria-label="Primary navigation">
+        <a href="/#trust">Trust</a>
+        <a href="/#services">Services</a>
+        <a href="/#about">About</a>
+        <a href="/#process">How It Works</a>
+        <a href="/#reviews">Reviews</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#inquiry">Inquiry</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+
+      <a class="header-call btn-call" href="tel:+918302482096">
+        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+        Call Us
+      </a>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Services</li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="main-content">
+    <!-- id is explicit rather than inferred: main.js attributes every CTA click
+         to the nearest section[id], and the page's two highest-intent buttons
+         live here. A class-order change must never silently rename the GA4
+         `link_section` value for them. -->
+    <section class="hub-hero" id="services-hero" aria-labelledby="hubTitle">
+      <div class="container">
+        <div class="hub-hero-inner">
+          <p class="eyebrow">Our services</p>
+          <h1 id="hubTitle">Care &amp; Home Support Services in Kota</h1>
+          <p class="hub-hero-lede">Seven services, two kinds of need: someone in the family who needs looking after, or a home that needs dependable hands. Tell us the situation and we'll help you work out which one fits — and match a verified person to it.</p>
+
+          <div class="hub-hero-actions" aria-label="Primary contact actions">
+            <a class="btn btn-primary btn-call" href="tel:+918302482096">
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              Call Now
+            </a>
+            <a class="btn btn-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%27m%20looking%20at%20your%20services%20and%20need%20some%20help%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              WhatsApp Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section hub-chooser" id="which-service" aria-labelledby="chooserTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Start here</p>
+          <h2 id="chooserTitle">Not Sure Which Service You Need?</h2>
+          <p>Almost every family that calls us arrives with one of two situations. This is the quickest way to tell them apart.</p>
+        </div>
+
+        <div class="hub-paths">
+          <article class="hub-path">
+            <i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i>
+            <h3>Someone in the home needs care</h3>
+            <p>A patient recovering at home, an elderly parent who needs daily support, a new mother and her baby, or young children who need looking after while you're at work.</p>
+            <a class="hub-path-link" href="#care-services">See Care Services <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></a>
+          </article>
+
+          <article class="hub-path">
+            <i class="fa-solid fa-house-chimney" aria-hidden="true"></i>
+            <h3>The home needs running</h3>
+            <p>Dependable everyday help — cleaning, kitchen work, cooking and general upkeep — arranged part-time or full-time around your household's routine.</p>
+            <a class="hub-path-link" href="#home-support-services">See Home Support Services <i class="fa-solid fa-arrow-right-long" aria-hidden="true"></i></a>
+          </article>
+        </div>
+
+        <p class="hub-chooser-fallback">
+          <i class="fa-solid fa-circle-info" aria-hidden="true"></i>
+          Still not sure, or the situation sits somewhere between the two? Call us and describe it in your own words. We'll tell you honestly which kind of help fits — and if we're not the right people for it, we'll say so.
+        </p>
+      </div>
+    </section>
+
+    <section class="section services-section" id="all-services" aria-labelledby="allServicesTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">All seven services</p>
+          <h2 id="allServicesTitle">What We Provide</h2>
+          <p>Every placement is a person we have verified and briefed about your specific needs before they start.</p>
+        </div>
+
+        <!-- Cluster 1 · Care Services (PROJECT.md §5, positions 1–4) -->
+        <div class="service-group" id="care-services">
+          <h3>Care Services</h3>
+          <div class="services-grid">
+            <article class="service-card">
+              <i class="fa-solid fa-user-nurse" aria-hidden="true"></i>
+              <h4>Patient Care</h4>
+              <p>Qualified Nurses and Experienced Caregivers, matched according to the patient's needs.</p>
+              <ul class="service-points">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Qualified Nurses</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Experienced Caregivers</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Recovery &amp; Daily Care</li>
+              </ul>
+              <!-- Detail-page link is added to this card on the commit that ships
+                   /services/patient-care. Never link to an unbuilt page (E5-T3). -->
+              <div class="service-actions">
+                <a href="/?service=Patient%20Care#inquiry" data-service="Patient Care">Get a Callback</a>
+                <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Patient%20Care%20support%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Patient Care">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+              </div>
+            </article>
+
+            <article class="service-card">
+              <i class="fa-solid fa-person-cane" aria-hidden="true"></i>
+              <h4>Elder Care</h4>
+              <p>Reliable daily support for elderly parents.</p>
+              <ul class="service-points">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hygiene &amp; Mobility</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Meal Support</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Companionship</li>
+              </ul>
+              <div class="service-actions">
+                <a href="/?service=Elder%20Care#inquiry" data-service="Elder Care">Get a Callback</a>
+                <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Elder%20Care%20support%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Elder Care">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+              </div>
+            </article>
+
+            <article class="service-card">
+              <i class="fa-solid fa-person-pregnant" aria-hidden="true"></i>
+              <h4>Mother &amp; Newborn Care</h4>
+              <p>Support for mothers and newborn babies during the first weeks after delivery.</p>
+              <ul class="service-points">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Recovery Help</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Feeding Support</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Newborn Care</li>
+              </ul>
+              <div class="service-actions">
+                <a href="/?service=Mother%20%26%20Newborn%20Care#inquiry" data-service="Mother &amp; Newborn Care">Get a Callback</a>
+                <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Mother%20%26%20Newborn%20Care%20support%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Mother &amp; Newborn Care">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+              </div>
+            </article>
+
+            <article class="service-card">
+              <i class="fa-solid fa-child" aria-hidden="true"></i>
+              <h4>Child Care</h4>
+              <p>Dependable care for young children while parents are at work or away.</p>
+              <ul class="service-points">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Play &amp; Activities</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Safety &amp; Supervision</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Daily Routines</li>
+              </ul>
+              <div class="service-actions">
+                <a href="/?service=Child%20Care#inquiry" data-service="Child Care">Get a Callback</a>
+                <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Child%20Care%20support%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Child Care">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <!-- Cluster 2 · Home Support Services (PROJECT.md §5, positions 5–7) -->
+        <div class="service-group" id="home-support-services">
+          <h3>Home Support Services</h3>
+          <div class="services-grid">
+            <article class="service-card">
+              <i class="fa-solid fa-house-user" aria-hidden="true"></i>
+              <h4>Maid Services</h4>
+              <p>Part-time or full-time help with cleaning, kitchen work, and daily tasks.</p>
+              <ul class="service-points">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Kitchen Work</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Cleaning</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Daily Chores</li>
+              </ul>
+              <div class="service-actions">
+                <a href="/?service=Maid%20Services#inquiry" data-service="Maid Services">Get a Callback</a>
+                <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Maid%20Services%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Maid Services">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+              </div>
+            </article>
+
+            <article class="service-card">
+              <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+              <h4>Home Cook Services</h4>
+              <p>Experienced home cooks for daily, fresh, home-style meal preparation.</p>
+              <ul class="service-points">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Daily Meal Preparation</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Home-Style Cooking</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Regular Schedules</li>
+              </ul>
+              <div class="service-actions">
+                <a href="/?service=Home%20Cook%20Services#inquiry" data-service="Home Cook Services">Get a Callback</a>
+                <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Home%20Cook%20Services%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Home Cook Services">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+              </div>
+            </article>
+
+            <article class="service-card">
+              <i class="fa-solid fa-broom" aria-hidden="true"></i>
+              <h4>Housekeeping / Dusting &amp; Cleaning</h4>
+              <p>Help with daily household cleaning and upkeep.</p>
+              <ul class="service-points">
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Cleaning</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Tidying</li>
+                <li><i class="fa-solid fa-check" aria-hidden="true"></i> Maintenance Help</li>
+              </ul>
+              <div class="service-actions">
+                <a href="/?service=Housekeeping%20%2F%20Dusting%20%26%20Cleaning#inquiry" data-service="Housekeeping / Dusting &amp; Cleaning">Get a Callback</a>
+                <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Housekeeping%20support%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Housekeeping / Dusting &amp; Cleaning">
+                  <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
+                </a>
+              </div>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section service-area-section" id="service-areas" aria-labelledby="serviceAreaTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Where we serve</p>
+          <h2 id="serviceAreaTitle">Areas We Serve in Kota</h2>
+          <p>All seven services are available across these areas in and around Kota. For locations slightly outside the city, call us to confirm availability.</p>
+        </div>
+
+        <div class="area-grid">
+          <div class="area-card">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Kota City</span>
+          </div>
+          <div class="area-card">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Talwandi</span>
+          </div>
+          <div class="area-card">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Vigyan Nagar</span>
+          </div>
+          <div class="area-card">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Mahaveer Nagar</span>
+          </div>
+          <div class="area-card">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Kunhari</span>
+          </div>
+          <div class="area-card">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Landmark City</span>
+          </div>
+          <div class="area-card">
+            <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+            <span>Nearby Areas</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="prefooter-section" aria-labelledby="hubPrefooterTitle">
+      <div class="container">
+        <div class="prefooter-inner">
+          <h2 id="hubPrefooterTitle">Tell Us What Your Family Needs</h2>
+          <p>One conversation is usually enough to work out the right kind of support. Call us, message on WhatsApp, or send an inquiry and we'll get back to you.</p>
+          <div class="prefooter-actions">
+            <a class="btn btn-primary btn-call" href="tel:+918302482096">
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              Call Now
+            </a>
+            <a class="btn btn-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%27m%20looking%20at%20your%20services%20and%20need%20some%20help%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              WhatsApp
+            </a>
+          </div>
+          <p class="prefooter-trust">
+            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            Serving families across Kota with verified caregivers.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h2>Quality Care Services</h2>
+        <p>Helping Kota families find reliable patient care, elder care, mother &amp; newborn care, child care, and home support services.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <a href="/#home">Home</a>
+        <a href="/#about">About Us</a>
+        <a href="/services/">Services</a>
+        <a href="/#reviews">Reviews</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#inquiry">Inquiry</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <a href="/services/#care-services">Patient Care</a>
+        <a href="/services/#care-services">Elder Care</a>
+        <a href="/services/#care-services">Mother &amp; Newborn Care</a>
+        <a href="/services/#care-services">Child Care</a>
+        <a href="/services/#home-support-services">Maid Services</a>
+        <a href="/services/#home-support-services">Home Cook Services</a>
+        <a href="/services/#home-support-services">Housekeeping / Dusting &amp; Cleaning</a>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <span>Kota</span>
+        <span>Talwandi</span>
+        <span>Vigyan Nagar</span>
+        <span>Nearby Areas</span>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <a href="tel:+918302482096"><i class="fa-solid fa-phone" aria-hidden="true"></i> +91 8302482096</a>
+        <a href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20need%20some%20help%20at%20home." class="footer-wa-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+        <a href="mailto:qualitycareserviceskota@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> qualitycareserviceskota@gmail.com</a>
+      </div>
+      <div class="footer-hours">
+        <h3>Business Hours</h3>
+        <p>Mon – Sat: 8:00 AM – 8:00 PM</p>
+        <p>Sunday: 9:00 AM – 2:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-copyright">&copy; 2025 Quality Care Services. All Rights Reserved.</span>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <script>
+        (function () {
+          var el = document.getElementById('footer-copyright');
+          if (el) el.textContent = '© ' + new Date().getFullYear() + ' Quality Care Services. All Rights Reserved.';
+        })();
+      </script>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%27m%20looking%20at%20your%20services%20and%20need%20some%20help%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="Chat with Quality Care Services on WhatsApp">
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <a class="sticky-call-mobile btn-call" href="tel:+918302482096">
+    <i class="fa-solid fa-phone" aria-hidden="true"></i>
+    Call Now
+  </a>
+
+  <script src="/assets/js/main.js?v=20260721b" defer></script>
+</body>
+</html>

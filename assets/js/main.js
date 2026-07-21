@@ -228,6 +228,33 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
+  // ---- Cross-page service intent (?service=…) ----
+  // The auto-fill above only works when the link and the form share a page. A
+  // CTA on /services/ navigates here instead, so the intent travels in the
+  // query string and is applied on arrival — the visitor does not re-select a
+  // service they have already chosen.
+  //
+  // Only a value that exactly matches an existing <option> is accepted, so the
+  // parameter can never inject an arbitrary string into a submitted lead.
+  // Assignment is deliberately programmatic and fires no `change` event: the
+  // originating click already emitted `service_selected` on the source page,
+  // and a second event here would double-count the same choice.
+  (function applyServiceFromQuery() {
+    try {
+      if (!serviceSelect || !window.location.search) return;
+
+      const requested = new URLSearchParams(window.location.search).get("service");
+      if (!requested) return;
+
+      const match = Array.from(serviceSelect.options).find(
+        (option) => option.value && option.value === requested
+      );
+      if (match) serviceSelect.value = match.value;
+    } catch (error) {
+      /* A malformed query string must never break the form. */
+    }
+  })();
+
   // ========== FORM UTILITIES ==========
   function cleanValue(value) {
     return String(value || "")
