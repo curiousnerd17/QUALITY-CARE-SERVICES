@@ -36,7 +36,7 @@
   <!-- Font Awesome loaded asynchronously — eliminates render-blocking -->
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-  <!-- Cache-busting: bump ?v= in BOTH index.html and 404.html on any deploy that changes the referenced asset (P0-3) -->
+  <!-- Cache-busting: bump ?v= in ALL page files — index.html, 404.html, privacy-policy.html — on any deploy that changes the referenced asset (P0-3) -->
   <link rel="stylesheet" href="assets/css/style.css?v=20260719">
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="msapplication-config" content="/browserconfig.xml">
@@ -704,7 +704,7 @@
 
           <p class="privacy-note">
             <i class="fa-solid fa-lock" aria-hidden="true"></i>
-            Your information stays with us. We'll only use it to contact you about your inquiry.
+            We'll only use your details to contact you about your inquiry — never for advertising, and never sold. See our <a href="/privacy-policy">Privacy Policy</a>.
           </p>
         </form>
       </div>
@@ -838,6 +838,7 @@
     </div>
     <div class="footer-bottom">
       <span id="footer-copyright">&copy; 2025 Quality Care Services. All Rights Reserved.</span>
+      <a href="/privacy-policy">Privacy Policy</a>
       <script>
         (function () {
           var el = document.getElementById('footer-copyright');
@@ -856,6 +857,6 @@
     Call Now
   </a>
 
-  <script src="assets/js/main.js?v=20260720" defer></script>
+  <script src="assets/js/main.js?v=20260721" defer></script>
 </body>
 </html>

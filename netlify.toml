@@ -87,6 +87,148 @@
   status = 404
   force = true
 
+[[redirects]]
+  from = "/LOCAL_SEO_MASTER_PLAN.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/IMPLEMENTATION_READINESS_REPORT.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/SEO_EXECUTION_PLAYBOOK.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# Pre-armed: DECISION_LOG.md does not exist yet (SEO_EXECUTION_PLAYBOOK.md
+# Appendix E row 2). The rule is added BEFORE the file so the blocklist cannot
+# lag the document — inverting the fail-open ordering that produced B5. A rule
+# for a non-existent path is inert: the path already 404s, and force=true
+# changes nothing until the file appears.
+[[redirects]]
+  from = "/DECISION_LOG.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# ── Directory-level protection: repository-only trees (B5 follow-up) ──────────
+# The per-file rules above are FAIL-OPEN — a new root document is public until
+# somebody remembers to add a rule, which is precisely how B5 arose and then
+# widened. Directories do not have that weakness: Netlify supports splats in
+# `from`, so a single rule covers every file in the tree, now and in future.
+# Any evidence artifact added later is therefore protected on creation with no
+# further action required — fail-CLOSED for everything under this path.
+# (Extensions still cannot be matched this way: `*.md` is not a valid pattern.
+# That limitation is why root documents remain individually enumerated above.)
+#
+# evidence/ holds deployment and verification records per
+# SEO_EXECUTION_PLAYBOOK.md §13 — screenshots, validator output, before/after
+# state. Repository-only, never served.
+[[redirects]]
+  from = "/evidence/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+
+# ── Canonical URL strategy (SP-T1) ───────────────────────────────────────────
+# DECISION (SP-T1, spec §4.3 gate 3, 2026-07-21):
+#   File strategy ....... FLAT files. `/services/patient-care.html` on disk.
+#                         Not `patient-care/index.html`.
+#   Canonical form ...... EXTENSIONLESS, NO trailing slash: `/services/patient-care`
+#   Rationale ........... PROJECT.md §9 states the target form literally, with no
+#                         extension and no trailing slash. Flat files also match the
+#                         only convention this repo has ever used (index.html,
+#                         404.html, privacy-policy.html) and avoid deep nesting,
+#                         which §9 prohibits. Directory-style would produce a
+#                         trailing slash that contradicts the §9 table.
+#
+# Binding consequence: the canonical tag, sitemap `<loc>`, schema `url`,
+# breadcrumb, and EVERY internal link use the extensionless form — for the
+# `/services/` hub (E4-T7), all seven service pages, and every page after them.
+#
+# Rule 1 canonicalises the `.html` form to the clean form (301) so exactly one
+# URL is indexable. Rule 2 serves the clean form from the flat file (200 rewrite,
+# URL unchanged in the address bar). Order matters: the 301 must precede the
+# rewrite, and both must follow the doc-blocklist rules above.
+#
+# ⚠️ UNVERIFIED — REQUIRES A PREVIEW-DEPLOY TEST BEFORE THE FIRST SERVICE PAGE
+# SHIPS. SP-T1's acceptance criteria demand that exactly one form returns 200 and
+# all variants 301, proven on a deploy preview. That test has NOT been run. Netlify
+# placeholder/splat interaction with a literal `.html` suffix is the specific
+# behaviour to confirm. Do not ship E3-T1 until the checks in the commit body pass.
+
+# ── Hub guards (SP-T1 amendment, approved 2026-07-21) ────────────────────────
+# The /services/ hub is INFRASTRUCTURE, not ordinary content: canonical entry
+# point for all services, parent of every service page and every future
+# service-specific blog cluster, central internal-link distribution node, and a
+# stable URL that must never require restructuring.
+#
+# Its file is /services/index.html, which collides with the :slug placeholder
+# below — `slug` would match the literal string "index", exposing the hub at
+# /services/index alongside its real URL. These three guards MUST precede the
+# placeholder pair (first match wins) and close every non-canonical form:
+#
+#   /services/index.html -> /services/   (the file's own path)
+#   /services/index      -> /services/   (what the :slug rewrite would produce)
+#   /services            -> /services/   (missing trailing slash)
+#
+# Per spec §4.4 the hub's canonical form carries the trailing slash, while leaf
+# service pages per PROJECT.md §9 do not. That asymmetry is deliberate and
+# constitutional — a directory index takes the slash, a leaf does not.
+
+[[redirects]]
+  from = "/services/index.html"
+  to = "/services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/index"
+  to = "/services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services"
+  to = "/services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/:slug.html"
+  to = "/services/:slug"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/:slug"
+  to = "/services/:slug.html"
+  status = 200
+
+# Root-level content pages follow the SAME canonical form, so the site has one
+# URL convention rather than two. Enumerated explicitly rather than by
+# placeholder: a root-level `/:page` rule would also capture `/index.html`,
+# `/404.html`, and every future asset path, which is not worth the blast radius
+# for a handful of pages. Add a pair here when a root page is added.
+# (`/` itself is served by index.html natively and needs no rule.)
+
+[[redirects]]
+  from = "/privacy-policy.html"
+  to = "/privacy-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy.html"
+  status = 200
+
 
 # ── Security headers (all pages) ──────────────────────────────────────────────
 

@@ -6,6 +6,198 @@ document.addEventListener("DOMContentLoaded", () => {
   const contactForm = document.getElementById("contactForm");
   const formMessage = document.getElementById("formMessage");
   const testimonialGrid = document.getElementById("testimonialGrid");
+  const urgencySelect = document.getElementById("urgencySelect");
+
+  // ========== ANALYTICS — GA4 EVENT LAYER (P3 · E6-T1…T4) ==========
+  // The gtag.js base tag and window.dataLayer are initialised in the <head> of
+  // index.html. This layer adds EVENTS ONLY. It deliberately does not:
+  //   · initialise GA          — already done in the page head
+  //   · fire page_view         — gtag('config') already sends it; a manual
+  //                              page_view here would double-count every session
+  //   · touch the DOM, styling, markup, or the lead path
+  // It is a silent no-op wherever GA is absent (404.html, ad-blockers, offline)
+  // and every entry point is wrapped so measurement can never throw into the
+  // form or navigation code paths.
+
+  const ANALYTICS_TEXT_LIMIT = 60;
+
+  // Sends a GA4 event. Prefers gtag(); falls back to queueing on dataLayer in
+  // the exact shape gtag.js consumes if the library has not parsed yet. If
+  // neither exists, does nothing and creates nothing (no global pollution).
+  function trackEvent(eventName, params) {
+    try {
+      if (!eventName) return;
+      const payload = params || {};
+
+      if (typeof window.gtag === "function") {
+        window.gtag("event", eventName, payload);
+      } else if (Array.isArray(window.dataLayer)) {
+        (function queueForGtag() {
+          window.dataLayer.push(arguments);
+        })("event", eventName, payload);
+      }
+    } catch (error) {
+      /* Measurement must never break the page. Swallow deliberately. */
+    }
+  }
+
+  // Nearest section id — gives every click a page-region context without
+  // adding a single attribute to the HTML. Falls back to the landmark region
+  // so header and footer entry points are attributable too.
+  function analyticsSection(element) {
+    try {
+      const section = element.closest("section[id]");
+      if (section && section.id) return section.id;
+      if (element.closest("header")) return "header";
+      if (element.closest("footer")) return "footer";
+      if (element.closest("nav")) return "nav";
+
+      // A <section> carrying no id — use its first class, minus the suffix.
+      const unnamed = element.closest("section[class]");
+      if (unnamed) {
+        const sectionToken = (unnamed.getAttribute("class") || "").trim().split(/\s+/)[0];
+        if (sectionToken) return sectionToken.replace(/-section$/, "");
+      }
+
+      // Free-floating element such as the mobile sticky call bar — the single
+      // highest-intent mobile CTA, so it must not fall through to "unknown".
+      const ownToken = (element.getAttribute("class") || "").trim().split(/\s+/)[0];
+      return ownToken || "unknown";
+    } catch (error) {
+      return "unknown";
+    }
+  }
+
+  // Visible link text, collapsed and truncated. Never user-entered content.
+  function analyticsLabel(element) {
+    try {
+      const text = (element.textContent || "").replace(/\s+/g, " ").trim();
+      return text ? text.slice(0, ANALYTICS_TEXT_LIMIT) : "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  // Service attribution for a clicked element: explicit data-service first,
+  // then the enclosing service card's heading. Returns "" when neither exists.
+  function analyticsService(element) {
+    try {
+      const tagged = element.closest("[data-service]");
+      if (tagged && tagged.dataset.service) return tagged.dataset.service;
+
+      const card = element.closest(".service-card");
+      const heading = card ? card.querySelector("h4, h3") : null;
+      return heading ? heading.textContent.replace(/\s+/g, " ").trim() : "";
+    } catch (error) {
+      return "";
+    }
+  }
+
+  // Form field readers. Only non-identifying selections are ever read — name,
+  // phone, location and message are never touched by the measurement layer.
+  function selectedService() {
+    return serviceSelect && serviceSelect.value ? serviceSelect.value : "";
+  }
+
+  function selectedUrgency() {
+    return urgencySelect && urgencySelect.value ? urgencySelect.value : "";
+  }
+
+  // ---- One delegated click listener for the whole document ----
+  // Delegation is the guarantee against duplicate listeners: exactly one
+  // handler is bound regardless of how many links exist, and it also covers
+  // markup injected later (e.g. the testimonial grid).
+  document.addEventListener("click", (event) => {
+    try {
+      const target = event.target;
+      if (!target || typeof target.closest !== "function") return;
+
+      const link = target.closest("a[href]");
+      if (!link) return;
+
+      const href = link.getAttribute("href") || "";
+      if (!href) return;
+
+      const section = analyticsSection(link);
+      const label = analyticsLabel(link);
+      const service = analyticsService(link);
+
+      // 1 · Call clicks — every tel: entry point.
+      if (href.toLowerCase().startsWith("tel:")) {
+        trackEvent("call_click", {
+          link_section: section,
+          link_text: label,
+          service: service,
+        });
+        return;
+      }
+
+      // 2 · WhatsApp clicks — checked before the generic external-link branch
+      //     so a WhatsApp click is never counted twice.
+      if (href.toLowerCase().indexOf("wa.me") !== -1) {
+        trackEvent("whatsapp_click", {
+          link_section: section,
+          link_text: label,
+          service: service,
+        });
+        return;
+      }
+
+      // 3 · Service selected via a service-card CTA. These are internal
+      //     (#inquiry) anchors, so this cannot collide with the branches above.
+      if (link.hasAttribute("data-service")) {
+        trackEvent("service_selected", {
+          service: link.dataset.service || "",
+          method: "service_card",
+          link_section: section,
+        });
+        return;
+      }
+
+      // 4 · External link clicks — any other absolute link off this origin.
+      if (/^https?:\/\//i.test(href)) {
+        let destination = null;
+        try {
+          destination = new URL(href, window.location.href);
+        } catch (error) {
+          return;
+        }
+        if (destination.hostname && destination.hostname !== window.location.hostname) {
+          trackEvent("external_link_click", {
+            link_section: section,
+            link_text: label,
+            link_domain: destination.hostname,
+            link_url: destination.href.slice(0, 200),
+          });
+        }
+      }
+    } catch (error) {
+      /* Never let measurement interfere with a click. */
+    }
+  });
+
+  // ---- Service selected via the dropdown ----
+  // Programmatic assignment (the data-service auto-fill below) does not emit a
+  // change event, so this fires only on genuine user selection — no double count.
+  serviceSelect?.addEventListener("change", () => {
+    if (!serviceSelect.value) return;
+    trackEvent("service_selected", {
+      service: serviceSelect.value,
+      method: "dropdown",
+      link_section: analyticsSection(serviceSelect),
+    });
+  });
+
+  // ---- Inquiry form started ----
+  // First genuine interaction with any field, once per page load.
+  let inquiryFormStartTracked = false;
+  contactForm?.addEventListener("focusin", () => {
+    if (inquiryFormStartTracked) return;
+    inquiryFormStartTracked = true;
+    trackEvent("inquiry_form_started", {
+      service: selectedService(),
+    });
+  });
 
   // ========== MENU TOGGLE ==========
   function setMenuState(isOpen) {
@@ -90,6 +282,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (firstInvalidField) {
+      trackEvent("inquiry_form_failed", {
+        failure_type: "validation",
+        field: firstInvalidField.name || firstInvalidField.id || "unknown",
+        service: selectedService(),
+      });
       setMessage("Please fill in all the required fields, including a valid 10-digit phone number.", "error");
       firstInvalidField.focus();
       return;
@@ -119,10 +316,23 @@ document.addEventListener("DOMContentLoaded", () => {
         throw new Error("Submission failed");
       }
 
+      // Read the selections BEFORE reset() clears them.
+      const submittedService = selectedService();
+      const submittedUrgency = selectedUrgency();
+
       form.reset();
       setMessage("Thank you. We've received your request. Someone from our team will call you soon.", "success");
       submissionSucceeded = true;
+
+      trackEvent("inquiry_form_submitted", {
+        service: submittedService,
+        urgency: submittedUrgency,
+      });
     } catch (error) {
+      trackEvent("inquiry_form_failed", {
+        failure_type: "submission",
+        service: selectedService(),
+      });
       setMessage("Something went wrong. Please try again or call us directly — we're here to help.", "error");
     } finally {
       form.removeAttribute("aria-busy");

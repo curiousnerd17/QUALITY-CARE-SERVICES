@@ -88,11 +88,68 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 |---|---|---|---|---|---|---|
 | B1 | ~~Production form key placeholder → lead loss~~ **INCIDENT RESOLVED 2026-07-19.** Owner executed all six recovery steps: fresh UUID key generated (verified: valid format, ≠ leaked `f42cd3…`, ≠ placeholder), old key(s) revoked (owner-attested), `index.html` updated by owner (commit `a78c43e`), deployed, **live browser submission test passed — success message ✓, cooldown ✓, inquiry email received ✓**. Incident window: ~2026-07-01 → 2026-07-19 (~18 days). Session 2 log remains the official incident record. | 🔴 Critical | Owner | — | Follow-up protection lands in P0-5 (synthetic form test + alerting) | ✅ **Resolved 2026-07-19** |
 | B2 | Truth-release work unreviewed/unmerged on `ds-3a-service-card` | 🔴 Critical | Owner (review) | P1 review session (72h SLA) | ✅ Pushed 2026-07-19 (`origin/ds-3a-service-card`); only review + merge remain | Open — review only |
-| B3 | Internal docs publicly served (`/PROJECT.md` confirmed live) | 🟠 High | Owner | Netlify config | P0-4 publish-dir restriction | Open |
+| B3 | Internal docs publicly served (`/PROJECT.md` confirmed live) | 🟠 High | Owner | Netlify config | P0-4 publish-dir restriction; blocklist completed to 12/12 on `b5-publish-blocklist` (see Readiness-B5 block below) | Open — awaiting deploy verification |
 | B4 | D4 (Home Support boundaries) unresolved — gates 3 of 7 service pages | 🟠 High | Business | Owner decision | Escalate at P7 start; time-box | Open |
 | B5 | D5 (short-notice availability per service) unresolved | 🟡 Medium | Business | Owner decision | Same escalation as B4 | Open |
 | B6 | §19 approvals needed for visible fixes (WA contrast, hero image, DS-3A) | 🟡 Medium | Owner (governance) | Before/after evidence | Batch per phase (P1, P2, P4) | Open |
 | B7 | ~~DS-3A CSS diff uncommitted 17 days~~ | 🟡 Medium | Owner | — | Committed as `ef4bd6c` (P0-1); §19 sign-off + DoD still pending under B6 | ✅ **Resolved 2026-07-19** |
+
+> ⚠️ **ID-NAMESPACE WARNING — two different B-registers exist.** The `B1…B7` IDs above are
+> this document's own register. `IMPLEMENTATION_READINESS_REPORT.md` maintains a **separate**
+> `B1…B5` register, and the IDs **collide with different meanings**:
+>
+> | ID | Here (progress doc) | In the readiness report |
+> |---|---|---|
+> | B3 | Internal docs publicly served | GBP does not exist / verification latency |
+> | B5 | **D5 — short-notice availability unresolved** | **Root docs outside the publish blocklist** |
+>
+> Always qualify the register when writing "B5". Unqualified, it is ambiguous, and the two
+> B5s are unrelated: one is a Netlify config gap, the other an open business decision.
+
+### Readiness-Report Blocker B5 — publish blocklist completion
+
+**Scope:** `IMPLEMENTATION_READINESS_REPORT.md` → Part III → **B5** ("2 root docs outside the
+P0-4 blocklist"). This is the *config* blocker. It is **not** progress-doc B5 (D5 short-notice
+availability), which remains **Open** and untouched by this work.
+
+**Implementation.** Branch `b5-publish-blocklist`. `netlify.toml` only; 29 lines added, 0 removed.
+The audit recorded 2 uncovered docs against 10; the live gap was **3 against 12** —
+`SEO_EXECUTION_PLAYBOOK.md` was created after the audit date. Rules added for
+`LOCAL_SEO_MASTER_PLAN.md`, `IMPLEMENTATION_READINESS_REPORT.md`, `SEO_EXECUTION_PLAYBOOK.md`,
+plus a pre-armed rule for `DECISION_LOG.md` (not yet created). Coverage: **12/12 root `.md`
+files, 13 forced-404 rules.** Build block, domain redirects, security headers, CSP, and cache
+policy byte-identical. No HTML/CSS/JS/routing/build change.
+
+**Deployment verification commands — all four must pass before B5 may be marked CLOSED:**
+
+```bash
+# The three previously-unprotected documents — expect: HTTP/2 404
+curl -I https://qualitycareservices.in/LOCAL_SEO_MASTER_PLAN.md
+curl -I https://qualitycareservices.in/IMPLEMENTATION_READINESS_REPORT.md
+curl -I https://qualitycareservices.in/SEO_EXECUTION_PLAYBOOK.md
+
+# Production behaviour unchanged — expect: HTTP/2 200
+curl -I https://qualitycareservices.in/
+```
+
+| # | Command target | Expected | Result | Date |
+|---|---|---|---|---|
+| 1 | `/LOCAL_SEO_MASTER_PLAN.md` | `HTTP/2 404` | ⬜ | — |
+| 2 | `/IMPLEMENTATION_READINESS_REPORT.md` | `HTTP/2 404` | ⬜ | — |
+| 3 | `/SEO_EXECUTION_PLAYBOOK.md` | `HTTP/2 404` | ⬜ | — |
+| 4 | `/` (homepage) | `HTTP/2 200` | ⬜ | — |
+
+**Status: ⬜ PENDING DEPLOY VERIFICATION.**
+
+**Closure instruction.** When — and only when — all four rows above read ✅ against the live
+production domain, replace the status line immediately above with:
+
+> **Readiness-Report Blocker B5 → ✅ CLOSED (YYYY-MM-DD).** 12/12 root docs publish-protected;
+> verified in production by the four commands above; homepage 200 confirmed unchanged.
+
+Do **not** pre-mark this closed from a Deploy Preview URL. A preview proves the rules parse;
+only the production domain proves the live exposure is shut. This ordering is
+`SEO_EXECUTION_PLAYBOOK.md` §8 closure requirement C1.
 
 ---
 
@@ -148,6 +205,7 @@ Status vocabulary: Not Started → In Progress → Review → Verified → Relea
 | P0-7 runbook | ✅ (doc + publish rule) | ✅ (TOML 9/9 docs covered; secret-scan clean — prose mentions only) | — (no site code touched) | ⬜ Post-deploy: `/RUNBOOK.md` → 404 | ⬜ Owner fill-ins + escrow activation |
 | P0-8 final verification | ✅ (report; trackers only) | ✅ (scripted battery: docs/config/static/security all pass) | — (read-only phase) | ⬜ Netlify UI mapping = OWNER VERIFY; post-deploy checklist = owner | ✅ (verdict recorded) |
 | P0-2 form pipeline recovery | ✅ (`a78c43e`, owner) | ✅ (key format verified, non-leaked) | ✅ Code-level paths + live cooldown confirmed by owner | ✅ **Owner live browser test + email delivery confirmed** | ✅ Deployed 2026-07-19 |
+| Readiness-B5 publish blocklist completion | ✅ (`b5-publish-blocklist`) | ⬜ Cold review pending (≥1 day after build — playbook §6.2) | ✅ Additive-only diff; TOML parse-validated (16 redirects, 8 header blocks); 12/12 root docs covered, 0 uncovered; headers/CSP/build byte-identical; 0 HTML/CSS/JS files touched | ⬜ 4 curl commands vs production (3× 404 + homepage 200) — see Readiness-B5 block above | ⬜ Awaits branch deploy |
 | *(append as tasks complete)* | | | | | |
 
 ---

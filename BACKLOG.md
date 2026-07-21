@@ -522,14 +522,30 @@ independently deployable.
 - **Acceptance Criteria:** Cleaning/dusting/upkeep scope only (no "deep cleaning" language —
   not offered); recurring + short-notice paths; Home-cluster links; valid schema; DoD passed.
 
-### E4-T7 — `/services/` hub page (optional but recommended)
-- **Description:** A lightweight hub listing all seven services, linking to each page and
-  back-linked from each breadcrumb.
-- **Priority:** Medium · **Effort:** M · **Dependencies:** at least E4-T1…E4-T6 in progress
-- **Files Affected:** new `/services/` index; footer/nav link
-- **Regression Risk:** Low
-- **Acceptance Criteria:** Hub lists exactly seven; reciprocal links with each page; valid
-  `BreadcrumbList`/`ItemList` if used; DoD passed.
+### E4-T7 — `/services/` hub page — **CRITICAL SHARED FOUNDATION**
+- **Description:** The `/services/` hub. Treated as **infrastructure, not ordinary
+  content** (owner ruling, 2026-07-21). Its responsibilities are permanent:
+  canonical entry point for all services · parent of every service page · parent of
+  every future service-specific blog cluster · central internal-link distribution
+  node · a stable URL that must never require restructuring. It lists all seven
+  canonical services and helps a visitor work out *which* service they need — it is
+  not a bare list of seven links. Future enhancements must preserve these
+  responsibilities.
+- **Priority:** **Critical** · **Effort:** M · **Dependencies:** **SP-T1**
+- **Sequencing (binding):** **Must precede E3 (Patient Care).** It establishes the
+  permanent navigation, breadcrumb, `BreadcrumbList`/`ItemList` schema, and cluster
+  root for every future service page. Building it after the pages would require
+  rewriting seven breadcrumbs and seven schema nodes — the rework this ordering
+  exists to prevent. *(Supersedes the former "optional but recommended · depends on
+  E4-T1…E4-T6" framing.)*
+- **Files Affected:** new `/services/index.html`; footer link; `sitemap.xml`
+- **Regression Risk:** Low — additive; no existing URL or anchor changes
+- **Acceptance Criteria:** Hub lists exactly the canonical seven, grouped by the
+  PROJECT.md §5 clusters; canonical `https://qualitycareservices.in/services/`;
+  `BreadcrumbList` (2 items) + `ItemList` (7 items, positions 1–7 in §5 order); no
+  `LocalBusiness` duplication (spec §4.6); links only to pages that exist; layout
+  supports later addition of FAQs, guides and blog clusters without IA change;
+  DoD passed.
 
 ---
 
