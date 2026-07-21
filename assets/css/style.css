@@ -1631,3 +1631,299 @@ button {
     justify-content: flex-start;
   }
 }
+/* ===================================================================
+   SERVICE PAGE COMPONENTS (E3-T1)
+   Additive only — no rule above this line is modified, so every
+   existing page renders byte-identically. These selectors are shared
+   by the /services/ hub and all seven service pages; they live here
+   rather than in eight page-scoped <style> blocks.
+
+   Every value resolves to a Design System token (SERVICE_PAGE_SPEC
+   §3.0). No new visual primitive is introduced, and no deprecated
+   token (--radius, --shadow-*, --blue, --section-blue) gains a new
+   consumer.
+
+   Components NOT defined here are deliberately reused as-is:
+   .hero-section/.hero-grid (service hero), .trust-grid/.trust-card
+   ("who it's for", trust points), .process-grid/.process-card
+   (journey), .faq-list/.faq-item (FAQ), .area-grid/.area-card
+   (areas served), .prefooter-section (end CTA), .service-card
+   (related services), .btn/.btn-primary/.btn-whatsapp (CTAs).
+   =================================================================== */
+
+/* ---- Breadcrumb (hub + every service page) ---- */
+.breadcrumb {
+  background: var(--surface-base);
+  border-bottom: 1px solid var(--line);
+  padding: var(--space-12) 0;
+  font-size: 0.9rem;
+}
+
+.breadcrumb ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-8);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-8);
+  color: var(--muted);
+}
+
+/* Held to the 4.5:1 text threshold, not treated as decoration: some
+   screen readers announce CSS generated content. */
+.breadcrumb li + li::before {
+  content: "\203A";
+  color: var(--muted);
+}
+
+/* min-height meets WCAG 2.2 SC 2.5.8 without relying on the inline
+   (line-height-constrained) exception. */
+.breadcrumb a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  color: var(--primary-dark);
+  font-weight: 600;
+}
+
+.breadcrumb a:hover,
+.breadcrumb a:focus-visible {
+  text-decoration: underline;
+}
+
+.breadcrumb [aria-current="page"] {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* ---- Scope block: what is and is not included ---- */
+.scope-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-20);
+  align-items: start;
+}
+
+.scope-col {
+  padding: var(--space-24);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-base);
+  box-shadow: var(--elevation-e1);
+}
+
+.scope-col h3 {
+  margin: 0 0 var(--space-12);
+  color: var(--text);
+  font-size: 1.14rem;
+  line-height: 1.3;
+}
+
+.scope-col .service-points {
+  margin-bottom: 0;
+}
+
+/* Boundary items are stated plainly, never in an alarm color. */
+.scope-col--boundary {
+  background: var(--section);
+}
+
+.scope-col--boundary .service-points i {
+  color: var(--muted);
+}
+
+.scope-note {
+  margin: var(--space-20) 0 0;
+  color: var(--muted);
+}
+
+/* Related-services cards sit under a section h2, so their titles are h3 —
+   whereas homepage/hub cards sit under a cluster h3 and use h4. The shared
+   card rule only styled h4, leaving these unstyled. Same treatment, both tags. */
+.service-card h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.14rem;
+  line-height: 1.3;
+}
+
+/* Section rhythm control. The site never places two tinted sections next to
+   each other; service pages alternate white/tinted explicitly via this class
+   rather than relying on which component class a section happens to carry. */
+.section--tinted {
+  background: var(--section);
+}
+
+/* Second scope row (boundary + rationale), separated from the first. */
+.scope-grid--secondary {
+  margin-top: var(--space-20);
+}
+
+.scope-col-note {
+  margin: 0;
+  color: var(--muted);
+}
+
+/* ---- Service Decision Aid (spec §3.2) ---- */
+.decision-aid {
+  margin-top: var(--space-24);
+  padding: var(--space-20) var(--space-24);
+  border-left: 3px solid var(--primary-400);
+  border-radius: var(--radius-sm);
+  background: var(--section);
+}
+
+.decision-aid h3 {
+  margin: 0 0 var(--space-8);
+  color: var(--text);
+  font-size: 1.05rem;
+}
+
+.decision-aid p {
+  margin: 0 0 var(--space-12);
+  color: var(--muted);
+}
+
+.decision-aid a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: 44px;
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+
+.decision-aid a:hover,
+.decision-aid a:focus-visible {
+  text-decoration: underline;
+}
+
+/* ---- Journey: five stages at desktop, then the .process-grid
+        responsive rules above take over unchanged. ---- */
+@media (min-width: 1101px) {
+  .journey-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* ---- Pricing factors (semantic list, spec §3.3) ---- */
+.pricing-factors {
+  list-style: none;
+  max-width: 760px;
+  margin: var(--space-24) auto 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-12);
+}
+
+.pricing-factors li {
+  display: flex;
+  gap: var(--space-12);
+  padding: var(--space-16) var(--space-20);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-base);
+  color: var(--muted);
+}
+
+.pricing-factors i {
+  flex-shrink: 0;
+  margin-top: 4px;
+  color: var(--primary);
+}
+
+.pricing-factors strong {
+  color: var(--text);
+}
+
+.pricing-closing {
+  max-width: 760px;
+  margin: var(--space-20) auto 0;
+  color: var(--muted);
+  text-align: center;
+}
+
+/* ---- Evidence Block (spec §3.4) — calm, no counters or seals ---- */
+.evidence-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-16);
+  margin-top: var(--space-24);
+}
+
+.evidence-item {
+  padding: var(--space-20);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--section);
+}
+
+.evidence-item h3 {
+  margin: 0 0 var(--space-8);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.evidence-item p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+/* ---- Mid-page CTA band (slot 9) ---- */
+.cta-band {
+  padding: var(--space-40) 0;
+  background: var(--section);
+}
+
+.cta-band-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.cta-band-inner h2 {
+  margin: 0;
+}
+
+.cta-band-inner p {
+  margin: var(--space-12) 0 var(--space-24);
+  color: var(--muted);
+}
+
+.cta-band-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-12);
+}
+
+/* ---- Related services: 2–3 cards without a fixed column count ---- */
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-20);
+  align-items: stretch;
+}
+
+/* ---- Service-page responsive ---- */
+@media (max-width: 980px) {
+  .scope-grid,
+  .evidence-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .cta-band-actions .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+}

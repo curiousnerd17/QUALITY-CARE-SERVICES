@@ -33,7 +33,7 @@
   <!-- Root-relative asset paths: this page sits one level deep, so the relative
        forms used by root pages would resolve to /services/assets/… (P0-3 rule
        on the ?v= token still applies — bump it on every page together). -->
-  <link rel="stylesheet" href="/assets/css/style.css?v=20260719">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260721">
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-optimized.png">
@@ -73,10 +73,11 @@
   </script>
 
   <!-- ItemList — the canonical seven, positions 1–7 in PROJECT.md §5 order.
-       No `url` on any item: the individual service pages do not exist yet and
-       schema must never point at a 404. Each item gains its `url` on the commit
-       that ships its page. LocalBusiness is NOT duplicated here — `provider`
-       references the homepage @id, which is the pattern spec §4.6 prescribes. -->
+       An item carries `url` only once its page is live, so schema never points
+       at a 404; the remaining six gain theirs on the commit that ships each
+       page. LocalBusiness is NOT duplicated here — `provider` references the
+       homepage @id, which is the pattern spec §4.6 prescribes.
+       Live: Patient Care. Pending: the other six. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -89,10 +90,12 @@
         "@type": "ListItem",
         "position": 1,
         "name": "Patient Care",
+        "url": "https://qualitycareservices.in/services/patient-care",
         "item": {
           "@type": "Service",
           "name": "Patient Care",
           "serviceType": "Patient Care",
+          "url": "https://qualitycareservices.in/services/patient-care",
           "provider": { "@id": "https://qualitycareservices.in/#business" },
           "areaServed": { "@type": "City", "name": "Kota" }
         }
@@ -186,52 +189,6 @@
        h2 → h3 → h4 nesting inside the services section rather than remapping
        tags and re-declaring the visuals. -->
   <style>
-    /* ---- Breadcrumb ---- */
-    .breadcrumb {
-      background: var(--surface-base);
-      border-bottom: 1px solid var(--line);
-      padding: var(--space-12) 0;
-      font-size: 0.9rem;
-    }
-    .breadcrumb ol {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: var(--space-8);
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-    .breadcrumb li {
-      display: flex;
-      align-items: center;
-      gap: var(--space-8);
-      color: var(--muted);
-    }
-    /* CSS-generated separator. Some screen readers announce `content`, so it
-       is held to the 4.5:1 text threshold rather than treated as decoration. */
-    .breadcrumb li + li::before {
-      content: "\203A";
-      color: var(--muted);
-    }
-    /* min-height meets WCAG 2.2 SC 2.5.8 (24px) without relying on the
-       line-height exception. */
-    .breadcrumb a {
-      display: inline-flex;
-      align-items: center;
-      min-height: 24px;
-      color: var(--primary-dark);
-      font-weight: 600;
-    }
-    .breadcrumb a:hover,
-    .breadcrumb a:focus-visible {
-      text-decoration: underline;
-    }
-    .breadcrumb [aria-current="page"] {
-      color: var(--text);
-      font-weight: 600;
-    }
-
     /* ---- Hub hero ---- */
     .hub-hero {
       padding: var(--space-48) 0 var(--space-40);
@@ -470,10 +427,8 @@
                 <li><i class="fa-solid fa-check" aria-hidden="true"></i> Experienced Caregivers</li>
                 <li><i class="fa-solid fa-check" aria-hidden="true"></i> Recovery &amp; Daily Care</li>
               </ul>
-              <!-- Detail-page link is added to this card on the commit that ships
-                   /services/patient-care. Never link to an unbuilt page (E5-T3). -->
               <div class="service-actions">
-                <a href="/?service=Patient%20Care#inquiry" data-service="Patient Care">Get a Callback</a>
+                <a href="/services/patient-care">Patient Care Details</a>
                 <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Patient%20Care%20support%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Patient Care">
                   <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
                 </a>
@@ -675,7 +630,7 @@
       </div>
       <div>
         <h3>Services</h3>
-        <a href="/services/#care-services">Patient Care</a>
+        <a href="/services/patient-care">Patient Care</a>
         <a href="/services/#care-services">Elder Care</a>
         <a href="/services/#care-services">Mother &amp; Newborn Care</a>
         <a href="/services/#care-services">Child Care</a>
