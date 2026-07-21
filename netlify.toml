@@ -200,15 +200,102 @@
   status = 301
   force = true
 
+# ── Per-service canonical rules ──────────────────────────────────────────────
+# DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
+# used placeholder rules:
+#     from = "/services/:slug.html"  to = "/services/:slug"
+# Preview testing returned `Location: /services/:slug` — the literal string.
+# Netlify does NOT substitute a placeholder when the `to` value combines it with
+# a literal suffix, so the redirect emitted an invalid path. This was the single
+# risk flagged as unverified when SP-T1 shipped; the preview matrix caught it at
+# 8/9 before it reached production.
+#
+# Replaced with explicit exact-match pairs — one 301 canonicalising the .html
+# form, one 200 rewrite serving the clean URL from the flat file. Verbose but
+# deterministic, and exact matches carry no substitution behaviour to get wrong.
+#
+# All seven canonical services are enumerated now, including pages not yet built.
+# A rule for a non-existent file is inert (the path 404s either way), and
+# pre-arming means each service page ships with zero config changes — the same
+# fail-closed ordering used for DECISION_LOG.md and /evidence/*.
+#
+# Slugs are bound by PROJECT.md §9 and must never drift from that table.
+
 [[redirects]]
-  from = "/services/:slug.html"
-  to = "/services/:slug"
+  from = "/services/patient-care.html"
+  to = "/services/patient-care"
   status = 301
   force = true
 
 [[redirects]]
-  from = "/services/:slug"
-  to = "/services/:slug.html"
+  from = "/services/elder-care.html"
+  to = "/services/elder-care"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/mother-newborn-care.html"
+  to = "/services/mother-newborn-care"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/child-care.html"
+  to = "/services/child-care"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/maid-services.html"
+  to = "/services/maid-services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/home-cook-services.html"
+  to = "/services/home-cook-services"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/housekeeping-cleaning.html"
+  to = "/services/housekeeping-cleaning"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/patient-care"
+  to = "/services/patient-care.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/elder-care"
+  to = "/services/elder-care.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/mother-newborn-care"
+  to = "/services/mother-newborn-care.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/child-care"
+  to = "/services/child-care.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/maid-services"
+  to = "/services/maid-services.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/home-cook-services"
+  to = "/services/home-cook-services.html"
+  status = 200
+
+[[redirects]]
+  from = "/services/housekeeping-cleaning"
+  to = "/services/housekeeping-cleaning.html"
   status = 200
 
 # Root-level content pages follow the SAME canonical form, so the site has one
