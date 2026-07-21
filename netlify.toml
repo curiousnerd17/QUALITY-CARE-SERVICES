@@ -116,6 +116,25 @@
   status = 404
   force = true
 
+# ── Directory-level protection: repository-only trees (B5 follow-up) ──────────
+# The per-file rules above are FAIL-OPEN — a new root document is public until
+# somebody remembers to add a rule, which is precisely how B5 arose and then
+# widened. Directories do not have that weakness: Netlify supports splats in
+# `from`, so a single rule covers every file in the tree, now and in future.
+# Any evidence artifact added later is therefore protected on creation with no
+# further action required — fail-CLOSED for everything under this path.
+# (Extensions still cannot be matched this way: `*.md` is not a valid pattern.
+# That limitation is why root documents remain individually enumerated above.)
+#
+# evidence/ holds deployment and verification records per
+# SEO_EXECUTION_PLAYBOOK.md §13 — screenshots, validator output, before/after
+# state. Repository-only, never served.
+[[redirects]]
+  from = "/evidence/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 
 # ── Security headers (all pages) ──────────────────────────────────────────────
 
