@@ -77,7 +77,7 @@
        at a 404; the remaining six gain theirs on the commit that ships each
        page. LocalBusiness is NOT duplicated here — `provider` references the
        homepage @id, which is the pattern spec §4.6 prescribes.
-       Live: Patient Care. Pending: the other six. -->
+       Live: Patient Care, Elder Care. Pending: the other five. -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -104,10 +104,12 @@
         "@type": "ListItem",
         "position": 2,
         "name": "Elder Care",
+        "url": "https://qualitycareservices.in/services/elder-care",
         "item": {
           "@type": "Service",
           "name": "Elder Care",
           "serviceType": "Elder Care",
+          "url": "https://qualitycareservices.in/services/elder-care",
           "provider": { "@id": "https://qualitycareservices.in/#business" },
           "areaServed": { "@type": "City", "name": "Kota" }
         }
@@ -445,7 +447,7 @@
                 <li><i class="fa-solid fa-check" aria-hidden="true"></i> Companionship</li>
               </ul>
               <div class="service-actions">
-                <a href="/?service=Elder%20Care#inquiry" data-service="Elder Care">Get a Callback</a>
+                <a href="/services/elder-care">Elder Care Details</a>
                 <a href="https://wa.me/918302482096?text=Hi%2C%20I%20need%20Elder%20Care%20support%20in%20Kota.%20Can%20we%20discuss%3F" class="service-wa" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp about Elder Care">
                   <i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp
                 </a>
@@ -631,7 +633,7 @@
       <div>
         <h3>Services</h3>
         <a href="/services/patient-care">Patient Care</a>
-        <a href="/services/#care-services">Elder Care</a>
+        <a href="/services/elder-care">Elder Care</a>
         <a href="/services/#care-services">Mother &amp; Newborn Care</a>
         <a href="/services/#care-services">Child Care</a>
         <a href="/services/#home-support-services">Maid Services</a>
