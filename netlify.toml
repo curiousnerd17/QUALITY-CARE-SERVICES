@@ -87,6 +87,35 @@
   status = 404
   force = true
 
+[[redirects]]
+  from = "/LOCAL_SEO_MASTER_PLAN.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/IMPLEMENTATION_READINESS_REPORT.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/SEO_EXECUTION_PLAYBOOK.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# Pre-armed: DECISION_LOG.md does not exist yet (SEO_EXECUTION_PLAYBOOK.md
+# Appendix E row 2). The rule is added BEFORE the file so the blocklist cannot
+# lag the document — inverting the fail-open ordering that produced B5. A rule
+# for a non-existent path is inert: the path already 404s, and force=true
+# changes nothing until the file appears.
+[[redirects]]
+  from = "/DECISION_LOG.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
 
 # ── Security headers (all pages) ──────────────────────────────────────────────
 
