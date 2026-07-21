@@ -163,6 +163,43 @@
 # placeholder/splat interaction with a literal `.html` suffix is the specific
 # behaviour to confirm. Do not ship E3-T1 until the checks in the commit body pass.
 
+# ── Hub guards (SP-T1 amendment, approved 2026-07-21) ────────────────────────
+# The /services/ hub is INFRASTRUCTURE, not ordinary content: canonical entry
+# point for all services, parent of every service page and every future
+# service-specific blog cluster, central internal-link distribution node, and a
+# stable URL that must never require restructuring.
+#
+# Its file is /services/index.html, which collides with the :slug placeholder
+# below — `slug` would match the literal string "index", exposing the hub at
+# /services/index alongside its real URL. These three guards MUST precede the
+# placeholder pair (first match wins) and close every non-canonical form:
+#
+#   /services/index.html -> /services/   (the file's own path)
+#   /services/index      -> /services/   (what the :slug rewrite would produce)
+#   /services            -> /services/   (missing trailing slash)
+#
+# Per spec §4.4 the hub's canonical form carries the trailing slash, while leaf
+# service pages per PROJECT.md §9 do not. That asymmetry is deliberate and
+# constitutional — a directory index takes the slash, a leaf does not.
+
+[[redirects]]
+  from = "/services/index.html"
+  to = "/services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/index"
+  to = "/services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services"
+  to = "/services/"
+  status = 301
+  force = true
+
 [[redirects]]
   from = "/services/:slug.html"
   to = "/services/:slug"
