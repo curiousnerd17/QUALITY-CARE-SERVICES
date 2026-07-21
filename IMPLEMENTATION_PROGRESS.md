@@ -8,8 +8,8 @@
 > Update after every implementation session. Keep entries one line where
 > possible. Never delete history — append.
 >
-> ⚠️ Public until P0-4 ships (publish-directory restriction). Write nothing
-> non-public here.
+> ⚠️ Publish-blocked since P0-4; blocklist completed to 12/12 root docs by B5
+> (`0f23caf`). Still treat as low-sensitivity — it is one config error from public.
 
 ---
 
@@ -17,34 +17,91 @@
 
 | Field | Value |
 |---|---|
-| **Overall status** | 🟡 P0 In Progress — **form incident RESOLVED 2026-07-19**; lead pipeline operational |
-| **Overall completion** | ~4% of master plan (P0-1 ✅, P0-2 ✅) |
-| **Current phase** | P0 — Production Stabilization (In Progress) |
-| **Current milestone** | M1 — Production Stabilization |
-| **Current branch** | `ds-3a-service-card` — clean, ✅ pushed (`origin/ds-3a-service-card` @ `a78c43e`) |
-| **Live production** | `main` @ `d628cd0` (pre-truth-release state) |
-| **Last update** | 2026-07-19 (Session 3 — P0-2 CLOSED; incident resolved) |
-| **Current release target** | R1 "Stabilization" = P0 complete, deployed, verified |
+| **Overall status** | 🔴 Phase A merged, **awaiting production verification** — nothing deployed |
+| **Overall completion** | ~26% of master plan (foundation ~85%; product surface 0 of 7 service pages) |
+| **Current phase** | Phase A (launch blockers) — merged, unverified |
+| **Current milestone** | SP-T1 preview verification → deploy → Phase B (E4-T7 hub) |
+| **Local `main`** | `88655e0` — 13 commits ahead of origin |
+| **Live production** | `origin/main` @ `a94f7b7` — **unchanged and healthy** |
+| **Last update** | 2026-07-21 |
+| **Current release target** | R2 "Launch Foundation" = B5 + SP-T1 + A-2 + P3 deployed and operationally verified |
+
+### Four-status model (binding — never report a single "Done")
+
+A phase is complete only when **all four** are satisfied. Code alone is never complete.
+
+| Status | Meaning |
+|---|---|
+| **Implementation** | Code written, locally verified, committed |
+| **Verification** | Independently checked — static analysis, tests, cold review |
+| **Production** | Merged **and deployed** to the live site |
+| **Operational** | Verified working in production and delivering its intended effect |
 
 ---
 
 ## Phase Progress
 
-| Phase | Status | % | Started | Completed | Branch | Notes |
+| Phase | Impl. | Verif. | Prod. | Oper. | Key commits | Notes |
 |---|---|---|---|---|---|---|
-| P0 Production Stabilization | **Engineering Complete** | 100% eng / owner items open | 2026-07-19 | 2026-07-19 (eng) | `ds-3a-service-card` | All 8 items done or owner-queued; **P0-8 verdict: PASS WITH OWNER ACTIONS** (Session 9) |
-| P1 Truth Release | Not Started | 0% | — | — | `ds-3a-service-card` (pre-work exists) | Homepage reconciliation already committed on branch, awaiting review |
-| P2 Trust, Privacy & Local Presence | Not Started | 0% | — | — | — | Needs business inputs: D6, evidence facts, mail hosting |
-| P3 Measurement | Not Started | 0% | — | — | — | — |
-| P4 Accessibility & Conversion | Not Started | 0% | — | — | — | Needs §19 approvals for visible deltas |
-| P5 Performance Hardening | Not Started | 0% | — | — | — | — |
-| P6 Security Hardening | Not Started | 0% | — | — | — | Ships alone; preview-deploy staged |
-| P7 Patient Care Page + Template | Not Started | 0% | — | — | — | Gated: P1, P3, P4, SP-T1, SP-T2 |
-| P8 Remaining Service Pages | Not Started | 0% | — | — | — | Gated: P7 cert; D4/D5 for Home Support pages |
-| P9 Brand & Design System | Not Started | 0% | — | — | — | DS-3A diff exists (uncommitted); §19-heavy |
-| P10 Operational Maturity | Not Started | 0% (continuous) | — | n/a | — | Seeded by P0-5/P0-7 |
+| P0 Production Stabilization | ✅ | ✅ | ✅ | 🟡 | `469d7ee` + P0-1…P0-8 | Engineering complete; monitoring ledger still 0/4 (owner) |
+| P1 Truth Release | ✅ | 🟡 | ✅ | 🟡 | `15c81ea` `596bf6e` `c7e9e15` `dd3af37` `725ddb4` `661d0c4` `a94f7b7` | **Code shipped and live.** 0 legacy terms, 7/7 canonical in production. Formal closure (5 production checks + paper trail) outstanding |
+| P2 Trust, Privacy & Local Presence | 🟡 | 🟡 | ❌ | ❌ | `60d356f` `7d2cf67` (A-2) | A-2 done, merged, undeployed. A-3…A-9 not started; GBP not created |
+| P3 Measurement | ✅ | 🟡 | ❌ | ❌ | `bed1c2a` (merge `ebcd8e5`) | Event layer merged. **No independent cold review** (builder = author). 5 GA4 custom dimensions unregistered |
+| P4 Accessibility & Conversion | ❌ | ❌ | ❌ | ❌ | — | A-12…A-23. A-16/A-18/A-19 need no §19 approval — startable now |
+| P5 Performance Hardening | ❌ | ❌ | ❌ | ❌ | — | E7-T1…T5. Not launch-blocking |
+| P6 Security Hardening | ❌ | ❌ | ❌ | ❌ | — | E9-T1…T4. CSP tightening ships alone (risk R2) |
+| P7 Patient Care + Certification | ❌ | ❌ | ❌ | ❌ | — | Gated: P1 closure, P3 deploy, P4, SP-T1 verified, SP-T2, **E4-T7 hub first**, F-029 |
+| P8 Remaining Six Pages | ❌ | ❌ | ❌ | ❌ | — | Gated: E3-T12 certification; D4/D5 for Home Support; japa scope |
+| P9 Brand & Design System | 🟡 | ❌ | ❌ | ❌ | `ef4bd6c` (DS-3A) | DS-2A/2B live; DS-3A partial, §19 pending. Not launch-blocking |
+| P10 Operational Maturity | 🟡 | ❌ | ❌ | ❌ | `dff7d20` `6f44419` | Seeded by P0-5/P0-7. **A-38 lead log unscheduled → 2 of 7 success metrics have no data source** |
 
-Status vocabulary: Not Started → In Progress → Review → Verified → Released → Complete.
+Legend: ✅ complete · 🟡 partial · ❌ not started · **N/A** where the dimension does not apply.
+
+**Cross-cutting (Phase A launch blockers) — merged locally, NOT deployed:**
+
+| Item | Impl. | Verif. | Prod. | Oper. | Commit | Foundation dependency |
+|---|---|---|---|---|---|---|
+| B5 publish blocklist | ✅ | ✅ | ❌ | ❌ | `0f23caf` `6023a4d` | none |
+| SP-T1 URL strategy | ✅ | 🟡 static only | ❌ | ❌ | `45bdb8f` | B5 (`netlify.toml`) |
+| SP-T1 hub guards | ✅ | 🟡 static only | ❌ | ❌ | `2d3db3a` | SP-T1 |
+| A-2 privacy policy | ✅ | ✅ | ❌ | ❌ | `60d356f` `7d2cf67` | SP-T1 (canonical form) |
+| P3 event layer | ✅ | 🟡 no cold review | ❌ | ❌ | `bed1c2a` | none |
+| P0-3 token alignment | ✅ | ✅ | ❌ | ❌ | `8b555cd` | P3 merge |
+
+🔴 **Phase A is Blocked on the SP-T1 preview matrix.** Nothing may deploy until it passes.
+
+---
+
+## Certified Foundations — LOCKED
+
+> **Foundation Certification Rule (owner ruling, 2026-07-21).** Once certified, a shared
+> foundation is **locked**. It may be modified only when (1) a production defect is found,
+> (2) a verified architectural flaw exists, or (3) a business decision explicitly changes
+> the requirement. Otherwise every future implementation **conforms to** the foundation
+> rather than redefining it. This is the control against template drift across seven pages.
+
+| # | Foundation | Certified | Authority | Commit |
+|---|---|---|---|---|
+| F1 | **URL hierarchy** — hub `/services/` (trailing slash) from `services/index.html`; leaves `/services/{slug}` (no slash) from `{slug}.html`. Asymmetry is deliberate: a directory index takes the slash, a leaf does not | 2026-07-21 | spec §4.4 + PROJECT.md §9 | `45bdb8f` `2d3db3a` |
+| F2 | **Breadcrumb pattern** — service `Home › Services › {Service}`; hub `Home › Services`, current page unlinked; visible text identical to canonical service names | 2026-07-21 | spec §4.4 | pending E4-T7 |
+| F3 | **`BreadcrumbList` schema** — hub 2 items, service 3; absolute canonical URLs; 1-indexed; mirrors the visible trail exactly | 2026-07-21 | spec §4.6 | pending E4-T7 |
+| F4 | **Internal linking** — hub links down to all seven; page links up via breadcrumb; Related Services 2–3 genuine adjacents; Decision Aid exactly one sibling per §3.2 pair map; never link an unshipped page | 2026-07-21 | spec §4.5, §3.2 | pending E4-T7 |
+| F5 | **`ItemList` structure** — hub only; 7 `ListItem`s, positions 1–7 in PROJECT.md §5 order; grouped by the §5 clusters; **not** `Service` nodes; no `LocalBusiness` duplication | 2026-07-21 | spec §4.6 | pending E4-T7 |
+| F6 | **Related Resources** — service pages only, reserved slot between 12 and 13; dormant until a blog exists; never ships empty; each article links back to its service page | 2026-07-21 | spec §3.5 | pending E3 |
+| F7 | **Blog cluster attachment** — service page is the cluster parent; attaches via the reserved slot with reciprocal linking; requires **zero** structural change to shipped pages | 2026-07-21 | spec §3.5, §11 | pending E3 |
+| F8 | **Canonical strategy** — self-referential canonical on every page; exactly one indexable form; sitemap `<loc>` matches character-for-character | 2026-07-21 | spec §4.3 | `45bdb8f` |
+| F9 | **SEO scalability** — Tier 1 today (Kota in titles/H1/content/`areaServed`, never URLs); Tier 2 extends `areaServed` on existing pages; Tier 3 needs a constitutional amendment; no programmatic city×service pages at any tier | 2026-07-21 | spec §4.8 | — |
+| F10 | **Navigation** — header nav unchanged until P8 completes (repointing is a §19 visible change); hub reached via footer + breadcrumb in the interim | 2026-07-21 | PROJECT.md §19 | pending E4-T7 |
+
+**Pending certification:** the service-page template itself. Patient Care becomes the
+**golden reference implementation** on E3-T12 pass; the remaining six ship as controlled
+variations of it. Any intentional deviation must document **reason · business value ·
+SEO impact · engineering impact**. Absent a justification, follow the reference.
+
+**The `/services/` hub is infrastructure, not content.** Permanent responsibilities:
+canonical entry point for all services · parent of every service page · parent of every
+future service-specific blog cluster · central internal-link distribution node · a stable
+URL that never requires restructuring. Future enhancements must preserve all five.
 
 ---
 
