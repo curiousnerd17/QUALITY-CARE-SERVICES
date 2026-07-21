@@ -136,6 +136,63 @@
   force = true
 
 
+# ── Canonical URL strategy (SP-T1) ───────────────────────────────────────────
+# DECISION (SP-T1, spec §4.3 gate 3, 2026-07-21):
+#   File strategy ....... FLAT files. `/services/patient-care.html` on disk.
+#                         Not `patient-care/index.html`.
+#   Canonical form ...... EXTENSIONLESS, NO trailing slash: `/services/patient-care`
+#   Rationale ........... PROJECT.md §9 states the target form literally, with no
+#                         extension and no trailing slash. Flat files also match the
+#                         only convention this repo has ever used (index.html,
+#                         404.html, privacy-policy.html) and avoid deep nesting,
+#                         which §9 prohibits. Directory-style would produce a
+#                         trailing slash that contradicts the §9 table.
+#
+# Binding consequence: the canonical tag, sitemap `<loc>`, schema `url`,
+# breadcrumb, and EVERY internal link use the extensionless form — for the
+# `/services/` hub (E4-T7), all seven service pages, and every page after them.
+#
+# Rule 1 canonicalises the `.html` form to the clean form (301) so exactly one
+# URL is indexable. Rule 2 serves the clean form from the flat file (200 rewrite,
+# URL unchanged in the address bar). Order matters: the 301 must precede the
+# rewrite, and both must follow the doc-blocklist rules above.
+#
+# ⚠️ UNVERIFIED — REQUIRES A PREVIEW-DEPLOY TEST BEFORE THE FIRST SERVICE PAGE
+# SHIPS. SP-T1's acceptance criteria demand that exactly one form returns 200 and
+# all variants 301, proven on a deploy preview. That test has NOT been run. Netlify
+# placeholder/splat interaction with a literal `.html` suffix is the specific
+# behaviour to confirm. Do not ship E3-T1 until the checks in the commit body pass.
+
+[[redirects]]
+  from = "/services/:slug.html"
+  to = "/services/:slug"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/services/:slug"
+  to = "/services/:slug.html"
+  status = 200
+
+# Root-level content pages follow the SAME canonical form, so the site has one
+# URL convention rather than two. Enumerated explicitly rather than by
+# placeholder: a root-level `/:page` rule would also capture `/index.html`,
+# `/404.html`, and every future asset path, which is not worth the blast radius
+# for a handful of pages. Add a pair here when a root page is added.
+# (`/` itself is served by index.html natively and needs no rule.)
+
+[[redirects]]
+  from = "/privacy-policy.html"
+  to = "/privacy-policy"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/privacy-policy"
+  to = "/privacy-policy.html"
+  status = 200
+
+
 # ── Security headers (all pages) ──────────────────────────────────────────────
 
 [[headers]]
