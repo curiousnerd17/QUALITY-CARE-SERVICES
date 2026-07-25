@@ -744,6 +744,7 @@ button {
 /* Service card actions */
 .service-actions {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-8);
   margin-top: auto;
   width: 100%;
@@ -786,6 +787,25 @@ button {
 .service-actions .service-wa:focus-visible {
   border-color: var(--whatsapp);
   background: #dcfce7;
+}
+
+/* Secondary action — deep-links to the full service page. It takes its own
+   full-width row beneath Get a Callback and WhatsApp (hence flex-wrap above),
+   so the two primary conversion actions keep their position and prominence.
+   Quieter treatment: outline only, muted label, existing tokens — no new
+   visual language, and the shared 44px min-height still applies. */
+.service-actions .service-more {
+  flex: 1 1 100%;
+  border: 1px solid var(--line);
+  color: var(--muted);
+  background: transparent;
+}
+
+.service-actions .service-more:hover,
+.service-actions .service-more:focus-visible {
+  border-color: var(--primary-400);
+  color: var(--primary-dark);
+  background: var(--section);
 }
 
 /* ========== PROCESS CARDS ========== */
