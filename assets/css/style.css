@@ -472,8 +472,16 @@ button {
 .hero-media img {
   width: 100%;
   max-height: 360px;
-  aspect-ratio: 16 / 10;
+  /* Matches the hero assets (1920x1072 and 1920x1069, plus the homepage's
+     1600x893) — all ~1.79. The previous 16/10 (1.600) box was narrower than
+     every source, so object-fit: cover discarded 10.7% of the width, 5.3%
+     off each edge, which is where the subjects in these photographs stand.
+     Holding the source ratio brings the crop to 0.00-0.28%. */
+  aspect-ratio: 1920 / 1072;
   object-fit: cover;
+  /* Kept as-is: with the box now matching the source, there is no meaningful
+     overflow left to position, so per-service object-position values were
+     evaluated and are not needed — every subject is inside the frame. */
   object-position: center 40%;
   border: 1px solid var(--line);
   border-radius: 12px;
@@ -1492,6 +1500,17 @@ button {
     grid-template-columns: 1fr;
   }
 
+  /* Once the hero collapses to one column the figure spans the full container
+     (~728-940px), so height = width/1.79 exceeded the 360px cap and the cap —
+     not the ratio — governed the box. That made it 2.0-2.6 wide and cropped
+     11-31% off the image vertically, worse than the desktop cropping QA
+     reported. Capping the WIDTH instead lets the ratio hold at the same
+     visual height, with the full frame intact. */
+  .hero-media {
+    max-width: 640px;
+    margin-inline: auto;
+  }
+
   .trust-grid,
   .services-grid,
   .process-grid,
@@ -1593,7 +1612,10 @@ button {
   }
 
   .hero-media img {
-    aspect-ratio: 16 / 10;
+    /* Same source ratio as the base rule; the 16/10 box here repeated the
+       10.7% side crop on phones. At 320-390px wide the resulting height
+       (179-195px) stays under the 260px cap, so the ratio governs. */
+    aspect-ratio: 1920 / 1072;
     max-height: 260px;
   }
 
