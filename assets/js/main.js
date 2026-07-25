@@ -385,51 +385,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // ========== TESTIMONIALS ==========
-  const fallbackReviews = [
-    {
-      name: "Rajesh Sharma",
-      city: "Talwandi, Kota",
-      service: "Elder Care",
-      review: "My father was discharged after surgery and we were worried about managing his care at home. Quality Care Services arranged an attendant within a day — she was patient with him and knew what to do. Made a stressful time much easier.",
-      rating: 5,
-    },
-    {
-      name: "Sunita Verma",
-      city: "Vigyan Nagar, Kota",
-      service: "Mother & Newborn Care",
-      review: "After delivery, I was exhausted and overwhelmed. The mother care attendant they sent was gentle, experienced, and understood what I needed without me having to explain everything. I could actually rest.",
-      rating: 5,
-    },
-    {
-      name: "Amit Jain",
-      city: "Mahaveer Nagar, Kota",
-      service: "Child Care",
-      review: "When my wife went back to work, we needed someone for our baby. The caregiver they sent was good with our child — fed her on time, put her to sleep, and we never had to worry while we were away.",
-      rating: 5,
-    },
-    {
-      name: "Pooja Mehta",
-      city: "Kota City",
-      service: "Elder Care",
-      review: "We didn't know what kind of support we needed for my mother. The team at Quality Care didn't just send someone — they asked questions, understood the situation, and suggested what would work. Felt like they actually cared.",
-      rating: 5,
-    },
-    {
-      name: "Vikram Singh",
-      city: "Kunhari, Kota",
-      service: "Housekeeping / Dusting & Cleaning",
-      review: "We had guests coming and the house was a mess. Called them on short notice and they arranged a housekeeping worker the next day. She did a thorough job and we didn't have to stress about it.",
-      rating: 5,
-    },
-    {
-      name: "Deepak Agarwal",
-      city: "Landmark City, Kota",
-      service: "Patient Care",
-      review: "What I liked is that they followed up after the service started to check if everything was okay. Not many places do that. It gave me confidence that if something went wrong, they'd be there.",
-      rating: 5,
-    },
-  ];
-
+  // Only real, approved reviews returned by the sheet are ever rendered. There
+  // is deliberately NO fallback/seed/demo review data here: a fabricated or
+  // padded testimonial is exactly what the honesty standard forbids, and the
+  // seven service pages already withhold testimonials for the same reason
+  // (SERVICE_PAGE_SPEC.md §3.4 — nothing ships until it is real and
+  // attributable). Where there is nothing verified to show, the section says so.
   const reviewAPI =
     "https://script.google.com/macros/s/AKfycbwLeL7ISz3a6s6ogP8BY_B7xsS56tK4fxsJcWnzXSYWtEiRxtAPiy9hLDheezCC-6rzZQ/exec";
 
@@ -488,6 +449,19 @@ document.addEventListener("DOMContentLoaded", () => {
     return words.map((word) => word.charAt(0).toUpperCase()).join("") || "QC";
   }
 
+  // Honest empty state. Reuses the existing review-card component and shared
+  // styles only — no new CSS, and no inline style attributes (the production
+  // CSP's style-src does not permit them). Makes no claim about how many
+  // reviews exist, invents no customer, and promises no rating.
+  function renderReviewsEmptyState() {
+    testimonialGrid.innerHTML = `
+      <article class="testimonial-card">
+        <p>We only publish reviews that come from families we have actually worked with, in their own words. As those come in, they will appear here.</p>
+        <p>If we have arranged care for your family and you would like to share your experience, we would be glad to hear from you.</p>
+      </article>
+    `;
+  }
+
   function renderReviews(reviews) {
     if (!testimonialGrid) return;
 
@@ -495,12 +469,13 @@ document.addEventListener("DOMContentLoaded", () => {
       .filter(isApprovedReview)
       .filter((review) => getReviewValue(review, ["review", "Review", "message", "Message", "feedback", "Feedback"], ""));
 
+    // Show only what is genuinely approved, capped at six. Never padded.
     const displayReviews = approvedReviews.slice(0, 6);
 
-    fallbackReviews.forEach((review) => {
-      if (displayReviews.length >= 6) return;
-      displayReviews.push(review);
-    });
+    if (!displayReviews.length) {
+      renderReviewsEmptyState();
+      return;
+    }
 
     testimonialGrid.innerHTML = displayReviews
       .map((review) => {
@@ -547,10 +522,11 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       const response = await fetch(reviewAPI, { method: "GET" });
       const payload = await response.json();
-      const reviews = normalizeReviews(payload);
-      renderReviews(reviews.length ? reviews : fallbackReviews);
+      renderReviews(normalizeReviews(payload));
     } catch (error) {
-      renderReviews(fallbackReviews);
+      // Unreachable endpoint, HTTP error, or unparseable payload. We have
+      // nothing verified to show, so we say that rather than substitute copy.
+      renderReviews([]);
     }
   }
 
