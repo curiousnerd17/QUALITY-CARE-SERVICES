@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-  <link rel="stylesheet" href="/assets/css/style.css?v=20260721">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260725">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-optimized.png">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-optimized.png">
@@ -27,50 +27,8 @@
     gtag('config', 'G-NT5DDR1ET5');
   </script>
 
-  <style>
-    .not-found {
-      min-height: calc(100vh - 76px);
-      display: flex;
-      align-items: center;
-      padding: 60px 0;
-      background: var(--section);
-    }
-    .not-found-inner {
-      max-width: 560px;
-      margin-inline: auto;
-      text-align: center;
-    }
-    .not-found-code {
-      margin: 0;
-      font-size: clamp(5rem, 20vw, 9rem);
-      font-weight: 900;
-      color: var(--line);
-      line-height: 1;
-      letter-spacing: -2px;
-    }
-    .not-found-title {
-      margin: 8px 0 0;
-      color: var(--text);
-      font-size: clamp(1.6rem, 3.5vw, 2.1rem);
-      line-height: 1.2;
-      letter-spacing: 0;
-    }
-    .not-found-desc {
-      margin: 12px 0 0;
-      color: var(--muted);
-    }
-    .not-found-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      justify-content: center;
-      margin-top: 28px;
-    }
-    @media (max-width: 640px) {
-      .not-found-actions .btn { width: 100%; }
-      .not-found { padding: 50px 0; }
-    }
-  </style>
+  <!-- Page-scoped layout (.not-found-*) lives in the shared stylesheet: the
+       production CSP's style-src permits no inline styles. -->
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>

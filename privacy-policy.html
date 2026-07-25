@@ -17,7 +17,7 @@
   <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
   <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
   <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
-  <link rel="stylesheet" href="assets/css/style.css?v=20260721">
+  <link rel="stylesheet" href="assets/css/style.css?v=20260725">
   <link rel="manifest" href="/manifest.webmanifest">
   <link rel="icon" type="image/png" sizes="32x32" href="images/logo-optimized.png">
   <link rel="apple-touch-icon" sizes="180x180" href="images/logo-optimized.png">
@@ -32,19 +32,8 @@
     gtag('config', 'G-NT5DDR1ET5');
   </script>
 
-  <!-- Page-scoped layout only (404.html precedent). Shared style.css untouched. -->
-  <style>
-    .policy-page { padding: 48px 0 72px; background: var(--section); }
-    .policy-page .policy-inner { max-width: 760px; margin: 0 auto; }
-    .policy-page h1 { margin-bottom: 8px; }
-    .policy-page .policy-updated { display: block; margin-bottom: 32px; opacity: .75; font-size: .95rem; }
-    .policy-page h2 { margin: 36px 0 12px; }
-    .policy-page p, .policy-page li { line-height: 1.7; }
-    .policy-page ul { margin: 0 0 16px 20px; }
-    .policy-page li { margin-bottom: 8px; }
-    .policy-page .policy-contact { margin-top: 40px; padding: 20px 24px; border-radius: var(--radius-md, 10px); background: var(--surface, #fff); }
-    .policy-page .policy-contact a { text-decoration: underline; }
-  </style>
+  <!-- Page-scoped layout (.policy-page) lives in the shared stylesheet: the
+       production CSP's style-src permits no inline styles. -->
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -131,7 +120,7 @@
       <p>If our practices change, we will update this page and change the date shown above.</p>
 
       <div class="policy-contact">
-        <h2 style="margin-top:0">Contact us about your information</h2>
+        <h2>Contact us about your information</h2>
         <p>
           <i class="fa-solid fa-phone" aria-hidden="true"></i>
           <a href="tel:+918302482096">+91 8302482096</a><br>
@@ -142,7 +131,7 @@
         </p>
       </div>
 
-      <p style="margin-top:32px"><a href="/">&larr; Back to Quality Care Services</a></p>
+      <p><a href="/">&larr; Back to Quality Care Services</a></p>
 
     </div>
   </main>

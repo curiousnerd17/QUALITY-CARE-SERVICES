@@ -33,7 +33,7 @@
   <!-- Root-relative asset paths: this page sits one level deep, so the relative
        forms used by root pages would resolve to /services/assets/… (P0-3 rule
        on the ?v= token still applies — bump it on every page together). -->
-  <link rel="stylesheet" href="/assets/css/style.css?v=20260721">
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260725">
   <link rel="manifest" href="/manifest.webmanifest">
   <meta name="msapplication-config" content="/browserconfig.xml">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-optimized.png">
@@ -188,135 +188,19 @@
   }
   </script>
 
-  <!-- Page-scoped layout only (404.html / privacy-policy.html precedent).
-       Shared style.css is untouched, so the homepage carries zero regression
-       risk from this page. Every value below resolves to an existing Design
-       System token (spec §3.0) — no new visual primitives are introduced.
+  <!-- Page-scoped layout (.hub-hero, .hub-chooser, .hub-path*) lives in the
+       shared stylesheet, not inline: the production CSP sets
+       `style-src 'self' https://cdnjs.cloudflare.com` with no 'unsafe-inline',
+       so an inline <style> block here was refused by the browser and this page
+       rendered without its hero and chooser layout. Every value still resolves
+       to an existing Design System token (spec §3.0) — no new visual
+       primitives. The .hub-* classes are used by this page only.
 
-       Only genuinely new components are styled here: the breadcrumb, the hub
-       hero, and the two-path chooser. The service cards, grid, cluster titles,
-       area grid, prefooter, header and footer are reused byte-identically from
-       the homepage and are styled entirely by the shared stylesheet — including
-       their heading levels, which is why this page keeps the homepage's
-       h2 → h3 → h4 nesting inside the services section rather than remapping
-       tags and re-declaring the visuals. -->
-  <style>
-    /* ---- Hub hero ---- */
-    .hub-hero {
-      padding: var(--space-48) 0 var(--space-40);
-      background: var(--section);
-    }
-    .hub-hero-inner {
-      max-width: 760px;
-    }
-    .hub-hero h1 {
-      margin: var(--space-8) 0 0;
-      font-size: clamp(1.9rem, 4vw, 2.7rem);
-      line-height: 1.15;
-    }
-    .hub-hero-lede {
-      margin: var(--space-16) 0 0;
-      color: var(--muted);
-      font-size: 1.06rem;
-      line-height: 1.7;
-    }
-    .hub-hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-12);
-      margin-top: var(--space-24);
-    }
-
-    /* ---- "Which service do I need?" chooser ---- */
-    .hub-chooser {
-      padding: var(--space-48) 0 var(--space-8);
-    }
-    .hub-paths {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: var(--space-20);
-      margin-top: var(--space-24);
-    }
-    .hub-path {
-      display: flex;
-      flex-direction: column;
-      padding: var(--space-24);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-md);
-      background: var(--surface-base);
-      box-shadow: var(--elevation-e1);
-      transition: box-shadow .25s ease, border-color .25s ease;
-    }
-    .hub-path:hover,
-    .hub-path:focus-within {
-      border-color: var(--primary-500);
-      box-shadow: var(--elevation-e2);
-    }
-    .hub-path > i {
-      display: inline-grid;
-      place-items: center;
-      width: 44px;
-      height: 44px;
-      margin-bottom: var(--space-12);
-      border-radius: var(--radius-md);
-      color: var(--primary);
-      background: var(--primary-50);
-      font-size: 1.05rem;
-    }
-    .hub-path h3 {
-      margin: 0;
-      color: var(--text);
-      font-size: 1.14rem;
-      line-height: 1.3;
-    }
-    .hub-path p {
-      margin: var(--space-8) 0 var(--space-16);
-      color: var(--muted);
-    }
-    /* Standalone card link, not inline in a sentence — so the SC 2.5.8 inline
-       exception does not apply. Sized to the 44px CTA rule (spec §9). */
-    .hub-path-link {
-      display: inline-flex;
-      align-items: center;
-      gap: var(--space-8);
-      min-height: 44px;
-      margin-top: auto;
-      align-self: flex-start;
-      color: var(--primary-dark);
-      font-weight: 700;
-    }
-    .hub-path-link:hover,
-    .hub-path-link:focus-visible {
-      text-decoration: underline;
-    }
-    .hub-chooser-fallback {
-      margin: var(--space-20) 0 0;
-      padding: var(--space-16) var(--space-20);
-      border-left: 3px solid var(--primary-400);
-      border-radius: var(--radius-sm);
-      background: var(--section);
-      color: var(--muted);
-    }
-
-    /* ---- Responsive ---- */
-    @media (max-width: 980px) {
-      .hub-paths {
-        grid-template-columns: 1fr;
-      }
-    }
-    @media (max-width: 640px) {
-      .hub-hero {
-        padding: var(--space-32) 0 var(--space-24);
-      }
-      .hub-hero-actions .btn {
-        flex: 1 1 100%;
-        justify-content: center;
-      }
-      .hub-chooser {
-        padding-top: var(--space-32);
-      }
-    }
-  </style>
+       The service cards, grid, cluster titles, area grid, prefooter, header,
+       footer and breadcrumb are reused byte-identically from the homepage and
+       were always styled by the shared stylesheet — including their heading
+       levels, which is why this page keeps the homepage's h2 → h3 → h4 nesting
+       inside the services section rather than remapping tags. -->
 </head>
 <body>
   <a class="skip-link" href="#main-content">Skip to main content</a>

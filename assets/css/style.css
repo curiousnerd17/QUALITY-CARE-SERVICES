@@ -1927,3 +1927,193 @@ button {
     justify-content: center;
   }
 }
+
+/* ========== PAGE-SCOPED LAYOUTS ==========================================
+   Previously delivered as inline <style> blocks on /services/, 404.html and
+   privacy-policy.html. The production CSP sets `style-src 'self'
+   https://cdnjs.cloudflare.com` with no 'unsafe-inline', nonce or hash, so
+   those blocks were refused by the browser and the pages rendered without
+   their layout. Moving the rules here makes them same-origin CSS, which the
+   existing policy already allows — the fix needs no CSP relaxation.
+
+   Declarations are carried over verbatim. Each class family below is used by
+   exactly one page (.hub-* -> /services/, .not-found-* -> 404.html,
+   .policy-page -> privacy-policy.html), so nothing here can affect the
+   homepage or the seven service pages.
+   ======================================================================== */
+
+/* ---- /services/ hub hero ---- */
+.hub-hero {
+  padding: var(--space-48) 0 var(--space-40);
+  background: var(--section);
+}
+.hub-hero-inner {
+  max-width: 760px;
+}
+.hub-hero h1 {
+  margin: var(--space-8) 0 0;
+  font-size: clamp(1.9rem, 4vw, 2.7rem);
+  line-height: 1.15;
+}
+.hub-hero-lede {
+  margin: var(--space-16) 0 0;
+  color: var(--muted);
+  font-size: 1.06rem;
+  line-height: 1.7;
+}
+.hub-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-12);
+  margin-top: var(--space-24);
+}
+
+/* ---- /services/ "Which service do I need?" chooser ---- */
+.hub-chooser {
+  padding: var(--space-48) 0 var(--space-8);
+}
+.hub-paths {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-20);
+  margin-top: var(--space-24);
+}
+.hub-path {
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-24);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-base);
+  box-shadow: var(--elevation-e1);
+  transition: box-shadow .25s ease, border-color .25s ease;
+}
+.hub-path:hover,
+.hub-path:focus-within {
+  border-color: var(--primary-500);
+  box-shadow: var(--elevation-e2);
+}
+.hub-path > i {
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: var(--space-12);
+  border-radius: var(--radius-md);
+  color: var(--primary);
+  background: var(--primary-50);
+  font-size: 1.05rem;
+}
+.hub-path h3 {
+  margin: 0;
+  color: var(--text);
+  font-size: 1.14rem;
+  line-height: 1.3;
+}
+.hub-path p {
+  margin: var(--space-8) 0 var(--space-16);
+  color: var(--muted);
+}
+/* Standalone card link, not inline in a sentence — so the SC 2.5.8 inline
+   exception does not apply. Sized to the 44px CTA rule (spec §9). */
+.hub-path-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-8);
+  min-height: 44px;
+  margin-top: auto;
+  align-self: flex-start;
+  color: var(--primary-dark);
+  font-weight: 700;
+}
+.hub-path-link:hover,
+.hub-path-link:focus-visible {
+  text-decoration: underline;
+}
+.hub-chooser-fallback {
+  margin: var(--space-20) 0 0;
+  padding: var(--space-16) var(--space-20);
+  border-left: 3px solid var(--primary-400);
+  border-radius: var(--radius-sm);
+  background: var(--section);
+  color: var(--muted);
+}
+
+/* ---- 404 page ---- */
+.not-found {
+  min-height: calc(100vh - 76px);
+  display: flex;
+  align-items: center;
+  padding: 60px 0;
+  background: var(--section);
+}
+.not-found-inner {
+  max-width: 560px;
+  margin-inline: auto;
+  text-align: center;
+}
+.not-found-code {
+  margin: 0;
+  font-size: clamp(5rem, 20vw, 9rem);
+  font-weight: 900;
+  color: var(--line);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.not-found-title {
+  margin: 8px 0 0;
+  color: var(--text);
+  font-size: clamp(1.6rem, 3.5vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+.not-found-desc {
+  margin: 12px 0 0;
+  color: var(--muted);
+}
+.not-found-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 28px;
+}
+
+/* ---- privacy-policy page ---- */
+.policy-page { padding: 48px 0 72px; background: var(--section); }
+.policy-page .policy-inner { max-width: 760px; margin: 0 auto; }
+.policy-page h1 { margin-bottom: 8px; }
+.policy-page .policy-updated { display: block; margin-bottom: 32px; opacity: .75; font-size: .95rem; }
+.policy-page h2 { margin: 36px 0 12px; }
+.policy-page p, .policy-page li { line-height: 1.7; }
+.policy-page ul { margin: 0 0 16px 20px; }
+.policy-page li { margin-bottom: 8px; }
+.policy-page .policy-contact { margin-top: 40px; padding: 20px 24px; border-radius: var(--radius-md, 10px); background: var(--surface, #fff); }
+.policy-page .policy-contact a { text-decoration: underline; }
+/* Replaces two inline style attributes that the CSP also refused: the
+   contact heading's `margin-top:0` and the back-link's `margin-top:32px`.
+   Targeted structurally so the markup keeps its original shape. */
+.policy-page .policy-contact h2 { margin-top: 0; }
+.policy-page .policy-contact + p { margin-top: 32px; }
+
+/* ---- Page-scoped responsive ---- */
+@media (max-width: 980px) {
+  .hub-paths {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .hub-hero {
+    padding: var(--space-32) 0 var(--space-24);
+  }
+  .hub-hero-actions .btn {
+    flex: 1 1 100%;
+    justify-content: center;
+  }
+  .hub-chooser {
+    padding-top: var(--space-32);
+  }
+  .not-found-actions .btn { width: 100%; }
+  .not-found { padding: 50px 0; }
+}
