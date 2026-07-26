@@ -200,6 +200,36 @@
   status = 301
   force = true
 
+# ── /careers/ directory index guards (E6) ────────────────────────────────────
+# /careers/ is a directory index like /services/, so it takes the trailing
+# slash and needs the same three guards closing every non-canonical form:
+#
+#   /careers/index.html -> /careers/   (the file's own path)
+#   /careers/index      -> /careers/   (what a :slug rewrite would produce)
+#   /careers            -> /careers/   (missing trailing slash)
+#
+# These must precede any future /careers/:slug placeholder pair — first match
+# wins — so that individual job pages can be added later without exposing the
+# index at a second URL.
+
+[[redirects]]
+  from = "/careers/index.html"
+  to = "/careers/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/careers/index"
+  to = "/careers/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/careers"
+  to = "/careers/"
+  status = 301
+  force = true
+
 # ── Per-service canonical rules ──────────────────────────────────────────────
 # DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
 # used placeholder rules:
