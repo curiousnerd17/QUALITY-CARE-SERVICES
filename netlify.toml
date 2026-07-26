@@ -111,6 +111,31 @@
   status = 404
   force = true
 
+# ── Forensic salvage records (E7.5-A · audit finding C-1) ────────────────────
+# These two files were created by the 2026-07-21 `git clean -fd` recovery and
+# were NOT given rules in the commit that created them — the exact fail-open
+# failure this block's own CONVENTION note warns about, recurring a third time.
+# They are the highest-sensitivity documents in the repository: the readiness
+# salvage carries a "Verdict: NOT READY" self-assessment and the SEO salvage
+# carries the full keyword architecture and competitor framework.
+#
+# The documents are DELIBERATELY RETAINED. They are legitimate forensic records
+# of a real data-loss incident and carry governance value; destroying evidence
+# to close an audit finding is the wrong remedy. Public access is blocked here;
+# the files stay in the repository.
+
+[[redirects]]
+  from = "/IMPLEMENTATION_READINESS_REPORT.SALVAGE.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/LOCAL_SEO_MASTER_PLAN.SALVAGE.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Pre-armed: DECISION_LOG.md does not exist yet (SEO_EXECUTION_PLAYBOOK.md
 # Appendix E row 2). The rule is added BEFORE the file so the blocklist cannot
 # lag the document — inverting the fail-open ordering that produced B5. A rule
