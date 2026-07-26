@@ -1,8 +1,9 @@
 # Knowledge Center — Platform Architecture
 
+**Version:** **1.0 — FROZEN** (see §24)
 **Sprint:** E7 · Planning only
-**Status:** Draft for owner review. **Nothing in this document has been implemented.**
-**Date:** 26 July 2026
+**Status:** Frozen blueprint for owner-gated implementation. **Nothing in this document has been implemented.**
+**Date:** 26 July 2026 · Part II (§16–§24) added at the freeze review
 **Supersedes:** nothing. **Amends:** `PROJECT.md` §9, §19, §20 and `LOCAL_SEO_MASTER_PLAN.md` §7.4, §8.3 — *proposed only, see §0.*
 
 ---
@@ -15,7 +16,8 @@ constitutional. Those amendments may well be the right call — but they are the
 make, and making them silently inside an implementation sprint is exactly the failure mode
 `PROJECT.md` §19 exists to prevent.
 
-Sections `§1`–`§15` then answer the brief in order. Every recommendation is marked:
+Part I (`§1`–`§15`) answers the original E7 brief in order; Part II (`§16`–`§24`) adds the
+governance layer and the freeze review. Every recommendation is marked:
 
 | Mark | Meaning |
 |---|---|
@@ -1423,9 +1425,983 @@ Center ahead of it. If capacity is genuinely scarce, GBP first, knowledge second
 
 ---
 
-# APPENDIX — OWNER DECISIONS
+# PART II — ENTERPRISE ARCHITECTURE REVIEW
 
-Numbering continues from the existing D1–D5.
+Added at the v1.0 freeze review. Part I (§0–§15) is unchanged: no architecture was
+redesigned, no principle altered, no URL, taxonomy or template decision revisited. Part II
+adds the governance layer that Part I assumed but did not specify.
+
+**Standing rule for this part:** a recommendation is included only if it makes the platform
+more maintainable, more governable, or more scalable *at 500 articles*. Anything that only
+makes the document look more thorough is rejected in writing, with the reason, in §24.1.
+
+---
+
+# §16 — CONTENT LIFECYCLE
+
+## 16.1 The state machine
+
+**DECIDED.** Nine states. Every article is in exactly one at all times, recorded in the
+`status` front-matter field (§21).
+
+```
+                   ┌──────────────────────────────────────────────┐
+                   │                                              │
+   [idea] ──► DRAFT ──► TECHNICAL_REVIEW ──► TRUTH_REVIEW ──► SEO_REVIEW ──► APPROVED
+                ▲              │                   │                │            │
+                │              │ fail              │ fail           │ fail       │
+                └──────────────┴───────────────────┴────────────────┘            │
+                                                                                 ▼
+                              ARCHIVED ◄────── NEEDS_REVIEW ◄──────────────► PUBLISHED
+                                 │                    ▲                          │
+                                 │                    └── scheduled review due ───┘
+                                 ▼
+                             REDIRECTED
+```
+
+**Any failed review returns the article to `DRAFT`.** Not to the previous gate. A truth
+failure often means the argument was wrong, not the sentence — sending it back one step
+invites patching a hole rather than fixing the reasoning.
+
+## 16.2 State definitions
+
+| State | Meaning | Who moves it out | Exit condition |
+|---|---|---|---|
+| **DRAFT** | Being written or rewritten. Not on disk as HTML. | Writer | Complete body, front matter, FAQs, declared links |
+| **TECHNICAL_REVIEW** | Structure, schema, links, front matter, slug, template conformance | Engineer | Validator passes clean (§21.4) |
+| **TRUTH_REVIEW** | Every claim evidenced; YMYL boundary; no fabrication | **Owner — non-delegable** | No unevidenced claim, no clinical instruction, no price, no guarantee, no superlative |
+| **SEO_REVIEW** | Title, meta, headings, internal links, cannibalisation check | Engineer / SEO | Passes §5 and §22.4 |
+| **APPROVED** | Signed off, not yet live. Exists so publication can be *scheduled* rather than coincident with approval | Owner | Publication date reached |
+| **PUBLISHED** | Live, indexable, in the sitemap | — | Review date reached, or a trigger fires |
+| **NEEDS_REVIEW** | **Still live and indexed.** Flagged as due or suspect. Not a soft-delete | Owner | Reviewed → back to PUBLISHED, or → DRAFT for rewrite, or → ARCHIVED |
+| **ARCHIVED** | Deliberately retired. Removed from sitemap and from all internal links. **URL still returns 200** with a dated notice | Owner | Traffic decays, or content is superseded |
+| **REDIRECTED** | URL 301s to a successor. Source file retained in `content/` for provenance | — | Terminal |
+
+## 16.3 The two states that carry the most weight
+
+**`NEEDS_REVIEW` means "due", not "broken".** The article stays live throughout. The
+alternative — unpublishing on the review date — punishes the reader for an internal process
+slipping. The only thing that pulls an article offline immediately is a **truth failure**,
+which goes straight to `DRAFT`.
+
+**`ARCHIVED` keeps the URL alive at 200.** Deleting a URL breaks every inbound link,
+bookmark and WhatsApp share that ever pointed at it, and `PROJECT.md` §9 forbids silently
+dropping a path. An archived article keeps its URL, gains a dated notice at the top
+("This article was last reviewed on *date* and is kept for reference; our current guidance
+is *link*"), loses its sitemap entry, and is removed from internal link modules. It is
+`noindex` only if the content is actively misleading — otherwise the honest signal is a
+stale-but-labelled page, not a hidden one.
+
+**`REDIRECTED` is used only when a genuine successor exists** and the old URL should not
+be a destination — a merge or a supersession. It is never used to tidy up.
+
+## 16.4 Reconciling with §9.6
+
+§9.6 defines six editorial gates. §16 defines nine states. They are the same process
+viewed as workflow and as data, and they map exactly:
+
+| §9.6 gate | §16 state |
+|---|---|
+| 1 Topic approval | *(pre-`DRAFT`; recorded on the inventory row, not as a state)* |
+| 2 Outline | DRAFT |
+| 3 Draft | DRAFT |
+| 4 Truth pass | TRUTH_REVIEW |
+| 5 YMYL pass | TRUTH_REVIEW *(same gate, two distinct checklists — see below)* |
+| 6 Technical pass | TECHNICAL_REVIEW + SEO_REVIEW |
+
+**§9.6 remains the operational checklist. §16 is the state field.** Neither supersedes the
+other and neither should be edited without the other.
+
+Two notes on collapsing:
+
+- **Truth and YMYL stay one state but two checklists.** They are the same reviewer at the same sitting; making them separate states would imply they can be scheduled apart, which invites doing one and deferring the other. Two signed checklists inside one state is the honest structure.
+- **Technical and SEO are separate states even though the same person performs both.** They fail for genuinely different reasons — a broken schema and a cannibalising title are unrelated defects — and batching them is what lets the second one slip. They may be performed in one sitting; they may not be signed in one action.
+
+## 16.5 Transition rules
+
+1. **No state skipping, ever** — including for a one-paragraph correction. A typo fix is a `PUBLISHED → PUBLISHED` edit that never enters the pipeline; anything that changes meaning re-enters at `DRAFT`.
+2. **Only `TRUTH_REVIEW` can be failed for a reason that is not written down.** Owner judgement is final and needs no justification. Every other gate must cite a specific rule.
+3. **A state change is a commit.** The front-matter `status` field and the git history are the audit trail; no separate log.
+4. **`APPROVED` may not sit longer than 30 days.** Beyond that the truth review is stale and the article returns to `TRUTH_REVIEW`.
+5. **Nothing enters `PUBLISHED` without a `next_review` date** already set (§18).
+
+---
+
+# §17 — CONTENT OWNERSHIP
+
+## 17.1 Roles are distinct even when the person is not
+
+**DECIDED, and this is the point of the section.** Today one person — the owner — will
+hold most of these roles. That is not a reason to collapse the fields.
+
+Recording four roles that resolve to one name costs nothing today and means that
+delegating a role later is a **data change, not a schema change**. Collapsing them now
+means that hiring a writer in year two requires touching every article ever published.
+
+**What must not happen:** inventing distinct names to make the fields look populated.
+`SERVICE_PAGE_SPEC.md` §3.4 forbids fabricated people, and §4.5 already applies this to
+bylines. If the owner is the truth reviewer, the field says the owner.
+
+## 17.2 The ownership fields
+
+| Field | Definition | V1 value | Delegable? |
+|---|---|---|---|
+| `content_owner` | Accountable for this article being correct and current for its whole life. The person the review reminder goes to. | Owner | Later, per-category |
+| `author` | Wrote it. **Public-facing byline is the Organization** (§4.5) — this field is internal attribution | Owner, or writer's name once one exists | Yes |
+| `technical_reviewer` | Signed `TECHNICAL_REVIEW` and `SEO_REVIEW` | Engineer | Yes |
+| `truth_reviewer` | Signed `TRUTH_REVIEW`. **Non-delegable at V1** | Owner | **No** — see 17.3 |
+| `medical_reviewer` | Reserved. Empty at V1. | *(absent)* | Only to a real, named, credentialed, consenting person |
+| `last_reviewed` | Date of the most recent completed review, whether or not anything changed | ISO date | — |
+| `next_review` | Scheduled date, computed from `review_frequency` | ISO date | — |
+| `review_frequency` | Months. Defaults by content type (§9.7), overridable per article | Integer | — |
+
+## 17.3 Why `truth_reviewer` is non-delegable
+
+Everything else on this platform can be checked against a rule. Truth review is the one
+gate whose standard is *"do we actually know this, and is it true of this business today"* —
+and only the person running the business holds that knowledge. This is the same reasoning
+that made the owner the sole approver of D3 and D4 rather than something I could infer.
+
+Delegating it is possible eventually, but it is a **deliberate, documented handover**, not
+a default that erodes under cadence pressure. This is R-3 (governance decay) written into
+the schema.
+
+## 17.4 What is explicitly rejected here
+
+- **A RACI matrix.** Four roles and one accountable person do not need one.
+- **Multi-approver sign-off.** Two approvers on a three-article-a-month cadence produces diffusion of responsibility, not rigour.
+- **Per-article role assignment ceremony.** Roles default from `taxonomy.yml`; the front matter only records the exception.
+
+---
+
+# §18 — CONTENT INVENTORY
+
+## 18.1 Purpose
+
+One row per article, for the whole life of the article. It answers the questions the
+individual files cannot: *what do we have, what is due, what is orphaned, what is not
+earning its place.*
+
+**Location:** `content/inventory.csv` — repo-only, blocked from publish by the `/content/*`
+splat (§12.1).
+
+**Format: CSV.** Not a spreadsheet file, not JSON, not a database. CSV diffs readably in
+git, opens in any tool the owner already has, and imports into any future CMS without a
+converter. **RECOMMENDED.**
+
+## 18.2 Fields
+
+| Field | Type | Source | Notes |
+|---|---|---|---|
+| `id` | `KB-0001` | Assigned once | See 18.3 |
+| `slug` | string | Front matter | Immutable after publication (§2.6) |
+| `url` | absolute | Derived | `category` + `slug` |
+| `title` | string | Front matter | May change; slug may not |
+| `category` | enum | Front matter | One of ten (§1.2) |
+| `content_type` | enum | Front matter | One of six (§3.2) |
+| `primary_service` | enum | Front matter | **Mandatory.** One of the canonical seven |
+| `secondary_services` | list | Front matter | 0–3 |
+| `status` | enum | Front matter | One of nine (§16) |
+| `content_owner` | string | Front matter | §17 |
+| `published` | ISO date | Front matter | Set once |
+| `updated` | ISO date | Front matter | Material edits only |
+| `last_reviewed` | ISO date | Front matter | Includes no-change reviews |
+| `next_review` | ISO date | Derived | `last_reviewed` + `review_frequency` |
+| `inbound_internal_links` | integer | **Computed** | Orphan detection (§22.7) |
+| `outbound_service_links` | integer | **Computed** | Must be ≥ 1 |
+| `word_count` | integer | Computed | Feeds reading time |
+| `notes` | free text | Manual | Why it exists, what it is waiting on |
+
+## 18.3 Article IDs — accepted, but in the cheap form
+
+The brief asks for a unique ID. **Accepted, as a human-readable sequential key: `KB-0001`,
+`KB-0002`, …** Assigned at `DRAFT`, never reused, never changed — including when an
+article is archived, redirected, or moved between categories.
+
+**UUIDs are rejected.** They are unreadable in a commit message, unsayable in a
+conversation, and solve a collision problem that does not exist at 500 rows.
+
+The slug is already immutable and unique, so the ID earns its place on exactly two
+grounds, both real: it survives a **category change** (which changes the URL while the
+slug persists), and it is the stable join key for a **future CMS migration**.
+
+## 18.4 Traffic and conversions — REJECTED as stored fields
+
+The brief lists `Traffic` and `Conversions` as inventory fields. **I recommend against
+storing them, and this is a genuine architectural objection rather than a preference.**
+
+| Problem | Consequence |
+|---|---|
+| Stale the moment they are written | A number in a CSV has no timestamp and no window; nobody can tell whether it means last month or last year |
+| Hand-transcribed from GA4 | Transcription error, at 500 rows, quarterly |
+| Ambiguous | Sessions or users? Which window? Conversions attributed how? |
+| **Actively misleading** | A retirement decision (§22.8) made on a stale number is a wrong decision made confidently |
+
+**Instead:** the inventory holds the **join key** (`url`), and metrics are pulled fresh
+from GA4 and Search Console **at review time** into a dated quarterly snapshot
+(`content/reviews/YYYY-Qn.csv`). Metrics live where they are measured; the inventory holds
+what only the inventory knows.
+
+This preserves every use the brief intended — retirement decisions, rewrite decisions,
+cluster performance — while removing the decay. It is also strictly less work.
+
+## 18.5 CMS migration path
+
+The inventory is designed so that adopting a CMS later changes **nothing public**:
+
+| Layer | Migrates? |
+|---|---|
+| URLs | ❌ Never — the whole point of §2 |
+| Taxonomy | ❌ Category/type/tag vocabularies import as-is |
+| Article bodies | ✅ Markdown imports into any CMS |
+| Front matter | ✅ §21 maps 1:1 onto standard CMS fields |
+| Inventory | ✅ CSV is the import file |
+| Templates | ✅ Rebuilt in the CMS to emit the same HTML |
+
+**A CMS migration under this architecture is an authoring-tool change, not a website
+change.** No URL moves, no redirect map, no ranking loss. That property is the return on
+the front-matter discipline §11 insisted on.
+
+---
+
+# §19 — CONTENT GOVERNANCE (QUARTERLY REVIEW)
+
+## 19.1 Cadence
+
+**One review per quarter, timeboxed to half a day, covering only what is due.** Not a full
+corpus audit — a full audit of 500 articles is a thing that gets scheduled, dreaded, and
+then skipped. A quarterly pass over the ~15–25 articles that are actually due is a thing
+that happens.
+
+**Scope:** every article whose `next_review` falls in the quarter, plus every article
+flagged by an automated check.
+
+## 19.2 The nine checks
+
+| # | Check | Automated? | Fails when |
+|---|---|---|---|
+| 1 | **Outdated content detection** | Semi | `next_review` past due; or a service scope change touches its `primary_service`; or a `local` article names a facility |
+| 2 | **Broken links** | ✅ Fully | Any internal link ≠ 200; any external link ≠ 200 for two consecutive quarters |
+| 3 | **Image review** | Manual | Missing/inaccurate alt text; image no longer represents the text; licence expired or unverifiable (§20.7) |
+| 4 | **SEO review** | Semi | Title/meta drift outside the bands; no impressions after 2 quarters live; cannibalisation flag (§22.4) |
+| 5 | **Fact verification** | Manual, **owner** | Any claim no longer true of the business today |
+| 6 | **FAQ freshness** | Semi | FAQ ≠ JSON-LD 1:1; a question no longer asked; a new recurring question absent |
+| 7 | **Internal link audit** | ✅ Fully | `inbound_internal_links` = 0; `outbound_service_links` = 0; anchor-text over-repetition across the corpus |
+| 8 | **Retirement assessment** | Manual | §19.4 criteria met |
+| 9 | **Rewrite assessment** | Manual | §19.5 criteria met |
+
+Checks 2 and 7 run in CI on every commit, not only quarterly — they are cheap and they
+catch regressions on the day they are introduced rather than up to 90 days later.
+
+## 19.3 Outputs
+
+Each quarterly review produces exactly two artefacts:
+
+1. `content/reviews/YYYY-Qn.csv` — the dated metrics snapshot (§18.4) plus a per-article verdict: `keep` · `refresh` · `rewrite` · `archive` · `redirect`.
+2. Commits implementing the verdicts. **No verdict is recorded without a resulting commit or an explicit deferral reason.** A review that produces a list and no changes is a review that did not happen.
+
+## 19.4 Retirement criteria — ARCHIVE
+
+Archive when **any** of these holds:
+
+- The service it supports no longer exists, or its scope changed such that the article misleads.
+- It has been live ≥ 4 quarters with **near-zero impressions** *and* zero inbound internal links *and* nobody in the business would send it to a customer.
+- It has been superseded but has **no single successor** (if there is one, `REDIRECT` instead).
+- It can no longer be made truthful without a rewrite nobody will do.
+
+**Never archive for being old.** Age is not decay; an evergreen article that is still true and still useful is doing its job at year seven.
+
+## 19.5 Rewrite criteria — DRAFT
+
+Rewrite when:
+
+- **Truth drift** — a material claim is no longer accurate. *Immediate, does not wait for the quarter.*
+- **Intent drift** — search results for the target query now answer a different question.
+- **Cannibalisation** — two articles compete; one is rewritten to differentiate or merged (§22.4).
+- **Quality debt** — an early article no longer meets the standard the corpus has since reached.
+- Ranking on page 2 for a query it should own, with the gap being depth or specificity rather than authority.
+
+**Refresh vs rewrite:** a *refresh* updates facts and touches `updated`. A *rewrite* re-enters at `DRAFT` and passes all four gates again.
+
+## 19.6 What is rejected
+
+- **A monthly review cycle.** Nothing meaningful changes in 30 days, and the calendar entry would be ignored by month four.
+- **A content scoring rubric (0–100).** Precision theatre. The five-verdict enum is more decidable and less arguable.
+- **Automated content-decay alerting.** At 36 articles a year, `next_review` in a CSV is sufficient. Revisit above ~150 articles.
+
+---
+
+# §20 — IMAGE ARCHITECTURE
+
+## 20.1 The rule that comes before all the technical ones
+
+**DECIDED — this is an honesty rule, not a media rule.**
+
+> **No image may imply something untrue.** A stock photograph must never be presented,
+> captioned, or contextually framed as a real client, a real member of staff, or a real
+> Kota home.
+
+`SERVICE_PAGE_SPEC.md` §3.4 forbids fabricated testimonials; a stock photo of a smiling
+family under a caption implying they are a client is the same fabrication in a different
+medium, and a more persuasive one. The site already removed six invented testimonials
+(`64147d5`) for exactly this reason.
+
+Three permitted image classes, and no fourth:
+
+| Class | Use | Constraint |
+|---|---|---|
+| **Owned** | Real photos of real work | **Written consent required before capture**, per the existing SP-T7 consent rule. Faces of patients or children: additional explicit consent, and prefer not to |
+| **Licensed stock** | Illustrative, generic | Never captioned or framed as depicting this business, its staff, or its clients |
+| **Diagrams / illustrations** | Explaining a process or layout | Original; no medical illustration (§9.1) |
+
+## 20.2 Hero images — conditional, never decorative
+
+Slot 5 is **conditional** (§4.2). An article ships without a hero rather than with a
+stock photo chosen to fill a hole. A generic hero costs LCP, costs bandwidth on the mobile
+connections most of this audience uses, and communicates nothing.
+
+| Property | Standard |
+|---|---|
+| Aspect ratio | **16:9** (`1600×900`) — deliberately *not* the hero pages' 1920×1072, because articles are content-width, not full-bleed |
+| Format | WebP only |
+| Weight | ≤ 120 KB |
+| Loading | `loading="eager"`, `fetchpriority="high"` — it is the LCP element |
+| Dimensions | `width` and `height` **always** present — CLS |
+| `object-fit` | `cover` with an explicit `aspect-ratio` — the E5 hero-crop lesson |
+
+## 20.3 In-body images
+
+| Property | Standard |
+|---|---|
+| Max rendered width | 800 px (content column) |
+| Source width | 1600 px (2× for retina) |
+| Format | WebP |
+| Weight | ≤ 80 KB |
+| Loading | `loading="lazy"`, `decoding="async"` |
+| Caption | Optional; when present it must add information, not restate the alt text |
+
+## 20.4 Alt text
+
+**Describe the function, not the file.** Alt text answers *"what would a sighted reader
+learn from this image that the surrounding text does not say?"*
+
+| ❌ | ✅ |
+|---|---|
+| `alt="image"` · `alt="patient care"` | `alt="A hospital bed positioned away from the wall on three sides, leaving room to move around it"` |
+| Keyword stuffing | Plain description |
+| Repeating the caption verbatim | Complementing it |
+| Alt text on a purely decorative image | `alt=""` — correct and required |
+
+Validator enforces: every `<img>` has an `alt` attribute; no `alt` is empty **unless** the
+image carries `role="presentation"`; no `alt` exceeds 125 characters.
+
+## 20.5 Naming convention
+
+```
+images/knowledge/<category>/<article-slug>-<n>.webp
+images/knowledge/patient-care/preparing-your-home-for-a-bedridden-patient-1.webp
+```
+
+Lowercase, hyphens, ASCII, no spaces, no ampersands, no capitals — **the E5 hero-image
+lesson**, where supplied filenames carried trailing spaces, `&` and capitals and had to be
+renamed before use. The path mirrors the URL tree, so an article's images are locatable
+from its slug alone and removable with the article.
+
+## 20.6 Responsive behaviour
+
+`srcset` at **two** widths (800 / 1600) with `sizes`. Not five. Two widths cover the real
+device population, and each additional variant multiplies the storage, the build step and
+the number of files that can go stale. **Revisit only if measurement shows a problem.**
+
+No `<picture>` element and no JPEG fallback: WebP support is universal in this audience's
+browsers, and the site already ships WebP-only imagery.
+
+## 20.7 Licensing
+
+| Requirement | Rule |
+|---|---|
+| Provenance record | Every non-owned image gets a row in `content/image-licences.csv`: file, source, licence type, licence URL, date acquired, permitted uses |
+| Prohibited | Google Image search results; "found online"; anything whose licence cannot be produced on request |
+| Consent | Owned photos of identifiable people: written consent on file before publication (existing SP-T7 rule) |
+| Quarterly check | Check 3 (§19.2) verifies the licence row still resolves |
+
+**An image whose licence cannot be evidenced is treated exactly like a claim whose source
+cannot be produced: it does not ship.**
+
+## 20.8 WebP strategy
+
+Already the site standard; no migration needed. AVIF is **deliberately not adopted** — it
+would add a second format, a `<picture>` element, and a build variant for a marginal size
+gain on images already under 120 KB. Reconsider if AVIF becomes single-format viable.
+
+## 20.9 Compression and weight budgets
+
+**Budgets are a gate, not a target.** An image over budget does not ship; it is
+recompressed, cropped, or dropped. Slot 5 is conditional precisely so that "drop it" is
+always an available answer.
+
+| | Hero | In-body | Diagram |
+|---|---|---|---|
+| Source width | 1600 px | 1600 px | 1200 px |
+| **Ceiling** | **120 KB** | **80 KB** | **40 KB** |
+| Target | 60–90 KB | 30–60 KB | ≤20 KB |
+| WebP quality | 78–82 | 75–80 | Lossless or 90 |
+| Metadata | Stripped — EXIF, GPS, camera data | Stripped | Stripped |
+
+**Quality 78–82, not 90.** Above ~85 the file grows steeply for a difference invisible on
+the mobile screens most of this audience uses. Encode once at the chosen quality from the
+original; never re-encode an already-compressed WebP — generational loss is cumulative and
+irreversible.
+
+**Stripping metadata is a privacy requirement, not an optimisation.** A photograph taken in
+a client's home carries GPS coordinates in EXIF by default. Publishing that would disclose
+a client's home address, which the Privacy Policy does not permit and no consent form
+covers. **The validator rejects any image retaining EXIF.**
+
+**Per-article page-weight ceiling: 500 KB total, images included**, on the assumption of a
+mid-range Android on a mobile connection. Articles are read by people sitting in hospital
+corridors; the budget reflects that rather than a desktop review.
+
+Encoding is a manual `cwebp` step at V1 and a generator step at E8-T6 — the tool changes,
+the budgets do not.
+
+---
+# §21 — FRONT MATTER SPECIFICATION
+
+## 21.1 Status: a contract, not a build dependency
+
+**DECIDED.** This specification is binding **from article one, whether or not a generator
+ever exists.** Front matter is written by hand into `content/articles/<category>/<slug>.md`
+and read by a human today; it is read by a script tomorrow. Nothing here requires D-11.
+
+The reason is §11's load-bearing insight: **every future capability reads existing
+metadata, and a corpus with inconsistent metadata cannot be retrofitted cheaply.** The
+cost of the contract is a dozen lines per article. The cost of not having it, discovered at
+article 80, is re-reading and re-annotating 80 articles.
+
+## 21.2 The contract
+
+```yaml
+---
+# ── Identity ──────────────────────────────────────────────
+id:                 KB-0004               # assigned once, never reused or changed
+slug:               preparing-your-home-for-a-bedridden-patient
+title:              Preparing Your Home for a Bedridden Patient
+description:        >-                    # 149–158 chars, §5.2
+  What to arrange in the room, bathroom and daily routine before someone
+  bedridden comes home from hospital in Kota.
+canonical:          https://qualitycareservices.in/knowledge/patient-care/preparing-your-home-for-a-bedridden-patient/
+
+# ── Taxonomy ──────────────────────────────────────────────
+category:           patient-care          # one of ten,  §1.2   → IN THE URL
+content_type:       preparation           # one of six,  §3.2   → not in URL
+primary_service:    patient-care          # MANDATORY,   §3.4   → one of the canonical seven
+secondary_services: [elder-care]          # 0–3
+tags:               [hospital-discharge, home-setup, bedridden]   # 0–5, closed vocabulary
+
+# ── Lifecycle ─────────────────────────────────────────────
+status:             published             # one of nine, §16
+published:          2026-09-14            # set once
+updated:            2026-09-14            # material edits only
+last_reviewed:      2026-09-14
+review_frequency:   12                    # months; default by content_type, §9.7
+next_review:        2027-09-14            # derived
+
+# ── Ownership ─────────────────────────────────────────────
+content_owner:      owner                 # §17
+author:             owner                 # internal; public byline is the Organization
+technical_reviewer: engineer
+truth_reviewer:     owner                 # non-delegable, §17.3
+# medical_reviewer:                       # RESERVED — omit until a real person exists
+
+# ── Relationships ─────────────────────────────────────────
+related_articles:   [KB-0001, KB-0007]    # 2–4, curated, §3.5
+hero_image:         images/knowledge/patient-care/preparing-your-home-…-1.webp   # optional
+hero_alt:           A hospital bed positioned away from the wall on three sides
+disclaimer:         true                  # §4.5 — required for health-adjacent content
+---
+```
+
+## 21.3 Field rules
+
+| Field | Required | Mutable | Validation |
+|---|---|---|---|
+| `id` | ✅ | ❌ Never | `^KB-\d{4}$`, unique |
+| `slug` | ✅ | ❌ After publication | §2.6 rules; unique within category |
+| `title` | ✅ | ✅ | Non-empty; decoupled from slug |
+| `description` | ✅ | ✅ | 149–158 chars |
+| `canonical` | ✅ | ❌ | Must equal derived URL exactly |
+| `category` | ✅ | ⚠️ Only with a 301 | Member of the ten |
+| `content_type` | ✅ | ✅ | Member of the six |
+| `primary_service` | ✅ | ✅ | **One of the canonical seven. Build fails if absent** |
+| `secondary_services` | ❌ | ✅ | ≤3, canonical seven, excludes primary |
+| `tags` | ❌ | ✅ | ≤5, all present in `taxonomy.yml` |
+| `status` | ✅ | ✅ | Member of the nine |
+| `published` | ✅ when published | ❌ | ISO 8601 |
+| `updated` | ✅ | ✅ | ≥ `published` |
+| `last_reviewed` | ✅ | ✅ | ≥ `published` |
+| `review_frequency` | ✅ | ✅ | Integer months |
+| `next_review` | derived | — | `last_reviewed` + frequency |
+| `content_owner` · `author` · `technical_reviewer` · `truth_reviewer` | ✅ | ✅ | Non-empty; real |
+| `medical_reviewer` | ❌ | ✅ | **Omit unless real.** Never a placeholder |
+| `related_articles` | ✅ from KB-0005 | ✅ | 2–4 valid published `id`s, not self |
+| `hero_image` / `hero_alt` | ❌ | ✅ | Both or neither; alt ≤125 chars |
+| `disclaimer` | ✅ | ✅ | Boolean; **true** for anything health-adjacent |
+
+## 21.4 Validation rules
+
+These are the checks a validator enforces — and, until one exists, the checklist a human
+runs at `TECHNICAL_REVIEW`. They are the same list either way.
+
+1. Every required field present and well-typed.
+2. `primary_service` ∈ canonical seven. **Hard fail** — this is §3.4's anti-orphan guarantee.
+3. `category` ∈ the ten; `content_type` ∈ the six; every tag ∈ `taxonomy.yml`.
+4. `canonical` equals the derived URL character for character.
+5. `slug` unique within category; `id` unique globally; neither changed since publication.
+6. Every `related_articles` id resolves to a **published** article; no self-reference.
+7. Visible FAQ count = `FAQPage` entry count, **text-identical** (the rule already verified on 12 pages).
+8. Every `<img>` has `alt`; `alt` ≤ 125 chars; `hero_alt` present iff `hero_image` present.
+9. No inline `style=` and no `<style>` block — **CSP `style-src` has no `unsafe-inline`** (R-7).
+10. Cache-buster token identical on every page in the commit (R-5).
+11. Every internal link resolves 200 on the local server.
+12. `disclaimer: true` wherever the body touches health, medication or infant care.
+13. `medical_reviewer`, if present, is non-empty and not a placeholder string.
+14. Body contains no `₹`, no price figure, no superlative from the blocklist, no response-time guarantee.
+
+Checks 7, 9, 10 and 11 are **already implemented** as ad-hoc Python in every sprint's
+self-review. E8-T6 consolidates them into `tools/validate.py`; nothing new is invented.
+
+## 21.5 Rejected fields
+
+| Rejected | Why |
+|---|---|
+| `keywords` | Meta keywords have been ignored for over a decade; the field invites keyword-first writing |
+| `priority` / `weight` | Manual ordering that goes stale; category pages sort by date or curation |
+| `featured: true` | Nobody ever un-features anything |
+| `seo_title` separate from `title` | Two titles drift. One title, written well |
+| `excerpt` separate from `description` | Same reason |
+| `word_count` / `reading_time` | **Derived, never authored.** A hand-typed reading time is wrong the moment the article is edited (§4.4) |
+
+---
+
+# §22 — TOPIC CLUSTER GOVERNANCE
+
+## 22.1 The pillar decision — the most important call in Part II
+
+**DECIDED, and it inverts the standard playbook.**
+
+> ### **The service page is the pillar. The category page is an index. The Knowledge Center never builds its own pillar pages.**
+
+Conventional hub-and-spoke SEO says: write a 3,000-word pillar page per cluster, link
+supporting articles to it. Applied here, that would produce
+`/knowledge/patient-care/` competing directly against `/services/patient-care` for the same
+head term — **the site's own commercial page, cannibalised by its own knowledge platform.**
+
+The seven service pages are already pillars in every sense: they are comprehensive, they
+own the head terms, they carry `Service` schema, and they are the pages that convert.
+Building a second set of pillars would split authority between two pages per topic and
+force a choice about which one should rank. There is no version of that trade that is
+worth making.
+
+## 22.2 Cluster anatomy
+
+| Element | Role | Where it lives | Count |
+|---|---|---|---|
+| **Pillar** | Owns the head term; converts | `/services/<service>` | 1, existing |
+| **Category index** | Navigational list of the cluster. Deliberately thin: title + one-line summary per article, one short intro | `/knowledge/<category>/` | 1 |
+| **Supporting articles** | Own long-tail; link up to the pillar | `/knowledge/<category>/<slug>/` | 3–10 |
+| **FAQs** | Inside articles and inside the pillar. **Never a standalone FAQ page** | In-page | per page |
+| **Checklists** | A `content_type`, living in its real category | `/knowledge/<category>/<slug>/` | — |
+| **Curated resource index** | `/knowledge/checklists/` — links only, self-canonical | Root of `/knowledge/` | 1 |
+| **Related services** | Pillar + genuine adjacencies | Slot 12 | 2–4 |
+
+## 22.3 Why category pages must stay thin
+
+A category index that grows introductory essay content becomes a de facto pillar and
+recreates the cannibalisation §22.1 avoids.
+
+**Hard limit: ≤ 150 words of unique prose on a category page.** Its intro states what the
+cluster covers and links to the service page. Everything else is the list. If a category
+page starts wanting to explain the topic, that explanation is an article.
+
+## 22.4 Cannibalisation prevention
+
+Four mechanisms, applied in order:
+
+1. **One query, one owner.** Before an article is approved (gate 1), its target query is checked against the inventory. If an existing article or service page already targets it, the new article is either differentiated, merged, or rejected.
+2. **The pillar owns the head term.** No article may target `patient care Kota`, `elder care Kota`, or any canonical service head term. Articles own **question and long-tail** queries.
+3. **Title differentiation.** No two titles may be distinguishable only by synonym. `Choosing an attendant` and `Selecting a caregiver` are one article.
+4. **Quarterly detection.** Search Console filtered to the cluster: any query where two of our URLs both appear, or where the ranking URL alternates between two of ours, is flagged. Resolution is **merge** (301 the weaker into the stronger) — not "optimise both".
+
+## 22.5 Orphan prevention — three independent guarantees
+
+Belt, braces, and a third thing. The brief asks for no orphan content; one mechanism is not enough at 500 articles.
+
+| # | Guarantee | Enforced by |
+|---|---|---|
+| 1 | Every article declares `primary_service` | Validator hard-fails without it (§21.4 rule 2) |
+| 2 | Every article is linked from its category index | Index is generated from the corpus, not hand-maintained |
+| 3 | Every article has ≥1 inbound link from a sibling | `inbound_internal_links` computed quarterly; zero = flagged (§19.2 check 7) |
+
+An article can lose guarantee 3 through churn. It cannot lose 1 or 2 without the build
+failing or the index regenerating. **Orphan content is structurally impossible here, not
+merely discouraged.**
+
+## 22.6 Cluster health metrics
+
+Reported per service, quarterly:
+
+| Metric | Healthy |
+|---|---|
+| Article count | ≥3 (activation, §6.5) |
+| Articles with 0 inbound internal links | 0 |
+| Articles with 0 outbound service links | 0 |
+| Queries where 2+ of our URLs compete | 0 |
+| Articles past `next_review` | 0 |
+| Pillar receives inbound from | ≥3 cluster articles |
+
+## 22.7 Rejected
+
+- **A separate pillar page per cluster** — §22.1. The single most valuable rejection in this document.
+- **Tag pages below 6 articles** — thin content (§3.3).
+- **Automated related-article selection** — at this corpus size, curated beats computed (§3.5).
+- **A visual cluster map artefact** — pretty, immediately stale, and the inventory already answers every question it would.
+
+---
+
+# §23 — ARCHITECTURE DECISION LOG
+
+## 23.1 Location
+
+**The ADL lives here, as §23** — not in a separate file.
+
+`netlify.toml` lines 108–117 pre-arm a blocklist rule for a `DECISION_LOG.md` that does not
+yet exist, reserved by `SEO_EXECUTION_PLAYBOOK.md` Appendix E for **project-wide**
+decisions. Creating it now to hold Knowledge-Center-only decisions would misuse a reserved
+name and split the record across two files. If `DECISION_LOG.md` is later created, it
+**references** these ADRs by ID; it does not copy them. One fact, one home.
+
+## 23.2 Format
+
+Each record: **Decision · Reason · Alternatives considered · Trade-offs · Status.** Status
+is `Accepted` · `Proposed` (owner gate open) · `Superseded by ADR-nnn` · `Rejected`.
+**Records are never deleted or rewritten** — a superseded decision keeps its text and gains
+a pointer. The value of a decision log is entirely in what it says about decisions that
+later looked wrong.
+
+---
+
+### ADR-001 · Directory-index URLs for the Knowledge Center
+- **Decision** — `/knowledge/<category>/<slug>/`, served from `<slug>/index.html`, trailing slash.
+- **Reason** — Zero Netlify redirect rules per article. The flat-file convention needs two exact-match rules per page, because placeholder substitution with a literal suffix is broken (defect verified on preview, 2026-07-21); 500 articles would need 1,000 hand-written rules.
+- **Alternatives** — (a) Flat files `/knowledge/<slug>` — the 1,000-rule problem, no category URL, hand-maintained breadcrumbs. (b) Flat with category prefix in the slug — unreadable and still 2 rules each. (c) Client-side routing — breaks static hosting and indexing.
+- **Trade-offs** — Requires amending `PROJECT.md` §9's "no deep nesting". Introduces a second file convention alongside `/services/`. Gains: path-derivable breadcrumbs, clean sitemap partitioning, and elimination of the local-dev mismatch that cost three hotfix commits in E5.
+- **Status** — **Proposed** · gated on **D-8** · verification task **E8-T0**
+
+### ADR-002 · No medical advice — the YMYL boundary
+- **Decision** — The platform explains how care is arranged, prepared for, chosen and supervised. It never explains how care is clinically performed.
+- **Reason** — `LOCAL_SEO_MASTER_PLAN.md` §7.3 rule 7. Clinical instruction from a non-medical publisher risks both search demotion and real harm to a vulnerable patient.
+- **Alternatives** — (a) Publish clinical content with a disclaimer — a disclaimer does not make unqualified advice safe. (b) Commission a medical reviewer — real option, deferred until a real credentialed person exists; fabricating one is the highest-severity honesty breach available here. (c) Avoid health topics entirely — forfeits the platform's whole purpose.
+- **Trade-offs** — Loses some high-volume clinical queries. §9.2 shows the reframe retains most of the intent and all of the credibility, and confines the platform to what this business genuinely knows.
+- **Status** — **Accepted**
+
+### ADR-003 · Truth-first publishing, inherited unchanged
+- **Decision** — `SERVICE_PAGE_SPEC.md` §3.4 and `LOCAL_SEO_MASTER_PLAN.md` §7.3 apply verbatim: no fabricated reviews, statistics, credentials, authors, reviewers, prices, guarantees or superlatives.
+- **Reason** — It is the project's founding principle, and articles create new surfaces to breach it — a composite "family we helped", an unsourced statistic, a stock photo framed as a client, an invented byline.
+- **Alternatives** — (a) A softer standard for "illustrative" content — this is precisely the reasoning that produced the six invented testimonials removed in `64147d5`. (b) Case studies with consent — permitted, and genuinely valuable, but it is a consent workflow rather than a lowered standard.
+- **Trade-offs** — Slower publishing, thinner-looking early articles, no social proof until real proof exists. Every one of those is the cost of being able to defend every sentence.
+- **Status** — **Accepted**
+
+### ADR-004 · Service-first clusters; the service page is the pillar
+- **Decision** — Categories mirror the canonical seven plus three cross-cutting. The Knowledge Center builds no pillar pages of its own; category pages are thin indexes capped at 150 words.
+- **Reason** — A knowledge pillar at `/knowledge/patient-care/` would compete with `/services/patient-care` for the same head term, splitting authority between two of our own pages and cannibalising the one that converts.
+- **Alternatives** — (a) Conventional hub-and-spoke with knowledge pillars — direct cannibalisation. (b) Topic-interest taxonomy independent of services — produces orphan-prone content and no commercial path. (c) A flat uncategorised corpus — no cluster signal, no breadcrumbs.
+- **Trade-offs** — Categories are constrained by the service list rather than by reader interest, which occasionally forces an imperfect `primary_service` fit. Accepted: an imperfect fit is allowed, an absent one is not.
+- **Status** — **Accepted**
+
+### ADR-005 · No locality doorway pages
+- **Decision** — No URL contains a locality name outside a single reserved `/knowledge/kota/` category, itself gated by the find-replace test and capped at 8 articles in year one.
+- **Reason** — Prohibited in three places: `PROJECT.md` §9, `LOCAL_SEO_MASTER_PLAN.md` §4.2 ("❌ Never · Doorway pattern") and §8.3. The E7 brief's own guardrail agrees.
+- **Alternatives** — (a) The 7×6 service-by-locality matrix — 42 find-replace pages; the textbook doorway pattern. (b) No local content at all — safe, and the fallback if D-9 is declined. (c) Locality landing pages with unique intros — the same pattern wearing a hat.
+- **Trade-offs** — Forfeits some "service + locality" query capture. Mitigated by the far higher-ROI Google Business Profile work, which is still pending and which outranks this entire roadmap.
+- **Status** — **Proposed** · gated on **D-9**
+
+### ADR-006 · Generator deferred to E8-T6, after the reference article
+- **Decision** — Build the reference article by hand and certify it; then build the generator to reproduce it. Not the other way round.
+- **Reason** — A generator built before the artefact is known produces the wrong generator. The hand-certify-then-scale order is what made the service-page template work across seven pages with zero structural drift.
+- **Alternatives** — (a) Generator first — premature abstraction. (b) No generator ever — hand-authoring already produced cache-token drift at 12 pages (`dfb456c`) and 11 file edits for one nav link (E6-T3); it does not reach 500 articles and probably not 50. (c) Adopt a static-site generator (Eleventy, Hugo) — a framework dependency in the deployed toolchain, against the spirit of `PROJECT.md` §19.
+- **Trade-offs** — Articles 1–4 are hand-built and must be retro-fitted to the generator's output. Deliberate: four articles of rework is cheap insurance against automating the wrong shape.
+- **Status** — **Proposed** · gated on **D-11**
+
+### ADR-007 · Traffic and conversion metrics excluded from the inventory
+- **Decision** — `content/inventory.csv` stores the join key, not the numbers. Metrics are pulled fresh from GA4 and Search Console into a dated quarterly snapshot.
+- **Reason** — Hand-transcribed metrics have no timestamp and no window, decay immediately, and at 500 rows are transcribed wrongly. A retirement decision made on a stale number is a wrong decision made confidently.
+- **Alternatives** — (a) Store them as the brief specified — the decay problem. (b) Automate a GA4 export into the CSV — an API dependency and a credential to manage, for data that is only read four times a year.
+- **Trade-offs** — The inventory cannot answer a performance question on its own; a review must open GA4. Correct: that is where the answer actually lives.
+- **Status** — **Accepted**
+
+### ADR-008 · Sitemap index replacing the single flat sitemap
+- **Decision** — `/sitemap.xml` becomes an index over `core`, `knowledge`, and `knowledge-articles`.
+- **Reason** — A single file at 500 URLs is technically valid but operationally useless; `lastmod` accuracy has already required one corrective micro-sprint at 11 URLs. Per-section files isolate `lastmod`, and Search Console then reports indexation per sitemap, so a knowledge indexing problem is visible rather than diluted.
+- **Alternatives** — (a) Keep one file — the `lastmod` maintenance problem scales linearly. (b) One sitemap per category — eleven files for a benefit that appears above a few thousand URLs.
+- **Trade-offs** — Four files instead of one, and a resubmission in Search Console. `robots.txt` is unchanged.
+- **Status** — **Accepted**
+
+### ADR-009 · Organization authorship until a real person exists
+- **Decision** — Public byline is "Quality Care Services" with a true statement of the basis of the expertise. `Person` author and `reviewedBy` are reserved in the schema shape and stay absent.
+- **Reason** — `SERVICE_PAGE_SPEC.md` §3.4. A fabricated medical byline on health-adjacent content is a real-world harm vector, not merely an E-E-A-T shortcut.
+- **Alternatives** — (a) Invent an expert persona — prohibited. (b) Use the owner's real name — available and legitimate; deferred to owner preference, and Organization is the safer default. (c) Omit authorship — weakens the entity graph for no gain.
+- **Trade-offs** — Weaker author-level E-E-A-T than a credentialed byline would give. The organisational claim is the one this business can actually defend.
+- **Status** — **Accepted**
+
+### ADR-010 · Front matter binding from article one, independent of the generator
+- **Decision** — §21's contract is mandatory from the first article, whether or not D-11 is approved.
+- **Reason** — Every future capability in §11 — search, filters, author pages, AI citation, Hindi, CMS migration — reads existing metadata. Retrofitting metadata onto 80 published articles is the expensive version of this.
+- **Alternatives** — (a) Adopt front matter when the generator arrives — guarantees a retrofit. (b) Minimal front matter now, extend later — the extension is the retrofit.
+- **Trade-offs** — ~12 lines of hand-written YAML per article that nothing reads on day one. The cheapest insurance in this document.
+- **Status** — **Accepted**
+
+---
+# §24 — FREEZE REVIEW
+
+## 24.1 Rejection register
+
+The review brief asked that anything adding unnecessary complexity be rejected in writing.
+Fourteen items were considered and declined. Each would have made the document look more
+complete; none would have made the platform better.
+
+| # | Rejected | Why | §|
+|---|---|---|---|
+| 1 | **Traffic / conversion fields in the inventory** | Stale on write, no timestamp, hand-transcribed at 500 rows. Drives confident wrong decisions | 18.4 |
+| 2 | **UUID article IDs** | Unreadable in a commit, unsayable aloud, solves a collision problem that does not exist at 500 rows. `KB-0001` does the same job | 18.3 |
+| 3 | **Knowledge pillar pages** | Would cannibalise the seven service pages for their own head terms. The service page already *is* the pillar | 22.1 |
+| 4 | **Tag pages below 6 articles** | Thin content, at scale, on a domain with no authority to spend | 3.3 |
+| 5 | **Automated related-article selection** | At 36–85 articles, curated beats computed, and computed reliably surfaces the least relevant sibling | 3.5 |
+| 6 | **A visual cluster map** | Immediately stale; the inventory answers every question it would | 22.7 |
+| 7 | **Monthly review cycle** | Nothing meaningful changes in 30 days. The entry gets ignored by month four, and an ignored process is worse than none | 19.6 |
+| 8 | **0–100 content scoring rubric** | Precision theatre. Five verdicts are more decidable and less arguable | 19.6 |
+| 9 | **RACI matrix** | Four roles, one accountable person | 17.4 |
+| 10 | **Multi-approver sign-off** | Diffusion of responsibility, not rigour, at this cadence | 17.4 |
+| 11 | **AVIF images** | A second format, a `<picture>` element and a build variant for a marginal gain on files already under 120 KB | 20.8 |
+| 12 | **Five `srcset` widths** | Two cover the real device population; each extra variant multiplies files that can go stale | 20.6 |
+| 13 | **A separate `DECISION_LOG.md` for the ADL** | Would misuse a name reserved for project-wide decisions and split the record. One fact, one home | 23.1 |
+| 14 | **Six rejected front-matter fields** (`keywords`, `priority`, `featured`, `seo_title`, `excerpt`, authored `reading_time`) | Each either drifts from a field that already exists, invites keyword-first writing, or is derivable | 21.5 |
+
+**Two states were considered for collapsing and deliberately kept separate:**
+`TECHNICAL_REVIEW` and `SEO_REVIEW` fail for unrelated reasons, and batching them is
+exactly what lets the second one slip (§16.4). **One pair was deliberately kept merged:**
+truth and YMYL are one state with two checklists, because separating them would imply they
+can be scheduled apart.
+
+## 24.2 Internal consistency check
+
+Part II adds governance to Part I; it must not contradict it. Every overlap was reconciled
+explicitly rather than left to the reader:
+
+| Potential contradiction | Resolution |
+|---|---|
+| §9.6 six gates vs §16 nine states | Mapped 1:1 in §16.4. §9.6 is the operational checklist; §16 is the data field. Neither supersedes the other; neither is edited alone |
+| §9.7 review cycles vs §17 `review_frequency` | §9.7 sets the defaults; §17's field records the per-article value. Same numbers |
+| §3.4 `primary_service` vs §22.5 orphan prevention | §3.4 is guarantee 1 of three. Consistent, now enforced by a build failure rather than by discipline |
+| §4.5 Organization author vs §17 `author` field | §17's field is internal attribution; the public byline is unchanged. ADR-009 states both |
+| §11 "front matter matters" vs D-11 generator gate | §21.1 and ADR-010 make the contract binding regardless of D-11. The metadata contract does not depend on the tool |
+| §5.9 sitemap index vs existing single `sitemap.xml` | ADR-008; `robots.txt` unchanged; E8-T1 owns the migration |
+| §19.2 checks vs §21.4 validation | Checks 2 and 7 run per-commit; the rest quarterly. Same rules, two cadences, stated in §19.2 |
+
+**No section of Part I was edited.** The URL architecture, taxonomy, template, SEO,
+linking, content, local and roadmap decisions are exactly as reviewed and approved.
+
+## 24.3 The six questions
+
+### 1 · Is this architecture capable of supporting 500+ articles?
+
+**Yes — with one hard dependency, stated honestly.**
+
+| Dimension | At 500 articles |
+|---|---|
+| Routing | **0** Netlify rules. Directory-index is O(1) in config (ADR-001) |
+| Sitemaps | Generated, partitioned, `lastmod` derived (ADR-008) |
+| Taxonomy | 10 categories, 1 axis in the URL. Unchanged at any corpus size |
+| Orphan prevention | Three independent guarantees, two of which fail the build (§22.5) |
+| Cannibalisation | Four mechanisms, one automated quarterly (§22.4) |
+| Discovery | Category indexes generated; search reserved and cheap to add (§11) |
+| Review load | ~125 articles/year due at 500 — **the real ceiling** (§24.5) |
+| **Authoring & maintenance** | **Requires the generator. This is the dependency.** |
+
+**The dependency is R-1.** Hand-authored HTML has already produced cache-token drift at
+twelve pages and eleven file edits for one nav link. At 500 articles a single global change
+is 511 hand-edits with 511 chances to desynchronise a cache token under a one-year
+immutable header. **Without D-11, the honest ceiling is 40–50 articles, not 500.**
+
+The architecture supports 500. The *toolchain* supports 500 only if D-11 is approved. That
+distinction is stated rather than blurred.
+
+### 2 · Does it preserve the truth-first philosophy?
+
+**Yes — and Part II strengthened it in four places rather than merely restating it.**
+
+- **ADR-002** — the YMYL boundary is now a decision with recorded alternatives, not a rule someone can reinterpret under cadence pressure.
+- **§17.3** — `truth_reviewer` is non-delegable *in the schema*. R-3 (governance decay) is now structural, not aspirational.
+- **§20.1** — the honesty standard extended to imagery: no stock photo may imply a real client, staff member, or Kota home. Closes a surface Part I did not cover.
+- **§21.3 / ADR-009** — `medical_reviewer` must be omitted rather than placeholdered. A fabricated medical byline is the highest-severity breach available on this platform, and the schema now makes it an act of commission.
+- **§19.5** — truth drift triggers an *immediate* rewrite that does not wait for the quarterly cycle. Truth is the only thing on the platform that cannot be scheduled.
+
+Nothing in Part II weakens a standard. Every constraint from `SERVICE_PAGE_SPEC.md` §3.4
+and `LOCAL_SEO_MASTER_PLAN.md` §7.3 carries through verbatim.
+
+### 3 · Does it avoid future URL migrations?
+
+**Yes, for every case the architecture controls. Two residual cases exist and both are named.**
+
+Immutable by design: no dates, no IDs, no years, no localities, no service permutations in
+any URL. Slug decoupled from title, so retitling is free. Category-in-path with a closed
+ten-member set. Hindi reserved *above* the tree so it never disturbs it. CMS migration
+touches nothing public (§18.5).
+
+**Residual case 1 — a category change.** Moving an article between categories changes its
+path. Mitigated: `id` survives, a 301 is mandatory, and the article's home is fixed at
+gate 1 before writing begins. Expected frequency: near zero.
+
+**Residual case 2 — a sub-category tier above ~40 articles per category.** Would deepen
+nesting again. At the §7 plan of 36 articles a year across ten categories, this is a
+year-eight problem at the earliest, and §1.5 already names it as amendment-gated.
+
+**One-time migration, before article one:** ADR-008's sitemap restructure. It moves no
+public URL.
+
+### 4 · Does it minimise future maintenance cost?
+
+**Yes, structurally — and the largest single cost is now measured rather than assumed.**
+
+| Cost driver | Mitigation |
+|---|---|
+| Per-article routing config | Eliminated — 0 rules (ADR-001) |
+| Global changes across N pages | Generator: one template, one nav, one cache token (R-1) |
+| Cache-token drift | Validator hard-fails on mismatch (§21.4 rule 10) |
+| Sitemap `lastmod` | Derived, never hand-edited (ADR-008) |
+| Orphan and broken-link discovery | Per-commit CI, not quarterly archaeology (§19.2) |
+| Review scheduling | `next_review` per article; quarterly pass covers only what is due |
+| Local-dev divergence | Eliminated by directory-index (§2.3) |
+| Metric transcription | Eliminated — pulled fresh at review time (ADR-007) |
+| Second URL convention | Bounded by a rule already constitutional: *anything with children is a directory index* |
+
+The unavoidable residual is **human review time**, quantified in §24.5.
+
+### 5 · Is anything still intentionally deferred?
+
+**Yes. Fifteen items, all deliberate, none blocking.**
+
+*Capabilities (§11):* advanced search · filters · author pages · medical reviewers · Hindi
+· downloadable resources · video library · AI recommendations · voice-search markup ·
+topic pages below the 6-article threshold.
+
+*Content:* `/updates/` reserved but unbuilt (D-10) · `/knowledge/checklists/` until ≥5
+checklists exist · Related Resources on each service page until that service reaches 3
+articles · sub-category tier until a category exceeds ~40.
+
+*Tooling:* `tools/build_search_index.py` reserved, not written.
+
+Every one has a named trigger and a reserved path. None requires a URL change to unlock.
+**Deferral here means "architected, path reserved, deliberately unbuilt" — not "unresolved".**
+
+### 6 · Can this be considered the frozen blueprint?
+
+**Yes — with a distinction that matters.**
+
+**The architecture is frozen. Authorisation to build is not the same thing.** Five owner
+decisions remain open (D-6, D-7, D-8, D-9, D-11) and one technical assumption remains
+unverified (E8-T0, the directory-index preview test). Freezing the blueprint does not close
+those gates; it fixes the design *they decide about*.
+
+Two of the five are load-bearing:
+
+- **D-8 declined** → ADR-001 is superseded by the flat alternative in §2.5, and §2, §12 and ADR-001 are rewritten. Everything else stands.
+- **D-11 declined** → R-1 is unmitigated, the answer to question 1 becomes "40–50 articles", and E8-T6 leaves the roadmap. The architecture is unchanged; only its ceiling moves.
+
+D-6, D-7 and D-9 change scope, not structure. **D-9 declined removes one category and five
+articles and touches nothing else** — the platform was deliberately designed so the
+riskiest element is also the most removable.
+
+## 24.4 Verification status
+
+| Claim | Status |
+|---|---|
+| Netlify placeholder substitution is broken with a literal suffix | ✅ **Verified** — preview matrix, 2026-07-21, recorded in `netlify.toml` |
+| `/services/` and `/careers/` are directory indexes with trailing slashes | ✅ **Verified** — live crawl, all 12 pages HTTP 200 |
+| Cache-token drift has occurred in this project | ✅ **Verified** — commit `dfb456c` |
+| One nav change required 11 file edits | ✅ **Verified** — sprint E6-T3 |
+| Blog deferral criteria 1–3 are met | ✅ **Verified** against the repository |
+| `python -m http.server` serves `dir/` → `index.html` | ✅ **Verified** — used in every sprint's crawl |
+| **Netlify redirects `/x/y/index.html` → `/x/y/`** | ⚠️ **UNVERIFIED — E8-T0 blocks E8-T1** |
+| **Netlify serves `/x/y/` from `y/index.html` with no rule** | ⚠️ **UNVERIFIED — E8-T0** |
+
+The two unverified items are the same class of assumption that produced the SP-T1 defect.
+They are cheap to test — two throwaway pages on a deploy preview — and nothing may be built
+on them until they are.
+
+## 24.5 The one number worth arguing about
+
+At **36 articles/year** with the §9.7 cycles, steady-state review load is roughly **20–25
+reviews a year** on top of authoring. Sustainable.
+
+At **500 articles**, review load alone is **~125 articles a year** — more than three a
+week, indefinitely, forever, before a single new article is written.
+
+**Maintenance capacity, not authoring capacity, is this platform's real ceiling.** The
+architecture will carry 500 articles. The business will not review them. That is not an
+argument against the architecture — it is the argument for §7's deliberate gap between a
+capacity of 500 and a commitment of 36, and for §19.4's willingness to archive.
+
+**Build for 500. Plan for 36. Archive without sentiment.**
+
+---
+
+# ARCHITECTURE FREEZE v1.0
+
+**Frozen 26 July 2026.** Sections §0–§23 are the binding blueprint for Knowledge Center
+implementation. Changes after this point require a new ADR recording what changed and why —
+existing ADRs are superseded, never rewritten.
+
+**What is frozen:** information architecture · URL architecture · taxonomy · article
+template · SEO architecture · internal linking · content strategy · local SEO policy ·
+editorial standards · conversion strategy · expansion reservations · file structure ·
+implementation roadmap · lifecycle · ownership · inventory · governance · imagery · front
+matter · cluster governance · ADRs 001–010.
+
+**What is not frozen, and is not meant to be:** article topics, publishing cadence within
+the §7 band, tag vocabulary growth, and the five open owner decisions below.
+
+## Remaining deferred decisions
+
+| ID | Decision | Blocks | Recommendation |
+|---|---|---|---|
+| **D-6** | Adopt the `PROJECT.md` constitutional amendment bringing the Knowledge Center into scope | Everything | **Yes** — required by §20 stage 8 |
+| **D-7** | Formally lift the `LOCAL_SEO_MASTER_PLAN.md` §7.4 blog deferral (3 of 4 criteria met; capacity is yours) | Everything | **Yes, at 3 articles/month** |
+| **D-8** | Amend §9 "no deep nesting" to permit three levels under `/knowledge/` | ADR-001, §2, §12 | **Yes** — the flat alternative reinstates the 1,000-rule problem |
+| **D-9** | Permit `/knowledge/kota/` under the find-replace test, capped at 8 articles/year | ADR-005, category 10 | **Yes, with the cap.** Declining is safe and removes one category cleanly |
+| **D-11** | Confirm a repo-local generator does not breach §19's framework ban, given the deployed output stays vanilla static HTML | ADR-006, R-1, question 1 | **Yes** — otherwise accept a 40–50 article ceiling |
+| **D-14** | Image sourcing: owned photography (consent workflow), licensed stock (budget + provenance register), or diagrams only | §20 | **Owned + diagrams first.** Stock only with a licence row on file |
+
+*(D-10, D-12 and D-13 from Part I are recommendations, not blockers, and do not gate E8.)*
+
+## Non-negotiable pre-conditions for E8-T1
+
+1. **D-6** adopted and committed as a `PROJECT.md` amendment.
+2. **D-8** resolved — the URL architecture cannot be chosen later.
+3. **E8-T0** passed on a deploy preview. ⚠️ The two unverified assumptions in §24.4.
+
+## Separately, and outranking all of it
+
+`LOCAL_SEO_MASTER_PLAN.md` §8.1 records the Google Business Profile as *"Highest-ROI
+unblocked work available"*, and it is still pending verification. **For a single-city
+home-care business it will out-perform this entire twelve-month roadmap.** Nothing in this
+blueprint argues for sequencing the Knowledge Center ahead of it.
+
+---
+# APPENDIX — OWNER DECISIONS (PART I)
+
+Numbering continues from the existing D1–D5. **Superseded for freeze purposes by the
+consolidated list in §24 — this table is retained unedited as the original record.**
 
 | ID | Decision | Blocks | Recommendation |
 |---|---|---|---|
