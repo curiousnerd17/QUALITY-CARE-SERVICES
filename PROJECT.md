@@ -289,6 +289,26 @@ Future service pages follow one flat, readable, permanent convention under `/ser
 - Existing homepage anchors (`#services`, `#faq`, `#contact`, etc.) must keep working.
   Service pages are **additive**.
 
+> **v1.4 Amendment (2026-07-26) — Knowledge Center URL exception.**
+>
+> The "no deep nesting" rule above is **scoped to `/services/` and root-level pages**,
+> where it continues to apply without exception. The Knowledge Center is admitted as a
+> single, bounded exception:
+>
+> | Level | Form | File |
+> |---|---|---|
+> | Hub | `/knowledge/` | `knowledge/index.html` |
+> | Category | `/knowledge/<category>/` | `knowledge/<category>/index.html` |
+> | Article | `/knowledge/<category>/<article>/` | `knowledge/<category>/<article>/index.html` |
+>
+> Every `/knowledge/` path is a **directory index and carries a trailing slash**, consistent
+> with the existing rule that a directory index takes the slash while a leaf does not.
+> The seven categories are named and slugged **identically to the seven canonical services
+> in §5** and are bound by that section — categories can never diverge from the services.
+>
+> All other §9 rules apply unchanged, including no dates, no IDs, no city in the URL, and
+> permanence. The exception is granted for `/knowledge/` only and extends nowhere else.
+
 ---
 
 ## 10. Page Template Standard
@@ -595,6 +615,18 @@ stage maps to existing epics — this view creates no new work items.
 8. **Future Platform** — authority building and continuous improvement (Phases 5–6),
    and any expansion beyond the current scope — which requires a constitutional
    amendment before work begins.
+
+> **v1.4 Amendment (2026-07-26) — Knowledge Center admitted to scope.**
+>
+> The **Knowledge Center** (`/knowledge/`) is admitted to project scope under stage 8, as
+> the authority-building work that stage describes. It is a service-education section
+> organised as seven categories mirroring the seven canonical services of §5, targeting
+> roughly 20–50 articles published gradually.
+>
+> This amendment grants scope only. It does not alter §5 (canonical services), §7 (SEO
+> strategy and its hard prohibitions), §10 (page template standard), §19 (things that must
+> never change), or the excluded-technologies list in §1 — the section ships as vanilla
+> static HTML with no build toolchain. Its URL form is fixed by the §9 v1.4 amendment.
 
 ---
 
