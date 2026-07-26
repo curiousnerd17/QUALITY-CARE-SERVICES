@@ -217,7 +217,19 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape") setMenuState(false);
+    if (event.key !== "Escape") return;
+
+    // Only act while the menu is actually open. Escape pressed anywhere else
+    // on the page (inside a <details> FAQ, in the form) must not move focus.
+    if (!menuToggle || menuToggle.getAttribute("aria-expanded") !== "true") return;
+
+    setMenuState(false);
+
+    // The nav collapses to `display: none` below 980px, so a focused nav link
+    // is removed from the accessibility tree by the line above and focus would
+    // fall back to <body> — the keyboard user loses their position entirely.
+    // Return focus to the control that owns the menu.
+    menuToggle.focus();
   });
 
   // ========== SERVICE SELECT AUTO-FILL ==========
