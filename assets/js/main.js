@@ -418,7 +418,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const approvalKeys = ["approved", "approval", "status", "isApproved", "Approved", "Status"];
     const presentKey = approvalKeys.find((key) => Object.prototype.hasOwnProperty.call(review, key));
 
-    if (!presentKey) return true;
+    // Fail CLOSED. If the source supplies no approval column at all, nothing is
+    // publishable — previously this returned true, which published every row in
+    // the sheet unreviewed onto the homepage. On a business that places staff
+    // inside customers' homes, an unmoderated publication path is not
+    // acceptable, and "no approval signal" is not the same as "approved".
+    if (!presentKey) return false;
 
     const value = String(review[presentKey]).trim().toLowerCase();
     return ["approved", "approve", "yes", "true", "1", "published"].includes(value);
@@ -429,6 +434,11 @@ document.addEventListener("DOMContentLoaded", () => {
     return key ? review[key] : fallback;
   }
 
+  // Returns a 1–5 rating, or null when the source supplied nothing usable.
+  // Previously this returned 5 on the fallthrough, so a row with a missing or
+  // unparseable rating rendered five filled stars and an aria-label announcing
+  // "5 out of 5" that the customer never gave. A rating we do not have is not
+  // a five; it is nothing, and the caller renders no stars for it.
   function getRating(rating) {
     const normalized = String(rating ?? "").trim().toLowerCase();
     const parsed = Number.parseInt(normalized, 10);
@@ -436,7 +446,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (parsed) return Math.min(5, Math.max(1, parsed));
     if (normalized.includes("very good")) return 4;
     if (normalized.includes("good")) return 3;
-    return 5;
+    return null;
   }
 
   function getInitials(name) {
@@ -479,11 +489,30 @@ document.addEventListener("DOMContentLoaded", () => {
 
     testimonialGrid.innerHTML = displayReviews
       .map((review) => {
-        const name = escapeHTML(getReviewValue(review, ["name", "Name", "author", "Author"], "Quality Care Family"));
+        // No invented attribution and no invented rating. Both default to the
+        // empty value so an absent field stays absent instead of becoming a
+        // fabricated "Quality Care Family" author or a fabricated 5 stars.
+        const name = escapeHTML(getReviewValue(review, ["name", "Name", "author", "Author"], ""));
         const text = escapeHTML(getReviewValue(review, ["review", "Review", "message", "Message", "feedback", "Feedback"], ""));
-        const rating = getRating(getReviewValue(review, ["rating", "Rating"], 5));
-        const stars = "\u2605".repeat(rating);
-        const initials = escapeHTML(getInitials(name));
+        const rating = getRating(getReviewValue(review, ["rating", "Rating"], ""));
+
+        // Stars only when a rating genuinely came through.
+        const ratingHTML = rating
+          ? `<div class="rating" aria-label="${rating} out of 5 rating">${"\u2605".repeat(rating)}</div>`
+          : "";
+
+        // Attribution block only when a name genuinely came through. An
+        // unattributed review still shows its own words; it just does not
+        // borrow someone else's name to do it.
+        const headerHTML = name
+          ? `<div class="review-header">
+              <span class="review-avatar" aria-hidden="true">${escapeHTML(getInitials(name))}</span>
+              <div>
+                <strong>${name}</strong>
+                ${ratingHTML}
+              </div>
+            </div>`
+          : ratingHTML;
 
         // Conditionally extract metadata
         const service = escapeHTML(getReviewValue(review, ["service", "Service", "category", "Category"], ""));
@@ -501,13 +530,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return `
           <article class="testimonial-card">
-            <div class="review-header">
-              <span class="review-avatar" aria-hidden="true">${initials}</span>
-              <div>
-                <strong>${name}</strong>
-                <div class="rating" aria-label="${rating} out of 5 rating">${stars}</div>
-              </div>
-            </div>
+            ${headerHTML}
             <p>${text}</p>
             ${metaHTML}
           </article>
