@@ -369,7 +369,17 @@ button {
 
 .hero-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.12fr) minmax(310px, 0.78fr);
+  /* The photography is wide, environmental and multi-subject: people spread
+     across the whole frame. At the old 1.12/0.78 split the image column was
+     only ~457px on a 1160 container, which is too narrow for that composition
+     — the scene reads as distant even when nothing is cropped. Giving the
+     image the larger share takes it to ~634px (+39% width, +93% area).
+     The copy column keeps its own scale: .hero-copy h1 is sized by
+     clamp(2.1rem, 4vw, 3.18rem) — viewport-driven, not column-driven — so
+     type size is unchanged and only the wrap point moves. .hero-actions and
+     .hero-indicators are flex-wrap, so the CTAs stay side by side and
+     left-aligned. */
+  grid-template-columns: minmax(0, 0.86fr) minmax(320px, 1.14fr);
   gap: clamp(24px, 4vw, 48px);
   align-items: center;
 }
@@ -471,7 +481,10 @@ button {
 
 .hero-media img {
   width: 100%;
-  max-height: 360px;
+  /* Headroom only. At the widened column (~634px) the ratio gives ~354px, so
+     this never binds — but it stops max-height silently overriding the aspect
+     ratio and reintroducing a crop if the column ever grows. */
+  max-height: 420px;
   /* Matches the hero assets (1920x1072 and 1920x1069, plus the homepage's
      1600x893) — all ~1.79. The previous 16/10 (1.600) box was narrower than
      every source, so object-fit: cover discarded 10.7% of the width, 5.3%
@@ -1507,7 +1520,11 @@ button {
      reported. Capping the WIDTH instead lets the ratio hold at the same
      visual height, with the full frame intact. */
   .hero-media {
-    max-width: 640px;
+    /* Single column here, so cap the WIDTH rather than the height — a height
+       cap would let the box go 2.0-2.6 wide and crop the photo vertically.
+       720px keeps the tablet image close to the desktop size (~634px) and
+       still yields ~402px height, inside the 420px cap. */
+    max-width: 720px;
     margin-inline: auto;
   }
 
