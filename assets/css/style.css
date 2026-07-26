@@ -1987,6 +1987,45 @@ button {
   }
 }
 
+/* ========== CAREERS: ROLE STATUS BADGE ===================================
+   The only new component in E6. Sits inside the reused .service-card on
+   /careers/ and is driven by data-job-status on the card, so a future
+   recruitment system can flip a role's state by writing one attribute —
+   no markup or layout change. Existing tokens only; no new colours, type
+   scale or spacing values.
+
+   Today every role is "accepting": we genuinely accept applications for all
+   seven services, which is true, while claiming no confirmed vacancy. The
+   --open and --closed variants exist so real states can ship the moment the
+   business has them.
+   ======================================================================== */
+
+.job-status {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  margin: var(--space-8) 0 0;
+  padding: 4px 12px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
+  color: var(--muted);
+  background: var(--section);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.job-status--accepting {
+  border-color: rgba(15, 118, 110, 0.28);
+  color: var(--primary-dark);
+  background: var(--primary-50);
+}
+
+.job-status--open {
+  border-color: rgba(22, 163, 74, 0.28);
+  color: #15803d;
+  background: #f0fdf4;
+}
+
 /* ========== PAGE-SCOPED LAYOUTS ==========================================
    Previously delivered as inline <style> blocks on /services/, 404.html and
    privacy-policy.html. The production CSP sets `style-src 'self'
