@@ -105,6 +105,12 @@
   status = 404
   force = true
 
+[[redirects]]
+  from = "/KNOWLEDGE_CENTER_ARCHITECTURE.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
 # Pre-armed: DECISION_LOG.md does not exist yet (SEO_EXECUTION_PLAYBOOK.md
 # Appendix E row 2). The rule is added BEFORE the file so the blocklist cannot
 # lag the document — inverting the fail-open ordering that produced B5. A rule
