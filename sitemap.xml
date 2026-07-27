@@ -62,9 +62,27 @@
   </url>
   <url>
     <loc>https://qualitycareservices.in/knowledge/patient-care/</loc>
-    <lastmod>2026-07-26</lastmod>
+    <lastmod>2026-07-27</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://qualitycareservices.in/knowledge/patient-care/arranging-patient-care-at-home/</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://qualitycareservices.in/knowledge/patient-care/questions-before-hiring-a-caregiver/</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://qualitycareservices.in/knowledge/patient-care/home-care-or-hospital-care/</loc>
+    <lastmod>2026-07-27</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://qualitycareservices.in/knowledge/elder-care/</loc>

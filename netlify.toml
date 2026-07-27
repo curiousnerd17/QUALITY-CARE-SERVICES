@@ -408,6 +408,57 @@
 
 
 
+# ── Knowledge ARTICLE guards (Sprint 2B.1) ───────────────────────────────────
+# An article is a directory index like every other /knowledge/ path, so it
+# carries the same TWO guards. Required by docs/knowledge/ARTICLE_TEMPLATE.md
+# §2, which records why: Sprint 1 production verification proved BOTH
+# non-canonical forms stay publicly reachable without them.
+#
+# This corrects the original architecture's claim that directory-index URLs
+# cost zero redirect rules per article. Serving is free — Netlify resolves
+# dir/index.html at /dir/ natively — but canonicalisation is not.
+#
+# Ordering is irrelevant here (no /knowledge/ placeholder exists to collide
+# with); these are grouped with the category guards for readability only.
+
+[[redirects]]
+  from = "/knowledge/patient-care/arranging-patient-care-at-home/index.html"
+  to = "/knowledge/patient-care/arranging-patient-care-at-home/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/patient-care/arranging-patient-care-at-home/index"
+  to = "/knowledge/patient-care/arranging-patient-care-at-home/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/patient-care/questions-before-hiring-a-caregiver/index.html"
+  to = "/knowledge/patient-care/questions-before-hiring-a-caregiver/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/patient-care/questions-before-hiring-a-caregiver/index"
+  to = "/knowledge/patient-care/questions-before-hiring-a-caregiver/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/patient-care/home-care-or-hospital-care/index.html"
+  to = "/knowledge/patient-care/home-care-or-hospital-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/patient-care/home-care-or-hospital-care/index"
+  to = "/knowledge/patient-care/home-care-or-hospital-care/"
+  status = 301
+  force = true
+
+
+
 # ── Per-service canonical rules ──────────────────────────────────────────────
 # DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
 # used placeholder rules:
