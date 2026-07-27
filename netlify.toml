@@ -459,6 +459,50 @@
 
 
 
+# ── Elder Care article guards (Sprint 2B.2) ──────────────────────────────────
+# Same TWO-guard pattern as every other /knowledge/ directory index, per
+# docs/knowledge/ARTICLE_TEMPLATE.md §2. Both non-canonical forms are
+# reachable without these rules — verified in production during Sprint 1 and
+# confirmed again when the Patient Care articles shipped.
+
+[[redirects]]
+  from = "/knowledge/elder-care/signs-a-parent-needs-support/index.html"
+  to = "/knowledge/elder-care/signs-a-parent-needs-support/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/elder-care/signs-a-parent-needs-support/index"
+  to = "/knowledge/elder-care/signs-a-parent-needs-support/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/elder-care/choosing-an-elder-caregiver/index.html"
+  to = "/knowledge/elder-care/choosing-an-elder-caregiver/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/elder-care/choosing-an-elder-caregiver/index"
+  to = "/knowledge/elder-care/choosing-an-elder-caregiver/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/elder-care/supporting-independent-living/index.html"
+  to = "/knowledge/elder-care/supporting-independent-living/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/elder-care/supporting-independent-living/index"
+  to = "/knowledge/elder-care/supporting-independent-living/"
+  status = 301
+  force = true
+
+
+
 # ── Per-service canonical rules ──────────────────────────────────────────────
 # DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
 # used placeholder rules:
