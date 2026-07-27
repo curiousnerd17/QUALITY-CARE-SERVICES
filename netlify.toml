@@ -283,6 +283,131 @@
 
 
 
+# ── /knowledge/ directory index guards (Sprint 1.1) ──────────────────────────
+# Closes the duplicate-URL finding from Sprint 1 production verification.
+# Every /knowledge/ path is a directory index carrying the trailing slash
+# (PROJECT.md §9 v1.4), so each one needs the same TWO guards already used for
+# /services/ and /careers/ above. Both non-canonical forms were confirmed live
+# in production before these rules were written — neither is speculative:
+#
+#   /knowledge/index.html -> served the hub directly, no redirect
+#   /knowledge/index      -> served the hub via Netlify's extensionless lookup
+#
+# The `/index` form matters because Netlify resolves an extensionless request
+# by trying `<path>.html`, so /knowledge/patient-care/index finds
+# knowledge/patient-care/index.html. That is the same exposure the /services/
+# comment above describes, reached by a different route.
+#
+# The trailing-slash-less form (/knowledge) is DELIBERATELY NOT guarded here.
+# Commit 22f85a6 removed exactly that rule from /services/ and /careers/
+# because it self-redirected; Netlify already handles the missing slash
+# natively. Re-adding it for /knowledge/ would reintroduce a fixed defect.
+#
+# Ordering: these sit with the other hub guards and before the per-service
+# canonical rules. There is no /knowledge/:slug placeholder, so no rule below
+# can capture these paths — grouping is for readability, not precedence.
+#
+# CONVENTION: a future /knowledge/<category>/<article>/ page is a directory
+# index too and takes its own pair when it ships.
+
+[[redirects]]
+  from = "/knowledge/index.html"
+  to = "/knowledge/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/index"
+  to = "/knowledge/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/patient-care/index.html"
+  to = "/knowledge/patient-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/patient-care/index"
+  to = "/knowledge/patient-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/elder-care/index.html"
+  to = "/knowledge/elder-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/elder-care/index"
+  to = "/knowledge/elder-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/index.html"
+  to = "/knowledge/mother-newborn-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/index"
+  to = "/knowledge/mother-newborn-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/child-care/index.html"
+  to = "/knowledge/child-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/child-care/index"
+  to = "/knowledge/child-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/maid-services/index.html"
+  to = "/knowledge/maid-services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/maid-services/index"
+  to = "/knowledge/maid-services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/index.html"
+  to = "/knowledge/home-cook-services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/index"
+  to = "/knowledge/home-cook-services/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/index.html"
+  to = "/knowledge/housekeeping-cleaning/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/index"
+  to = "/knowledge/housekeeping-cleaning/"
+  status = 301
+  force = true
+
+
+
 # ── Per-service canonical rules ──────────────────────────────────────────────
 # DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
 # used placeholder rules:
