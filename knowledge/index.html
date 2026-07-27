@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Quality Care Services" />
+  <meta name="theme-color" content="#0f766e" />
+
+  <title>Home Care Guides for Kota Families | Quality Care Services</title>
+  <meta name="description" content="Practical guides on arranging patient care, elder care, newborn care, child care and home help in Kota — what to expect, what to ask, and how to decide." />
+
+  <!-- Canonical form per PROJECT.md §9 v1.4: every /knowledge/ path is a
+       directory index and carries the trailing slash, matching /services/
+       and /careers/. Leaf service pages do not. -->
+  <link rel="canonical" href="https://qualitycareservices.in/knowledge/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://qualitycareservices.in/knowledge/" />
+  <meta property="og:title" content="Home Care Guides for Kota Families | Quality Care Services" />
+  <meta property="og:description" content="Practical guides on arranging patient care, elder care, newborn care, child care and home help in Kota — what to expect, what to ask, and how to decide." />
+  <meta property="og:image" content="https://qualitycareservices.in/images/logo-optimized.png" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:site_name" content="Quality Care Services" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Home Care Guides for Kota Families | Quality Care Services" />
+  <meta name="twitter:description" content="Practical guides on arranging patient care, elder care, newborn care, child care and home help in Kota — what to expect, what to ask, and how to decide." />
+  <meta name="twitter:image" content="https://qualitycareservices.in/images/logo-optimized.png" />
+
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  <!-- Root-relative asset paths. The ?v= token is unchanged from every other
+       page: Sprint 1 added NO CSS and NO JS, so there is nothing to bust.
+       If a later sprint edits style.css, this token bumps on all pages together. -->
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260728">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-optimized.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-optimized.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-optimized.png">
+
+  <!-- Google tag (gtag.js) — MANDATORY on every page. main.js ships the event
+       layer but no-ops without this tag, so a page missing it collects nothing. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT5DDR1ET5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NT5DDR1ET5');
+  </script>
+
+  <!-- ONE node only: BreadcrumbList, mirroring the visible breadcrumb exactly.
+       ItemList is DELIBERATELY ABSENT. The /services/ hub carries one because
+       it lists seven commercial offerings; this hub lists seven content
+       sections that hold no articles yet, and an ItemList asserting otherwise
+       would be structured data describing something that does not exist.
+       Article/CollectionPage nodes ship with the articles, not before them. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Home",
+        "item": "https://qualitycareservices.in/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Knowledge",
+        "item": "https://qualitycareservices.in/knowledge/"
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="Quality Care Services home">
+        <img src="/images/logo-optimized.png" alt="Quality Care Services logo" width="68" height="68" decoding="async">
+        <span>Quality Care Services</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-controls="primaryNavigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-links" id="primaryNavigation" aria-label="Primary navigation">
+        <a href="/#trust">Trust</a>
+        <a href="/#services">Services</a>
+        <a href="/#about">About</a>
+        <a href="/#process">How It Works</a>
+        <a href="/#reviews">Reviews</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#inquiry">Inquiry</a>
+        <a href="/#contact">Contact</a>
+        <a href="/knowledge/">Knowledge</a>
+        <a href="/careers/">Careers</a>
+      </nav>
+
+      <a class="header-call btn-call" href="tel:+918302482096">
+        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+        Call Us
+      </a>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">Knowledge</li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- SLOT 1 · Hero. Uses .hub-hero, the pattern established by /services/
+         and reused by /careers/. Copy-led, no image: there is no knowledge-
+         section photography and a placeholder would be the only unfinished
+         element on the site. -->
+    <section class="hub-hero" id="knowledge-hero" aria-labelledby="knowledgeTitle">
+      <div class="container">
+        <div class="hub-hero-inner">
+          <p class="eyebrow">Knowledge Center</p>
+          <h1 id="knowledgeTitle">Home Care Guides for Kota Families</h1>
+          <p class="hub-hero-lede">Most families arranging care at home are doing it for the first time, usually in a difficult week. This section is where we write down what we would tell you on the phone — what to expect, what to ask, and how to decide — organised by the seven services we actually provide.</p>
+
+          <div class="hub-hero-actions" aria-label="Primary contact actions">
+            <a class="btn btn-primary btn-call" href="tel:+918302482096">
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              Call Now
+            </a>
+            <a class="btn btn-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20have%20a%20question%20about%20arranging%20care%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              Ask Us Directly
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLOT 2 · Purpose and boundary. The right-hand column is the YMYL
+         boundary stated in public, not just in the editorial standard: this
+         section explains how to arrange care, never how to treat anyone. -->
+    <section class="section" id="what-this-is" aria-labelledby="purposeTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">What this section is for</p>
+          <h2 id="purposeTitle">Written to Help You Decide, Not to Sell You Something</h2>
+          <p>We are a home care and domestic support business in Kota, so we are not a neutral party. What we can honestly offer is what we have learned from arranging these placements — set out plainly enough that it is useful even if you never call us.</p>
+        </div>
+
+        <div class="scope-grid">
+          <div class="scope-col">
+            <h3>What you will find here</h3>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> How to work out what kind of help a situation actually needs</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> What to ask before anyone comes into your home</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> How to prepare a home, a room or a routine before care starts</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> What a placement involves day to day, told honestly</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> What tends to go wrong, and how families handle it</li>
+            </ul>
+          </div>
+
+          <div class="scope-col scope-col--boundary">
+            <h3>What you will not find here</h3>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> Medical advice, diagnosis, or anything about treatment or medication — we are not clinicians and will not write as though we are</li>
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> Fixed prices. What a placement costs depends on the hours, the shift and the duty, and a number written before we know those would not be honest</li>
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> Filler written to rank. If we have nothing useful to say on a topic, we would rather publish nothing</li>
+            </ul>
+            <p class="scope-col-note">For anything clinical — a diagnosis, a medication, a treatment decision, or a symptom that worries you — speak to the treating doctor or a qualified medical professional. Our guides cover arranging and running care at home, which is a different question.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLOT 3 · The seven categories. Named and slugged identically to the
+         seven canonical services (PROJECT.md §5 and §9 v1.4) and listed in
+         §5 order. Categories are bound to services and can never diverge:
+         adding an eighth category would require adding an eighth service. -->
+    <section class="section section--tinted services-section" id="categories" aria-labelledby="categoriesTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Browse by service</p>
+          <h2 id="categoriesTitle">Seven Sections, One Per Service</h2>
+          <p>Each section covers the service we actually provide, so nothing here is written about work we do not do. Guides are being written now and appear in their section as they are published.</p>
+        </div>
+
+        <div class="services-grid">
+          <article class="service-card">
+            <i class="fa-solid fa-user-nurse" aria-hidden="true"></i>
+            <h3>Patient Care</h3>
+            <p>Arranging care for someone recovering at home — after a hospital stay, an operation, or during a long illness.</p>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Preparing a home before discharge</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Nurse or caregiver — telling them apart</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Day, night and 24-hour duty</li>
+            </ul>
+            <div class="service-actions">
+              <a href="/knowledge/patient-care/">Patient Care guides</a>
+              <a href="/services/patient-care" class="service-more">About the service</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <i class="fa-solid fa-person-cane" aria-hidden="true"></i>
+            <h3>Elder Care</h3>
+            <p>Supporting an elderly parent at home — daily routines, dignity, safety, and the conversations families find hardest.</p>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Knowing when help is needed</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Hygiene and mobility support</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Companionship and daily routine</li>
+            </ul>
+            <div class="service-actions">
+              <a href="/knowledge/elder-care/">Elder Care guides</a>
+              <a href="/services/elder-care" class="service-more">About the service</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <i class="fa-solid fa-person-pregnant" aria-hidden="true"></i>
+            <h3>Mother &amp; Newborn Care</h3>
+            <p>The first weeks after delivery — what support at home looks like for a recovering mother and a newborn.</p>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Preparing before the baby arrives</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> What a post-delivery attendant does</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Day and overnight support</li>
+            </ul>
+            <div class="service-actions">
+              <a href="/knowledge/mother-newborn-care/">Mother &amp; Newborn guides</a>
+              <a href="/services/mother-newborn-care" class="service-more">About the service</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <i class="fa-solid fa-child" aria-hidden="true"></i>
+            <h3>Child Care</h3>
+            <p>Leaving young children with someone else at home — safety, routine, and how to judge whether it is working.</p>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Vetting someone who will be alone with your child</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Setting a routine that holds</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Safety at home, practically</li>
+            </ul>
+            <div class="service-actions">
+              <a href="/knowledge/child-care/">Child Care guides</a>
+              <a href="/services/child-care" class="service-more">About the service</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <i class="fa-solid fa-house-user" aria-hidden="true"></i>
+            <h3>Maid Services</h3>
+            <p>Everyday household help — agreeing the work, setting timings, and keeping the arrangement fair on both sides.</p>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Writing a task list that works</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Part-time or full-time — choosing</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Handling changes and time off</li>
+            </ul>
+            <div class="service-actions">
+              <a href="/knowledge/maid-services/">Maid Services guides</a>
+              <a href="/services/maid-services" class="service-more">About the service</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <i class="fa-solid fa-utensils" aria-hidden="true"></i>
+            <h3>Home Cook Services</h3>
+            <p>Bringing a cook into your kitchen — meal planning, dietary needs, timings, and hygiene expectations.</p>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Agreeing menus and timings</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Dietary needs and restrictions</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Kitchen hygiene and storage</li>
+            </ul>
+            <div class="service-actions">
+              <a href="/knowledge/home-cook-services/">Home Cook guides</a>
+              <a href="/services/home-cook-services" class="service-more">About the service</a>
+            </div>
+          </article>
+
+          <article class="service-card">
+            <i class="fa-solid fa-broom" aria-hidden="true"></i>
+            <h3>Housekeeping / Dusting &amp; Cleaning</h3>
+            <p>Cleaning as the main job — what thorough actually means, how often, and how to judge the standard.</p>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Room-by-room expectations</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Scheduled visits versus daily help</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Cleaning around a patient or newborn</li>
+            </ul>
+            <div class="service-actions">
+              <a href="/knowledge/housekeeping-cleaning/">Housekeeping guides</a>
+              <a href="/services/housekeeping-cleaning" class="service-more">About the service</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLOT 4 · Honest status. This section states plainly that the guides
+         are not written yet. It exists because the alternative — an empty
+         section that implies content — is the dishonest option. -->
+    <section class="section" id="status" aria-labelledby="statusTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Where this has got to</p>
+          <h2 id="statusTitle">We Are Writing These Now</h2>
+          <p>The seven sections above are open and the guides are being written. We are deliberately not filling them quickly — a section of thin, padded articles would be worse than an honest empty one, and it would not help anybody standing in a hospital corridor trying to work out what to do next.</p>
+        </div>
+
+        <div class="evidence-grid">
+          <div class="evidence-item">
+            <h3>Published as they are ready</h3>
+            <p>Each guide appears in its section once it is written and checked. There is no schedule on this page because we would rather not publish a date we might miss.</p>
+          </div>
+          <div class="evidence-item">
+            <h3>Checked before it goes up</h3>
+            <p>Every factual claim is either something we can stand behind or it comes out. Nothing here is written to fill a page.</p>
+          </div>
+          <div class="evidence-item">
+            <h3>Faster to just ask</h3>
+            <p>If you have a specific question today, calling us will get you a straight answer in a few minutes. That is quicker than any article, and it costs you nothing.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SLOT 5 · Final CTA -->
+    <section class="prefooter-section" aria-labelledby="knowledgeCtaTitle">
+      <div class="container">
+        <div class="prefooter-inner">
+          <h2 id="knowledgeCtaTitle">Have a Question We Have Not Written Up Yet?</h2>
+          <p>Describe the situation in your own words and we will tell you honestly what kind of help fits — and if we are not the right people for it, we will say so.</p>
+          <div class="prefooter-actions">
+            <a class="btn btn-primary btn-call" href="tel:+918302482096">
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              Call Now
+            </a>
+            <a class="btn btn-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20have%20a%20question%20about%20arranging%20care%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="Ask us on WhatsApp">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              WhatsApp
+            </a>
+            <a class="btn" href="/services/">
+              <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+              See the Services
+            </a>
+          </div>
+          <p class="prefooter-trust">
+            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            Every person we place is verified before a placement starts.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h2>Quality Care Services</h2>
+        <p>Helping Kota families find reliable patient care, elder care, mother &amp; newborn care, child care, and home support services.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <a href="/#home">Home</a>
+        <a href="/#about">About Us</a>
+        <a href="/services/">Services</a>
+        <a href="/knowledge/">Knowledge</a>
+        <a href="/careers/">Careers</a>
+        <a href="/#reviews">Reviews</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#inquiry">Inquiry</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <a href="/services/patient-care">Patient Care</a>
+        <a href="/services/elder-care">Elder Care</a>
+        <a href="/services/mother-newborn-care">Mother &amp; Newborn Care</a>
+        <a href="/services/child-care">Child Care</a>
+        <a href="/services/maid-services">Maid Services</a>
+        <a href="/services/home-cook-services">Home Cook Services</a>
+        <a href="/services/housekeeping-cleaning">Housekeeping / Dusting &amp; Cleaning</a>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <span>Kota</span>
+        <span>Talwandi</span>
+        <span>Vigyan Nagar</span>
+        <span>Nearby Areas</span>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <a href="tel:+918302482096"><i class="fa-solid fa-phone" aria-hidden="true"></i> +91 8302482096</a>
+        <a href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20need%20some%20help%20at%20home." class="footer-wa-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+        <a href="mailto:qualitycareserviceskota@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> qualitycareserviceskota@gmail.com</a>
+      </div>
+      <div class="footer-hours">
+        <h3>Business Hours</h3>
+        <p>Mon – Sat: 8:00 AM – 8:00 PM</p>
+        <p>Sunday: 9:00 AM – 2:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-copyright">&copy; 2025 Quality Care Services. All Rights Reserved.</span>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <script>
+        (function () {
+          var el = document.getElementById('footer-copyright');
+          if (el) el.textContent = '© ' + new Date().getFullYear() + ' Quality Care Services. All Rights Reserved.';
+        })();
+      </script>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20need%20some%20help%20at%20home." target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp with Quality Care Services">
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <a class="sticky-call-mobile btn-call" href="tel:+918302482096">
+    <i class="fa-solid fa-phone" aria-hidden="true"></i>
+    Call Now
+  </a>
+
+  <script src="/assets/js/main.js?v=20260728" defer></script>
+</body>
+</html>
