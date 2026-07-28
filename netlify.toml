@@ -670,6 +670,49 @@
 
 
 
+# ── Housekeeping article guards (Sprint 2B.7) ────────────────────────────────
+# Same TWO-guard pattern as every other /knowledge/ directory index, per
+# docs/knowledge/ARTICLE_TEMPLATE.md §2. This completes the first-wave article
+# set: 7 categories x 3 articles = 21 articles, 42 guard rules in total.
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/preparing-home-for-a-cleaner/index.html"
+  to = "/knowledge/housekeeping-cleaning/preparing-home-for-a-cleaner/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/preparing-home-for-a-cleaner/index"
+  to = "/knowledge/housekeeping-cleaning/preparing-home-for-a-cleaner/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/questions-before-hiring-housekeeping/index.html"
+  to = "/knowledge/housekeeping-cleaning/questions-before-hiring-housekeeping/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/questions-before-hiring-housekeeping/index"
+  to = "/knowledge/housekeeping-cleaning/questions-before-hiring-housekeeping/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/creating-a-cleaning-checklist/index.html"
+  to = "/knowledge/housekeeping-cleaning/creating-a-cleaning-checklist/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/housekeeping-cleaning/creating-a-cleaning-checklist/index"
+  to = "/knowledge/housekeeping-cleaning/creating-a-cleaning-checklist/"
+  status = 301
+  force = true
+
+
+
 # ── Per-service canonical rules ──────────────────────────────────────────────
 # DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
 # used placeholder rules:
