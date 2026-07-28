@@ -282,7 +282,6 @@
   force = true
 
 
-
 # ── /knowledge/ directory index guards (Sprint 1.1) ──────────────────────────
 # Closes the duplicate-URL finding from Sprint 1 production verification.
 # Every /knowledge/ path is a directory index carrying the trailing slash
@@ -498,6 +497,48 @@
 [[redirects]]
   from = "/knowledge/elder-care/supporting-independent-living/index"
   to = "/knowledge/elder-care/supporting-independent-living/"
+  status = 301
+  force = true
+
+
+
+# ── Mother & Newborn Care article guards (Sprint 2B.3) ───────────────────────
+# Same TWO-guard pattern as every other /knowledge/ directory index, per
+# docs/knowledge/ARTICLE_TEMPLATE.md §2.
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/preparing-home-before-baby-arrives/index.html"
+  to = "/knowledge/mother-newborn-care/preparing-home-before-baby-arrives/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/preparing-home-before-baby-arrives/index"
+  to = "/knowledge/mother-newborn-care/preparing-home-before-baby-arrives/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/questions-before-hiring-newborn-care/index.html"
+  to = "/knowledge/mother-newborn-care/questions-before-hiring-newborn-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/questions-before-hiring-newborn-care/index"
+  to = "/knowledge/mother-newborn-care/questions-before-hiring-newborn-care/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/support-at-home-after-birth/index.html"
+  to = "/knowledge/mother-newborn-care/support-at-home-after-birth/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/mother-newborn-care/support-at-home-after-birth/index"
+  to = "/knowledge/mother-newborn-care/support-at-home-after-birth/"
   status = 301
   force = true
 
