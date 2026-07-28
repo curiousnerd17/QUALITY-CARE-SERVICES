@@ -628,6 +628,48 @@
 
 
 
+# ── Home Cook Services article guards (Sprint 2B.6) ──────────────────────────
+# Same TWO-guard pattern as every other /knowledge/ directory index, per
+# docs/knowledge/ARTICLE_TEMPLATE.md §2.
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/choosing-a-home-cook/index.html"
+  to = "/knowledge/home-cook-services/choosing-a-home-cook/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/choosing-a-home-cook/index"
+  to = "/knowledge/home-cook-services/choosing-a-home-cook/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/questions-before-hiring-a-cook/index.html"
+  to = "/knowledge/home-cook-services/questions-before-hiring-a-cook/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/questions-before-hiring-a-cook/index"
+  to = "/knowledge/home-cook-services/questions-before-hiring-a-cook/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/preparing-your-kitchen/index.html"
+  to = "/knowledge/home-cook-services/preparing-your-kitchen/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/home-cook-services/preparing-your-kitchen/index"
+  to = "/knowledge/home-cook-services/preparing-your-kitchen/"
+  status = 301
+  force = true
+
+
+
 # ── Per-service canonical rules ──────────────────────────────────────────────
 # DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
 # used placeholder rules:
