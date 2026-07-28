@@ -586,6 +586,48 @@
 
 
 
+# ── Maid Services article guards (Sprint 2B.5) ───────────────────────────────
+# Same TWO-guard pattern as every other /knowledge/ directory index, per
+# docs/knowledge/ARTICLE_TEMPLATE.md §2.
+
+[[redirects]]
+  from = "/knowledge/maid-services/choosing-a-maid/index.html"
+  to = "/knowledge/maid-services/choosing-a-maid/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/maid-services/choosing-a-maid/index"
+  to = "/knowledge/maid-services/choosing-a-maid/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/maid-services/questions-before-hiring-a-maid/index.html"
+  to = "/knowledge/maid-services/questions-before-hiring-a-maid/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/maid-services/questions-before-hiring-a-maid/index"
+  to = "/knowledge/maid-services/questions-before-hiring-a-maid/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/maid-services/preparing-home-for-a-maid/index.html"
+  to = "/knowledge/maid-services/preparing-home-for-a-maid/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/knowledge/maid-services/preparing-home-for-a-maid/index"
+  to = "/knowledge/maid-services/preparing-home-for-a-maid/"
+  status = 301
+  force = true
+
+
+
 # ── Per-service canonical rules ──────────────────────────────────────────────
 # DEFECT FIX (preview-verified 2026-07-21). The original SP-T1 implementation
 # used placeholder rules:
