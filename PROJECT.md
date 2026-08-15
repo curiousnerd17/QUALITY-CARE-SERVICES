@@ -227,6 +227,23 @@ SEO here is a discipline of honesty and structure, not volume.
 - ❌ **No content created solely to rank.** Every page and section must represent a real
   offering and be genuinely useful to a real visitor.
 
+> **v1.5 Amendment (2026-08-02) — Local Intent pages: URL scope clarified.**
+>
+> The rule above that location "lives in titles, content, and schema — never in the URL"
+> is **scoped to place names**. It prohibits `/patient-care-kota`, `/talwandi-elder-care`
+> and every city or locality token in a path, without exception.
+>
+> A **proximity modifier** — the literal phrase `near-me` — is not a place name. It names
+> a *search situation*, not a location, and it is identical on every such page regardless
+> of where the visitor is. One bounded exception is granted for that phrase only, and it
+> extends to no other modifier, no city, no locality, and no landmark.
+>
+> The hard prohibitions above are **unchanged and unweakened**. Per-locality pages, the
+> city × service matrix, and thin pages created to rank remain refused. A Local Intent
+> page earns its URL only by answering operational questions no other page answers
+> (§8 v1.5); one that merely restates its service page is content created solely to rank
+> and is refused under this same section.
+
 ---
 
 ## 8. Information Architecture
@@ -261,6 +278,41 @@ Reviews
 > review phases (Information Architecture, SEO Architecture, Content Architecture) and is
 > the approved target. Changes to the architecture itself require review and approval per
 > §19 and §21.
+
+> **v1.5 Amendment (2026-08-02) — Local Intent pages admitted to scope.**
+>
+> A fifth page type is admitted: the **Local Intent page**, one per canonical service,
+> at `/{service-slug}-near-me/`. It is a **satellite of its service page**, never a peer,
+> and it does not alter the hierarchy above — the homepage remains the hub, service pages
+> remain the depth layer.
+>
+> **Why it is a real page and not an SEO artefact.** A service page answers *"what is this
+> service, and is it right for us?"* A Local Intent page answers five operational questions
+> that page does not: can you help today · can you reach my location · how does availability
+> work · what happens after I contact you · what should I do next. Coverage, travel,
+> availability mechanics and post-contact logistics exist nowhere else on this site. That is
+> the offering it represents, and it is the only justification for its existence.
+>
+> **Binding constraints — all of them:**
+>
+> | Constraint | Rule |
+> |---|---|
+> | Ceiling | **Seven pages maximum**, one per canonical service in §5. No eighth is authorised |
+> | Locality dimension | **Refused.** No page may be built for a locality, hospital or landmark |
+> | Non-services | **Refused.** No Local Intent page for anything outside §5 |
+> | Duplication | Body overlap with its service page **must stay under 15%**, measured before release |
+> | Placement | **Never** in global navigation or the footer. Sitemap priority below its service page |
+> | Inbound links | Exactly **one** in-content link, from its own service page |
+> | Schema | Never a second `LocalBusiness` or `Service` node — reference the canonical ones by `@id` |
+> | Failure | A page that cannot meet these is **not built**. One already live that fails them is retired, 301'd to its service page |
+>
+> This amendment grants scope only. It does not alter §5 (canonical services), the hard
+> prohibitions in §7, §10 (page template standard), §11 (design principles), §19, or the
+> excluded-technologies list in §1. The type ships as vanilla static HTML on the existing
+> design system, with no new component, stylesheet or build step.
+>
+> **Governing specification:** `docs/NEAR_ME_PAGE_SPEC.md` (v1.3, frozen). It is
+> subordinate to this document; on any conflict, this document wins.
 
 ---
 
@@ -308,6 +360,31 @@ Future service pages follow one flat, readable, permanent convention under `/ser
 >
 > All other §9 rules apply unchanged, including no dates, no IDs, no city in the URL, and
 > permanence. The exception is granted for `/knowledge/` only and extends nowhere else.
+
+> **v1.5 Amendment (2026-08-02) — Local Intent page URL form.**
+>
+> | Canonical Service | Local Intent URL |
+> |---|---|
+> | Patient Care | `/patient-care-near-me/` |
+> | Elder Care | `/elder-care-near-me/` |
+> | Mother & Newborn Care | `/mother-newborn-care-near-me/` |
+> | Child Care | `/child-care-near-me/` |
+> | Maid Services | `/maid-services-near-me/` |
+> | Home Cook Services | `/home-cook-services-near-me/` |
+> | Housekeeping / Dusting & Cleaning | `/housekeeping-cleaning-near-me/` |
+>
+> **Form:** root-level directory index carrying the **trailing slash**, consistent with
+> `/about/`, `/careers/`, `/terms/` and every `/knowledge/` path. The slug is the §9 service
+> slug plus the literal suffix `-near-me` — it is derived, never invented, so a slug can
+> never drift from its service.
+>
+> These seven URLs are the **complete and closed set**. No eighth is authorised, and no
+> variant carrying a city, locality, hospital or landmark token may ever be created — that
+> remains the §7 hard prohibition, unweakened.
+>
+> All other §9 rules apply unchanged: lowercase, hyphen-separated, no dates, no IDs, **no
+> city in the URL**, and permanence. A published Local Intent URL is a permanent commitment;
+> if one is ever retired it is `301`'d to its service page and never silently dropped.
 
 ---
 
@@ -627,6 +704,22 @@ stage maps to existing epics — this view creates no new work items.
 > strategy and its hard prohibitions), §10 (page template standard), §19 (things that must
 > never change), or the excluded-technologies list in §1 — the section ships as vanilla
 > static HTML with no build toolchain. Its URL form is fixed by the §9 v1.4 amendment.
+
+> **v1.5 Amendment (2026-08-02) — Local Intent pages admitted to scope.**
+>
+> **Local Intent pages** (`/{service-slug}-near-me/`) are admitted under stage 6 (SEO), as
+> the local-search work that stage describes. They are satellites of the service pages, not
+> a new stage, and they do not change the sequence above: service pages ship first and a
+> Local Intent page is only ever built for a service whose page is already live.
+>
+> Scope is capped at **seven** — one per canonical service — and the type is governed by
+> `docs/NEAR_ME_PAGE_SPEC.md`. Full architectural constraints are recorded in the §8
+> v1.5 amendment; the URL form in the §9 v1.5 amendment.
+>
+> **Sequencing note, binding:** these pages target proximity queries, which are won
+> primarily through a verified Google Business Profile rather than on-page content. The
+> GBP is the prerequisite investment; a Local Intent page complements it and never
+> substitutes for it. Build one page, measure for 90 days, then decide on the next.
 
 ---
 

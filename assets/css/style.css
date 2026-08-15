@@ -1631,8 +1631,82 @@ button {
     min-height: 0;
   }
 
+  /* Stack the card below 640px: icon, heading, description each on their own
+     row at full card width. The 2-column form left only 240px for text at
+     360px, which broke headings across several short lines while the
+     description wrapped in the same narrow track. One column gives 288px.
+     This SUPERSEDES the earlier gutter-tightening override, so padding and
+     gap return to their base values rather than accumulating mobile-only
+     exceptions. Typography, icon size, colours and card structure are
+     unchanged; the whole block is inside max-width:640px, so tablet and
+     desktop render byte-identically. */
   .trust-card {
-    grid-template-columns: 36px 1fr;
+    grid-template-columns: 1fr;
+  }
+
+  .trust-card > i {
+    /* Release the base `grid-row: span 2`, which exists only so the icon can
+       flank both rows of the 2-column form. In one column it would otherwise
+       reserve two rows of height for itself. */
+    grid-row: auto;
+  }
+
+  /* ── Mobile reading measure ─────────────────────────────────────────────────
+     Analysed in CHARACTERS PER LINE, not pixels. Pixel width alone is
+     misleading here because the narrower containers also carry smaller type
+     (.evidence-item and .trust-card at 0.95rem, .service-points at 0.88rem),
+     which largely self-corrects the measure. Converting to CPL at 360px
+     (container 336px, 0.5em average advance):
+
+         42.0  bare <p> and .policy-page p        (336px @ 16px)
+         40.9  .service-points li in .scope-col   (272px @ 14.08px)
+         40.0  .trust-card p                      (304px @ 15.2px)
+         38.9  .evidence-item p / .service-card p (296px @ 15.2px)
+         37.5  .faq-item p                        (300px @ 16px)
+         36.0  .scope-col / .decision-aid p       (288px @ 16px)
+         34.5  .policy-page li                    (276px @ 16px)  ← ONLY OUTLIER
+
+     The comfortable mobile band is 35–45 CPL. Exactly one context fell below
+     it, and it is fixed below. Every other container was already inside the
+     band, so the interior padding of the card components is DELIBERATELY LEFT
+     ALONE: .scope-col, .decision-aid and .policy-contact keep 24px (1.5em) and
+     .evidence-item keeps 20px (1.25em), which is the conventional 1–1.5em
+     inset for a bordered box. Cutting them to 16px (1.0em) would have bought
+     about 2 CPL — imperceptible — at the cost of halving the breathing room
+     between the text and a visible border, which is what makes these boxes
+     read as calm rather than cramped. Wider is not the same as more readable. */
+
+  /* Policy-page lists are the one genuine defect: they carry the browser's
+     default `padding-inline-start: 40px` ON TOP of the 20px left margin set in
+     the base rule. 60px of indent drops them to 34.5 CPL — the only reading
+     context on the site below the comfort floor. One indent replaces both,
+     with the marker sitting inside it, taking the measure to 39.5 CPL.
+     `:not([class])` is the scalpel: it targets exactly the unclassed lists
+     that rely on browser defaults (51 <li> across the two policy pages) and
+     leaves .service-points and every other classed list component to its own
+     rules, which already reset padding. No card, no container and no type
+     value is touched. */
+  .policy-page ul:not([class]) {
+    margin-left: 0;
+    padding-left: var(--space-20);
+  }
+
+  /* A flex container turns EVERY in-flow child into its own flex item, so a
+     bullet written as `<i> <strong>Label.</strong> sentence <a>link</a> more`
+     becomes five items laid out side by side, not one sentence. With the
+     default nowrap they all shrink to fit one line, which is why at 360px the
+     bolded label collapsed into a narrow column of short lines while the
+     sentence wrapped in a second narrow column beside it.
+     34 of the 660 `.service-points` bullets on the site contain inline
+     <strong> or <a> and are affected; the other 626 are plain text and render
+     identically either way.
+     Below 640px the row becomes a normal block, so the whole bullet flows as
+     one sentence at full width. The hanging indent keeps wrapped lines aligned
+     under the first line's text instead of under the tick. */
+  .service-points li {
+    display: block;
+    padding-left: var(--space-16);
+    text-indent: calc(-1 * var(--space-16));
   }
 
   .hero-media img {
@@ -1659,7 +1733,15 @@ button {
 
   .floating-whatsapp {
     right: 16px;
-    bottom: 88px;
+    /* Clearance above the sticky call bar, derived from that bar's own geometry
+       rather than eyeballed: it sits at bottom var(--space-12) with
+       min-height 54px, so its top edge is 66px off the viewport floor. Adding
+       one full --space-32 puts the WhatsApp button's lower edge at 98px and
+       holds a 32px gap (was 22px, which read as cramped at 360px).
+       Both offsets are viewport-independent, so 360 / 390 / 430 are identical,
+       and both components are global — this applies site-wide. If the bar's
+       height or offset ever changes, update the 54px here in the same commit. */
+    bottom: calc(var(--space-12) + 54px + var(--space-32));
   }
 
   .sticky-call-mobile {
