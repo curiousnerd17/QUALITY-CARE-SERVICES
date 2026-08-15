@@ -282,6 +282,172 @@
   force = true
 
 
+# ── /about/ directory index guards ───────────────────────────────────────────
+# /about/ is a directory index like /services/, /careers/ and every /knowledge/
+# path, so it takes the trailing slash (PROJECT.md §9) and needs the same TWO
+# guards closing the non-canonical forms:
+#
+#   /about/index.html -> /about/   (the file's own path)
+#   /about/index      -> /about/   (Netlify resolves an extensionless request by
+#                                   trying <path>.html, so /about/index finds
+#                                   about/index.html and serves the page at a
+#                                   second URL)
+#
+# The trailing-slash-less form (/about) is DELIBERATELY NOT guarded, for the same
+# reason recorded above for /knowledge/: commit 22f85a6 removed exactly that rule
+# from /services/ and /careers/ because it self-redirected. Netlify already
+# handles the missing slash natively.
+
+[[redirects]]
+  from = "/about/index.html"
+  to = "/about/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/about/index"
+  to = "/about/"
+  status = 301
+  force = true
+
+
+# ── /terms/ directory index guards ───────────────────────────────────────────
+# /terms/ is a directory index like /about/, /services/, /careers/ and every
+# /knowledge/ path, so it takes the trailing slash (PROJECT.md §9) and needs the
+# same TWO guards closing the non-canonical forms:
+#
+#   /terms/index.html -> /terms/   (the file's own path)
+#   /terms/index      -> /terms/   (Netlify resolves an extensionless request by
+#                                   trying <path>.html, so /terms/index finds
+#                                   terms/index.html and serves the page at a
+#                                   second URL)
+#
+# The trailing-slash-less form (/terms) is DELIBERATELY NOT guarded, for the
+# reason recorded for /knowledge/ and /about/ above: commit 22f85a6 removed
+# exactly that rule from /services/ and /careers/ because it self-redirected.
+#
+# NOTE the asymmetry with /privacy-policy, which is a root-level LEAF file and
+# therefore has a .html -> extensionless 301 plus a 200 rewrite further down,
+# not directory-index guards. Both forms are correct for their file shape.
+
+[[redirects]]
+  from = "/terms/index.html"
+  to = "/terms/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/terms/index"
+  to = "/terms/"
+  status = 301
+  force = true
+
+
+# ── /patient-care-near-me/ directory index guards ────────────────────────────
+# Local Intent page, admitted by PROJECT.md §8/§9 v1.5 and governed by
+# docs/NEAR_ME_PAGE_SPEC.md. It is a root-level directory index like /about/ and
+# /terms/, so it takes the trailing slash and the same TWO guards:
+#
+#   /patient-care-near-me/index.html -> /patient-care-near-me/
+#   /patient-care-near-me/index      -> /patient-care-near-me/
+#
+# The trailing-slash-less form is DELIBERATELY NOT guarded — commit 22f85a6
+# removed exactly that rule from /services/ and /careers/ because it
+# self-redirected; Netlify handles the missing slash natively.
+#
+# CONVENTION: every Local Intent page gets its own guard pair here. All seven
+# are present as of 2026-08-04. Seven is the hard ceiling (PROJECT.md §8 v1.5).
+
+[[redirects]]
+  from = "/patient-care-near-me/index.html"
+  to = "/patient-care-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/patient-care-near-me/index"
+  to = "/patient-care-near-me/"
+  status = 301
+  force = true
+
+
+# The remaining six Local Intent pages, shipped 2026-08-04. Seven is now the
+# hard ceiling (PROJECT.md §8 v1.5) — this convention block is complete and no
+# further Near Me guard pairs may be added.
+
+[[redirects]]
+  from = "/elder-care-near-me/index.html"
+  to = "/elder-care-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/elder-care-near-me/index"
+  to = "/elder-care-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/mother-newborn-care-near-me/index.html"
+  to = "/mother-newborn-care-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/mother-newborn-care-near-me/index"
+  to = "/mother-newborn-care-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/child-care-near-me/index.html"
+  to = "/child-care-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/child-care-near-me/index"
+  to = "/child-care-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home-cook-services-near-me/index.html"
+  to = "/home-cook-services-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/home-cook-services-near-me/index"
+  to = "/home-cook-services-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/maid-services-near-me/index.html"
+  to = "/maid-services-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/maid-services-near-me/index"
+  to = "/maid-services-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/housekeeping-cleaning-near-me/index.html"
+  to = "/housekeeping-cleaning-near-me/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/housekeeping-cleaning-near-me/index"
+  to = "/housekeeping-cleaning-near-me/"
+  status = 301
+  force = true
+
+
 # ── /knowledge/ directory index guards (Sprint 1.1) ──────────────────────────
 # Closes the duplicate-URL finding from Sprint 1 production verification.
 # Every /knowledge/ path is a directory index carrying the trailing slash
