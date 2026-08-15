@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="author" content="Quality Care Services" />
+  <meta name="theme-color" content="#0f766e" />
+
+  <title>About Quality Care Services | Home Care Company in Kota</title>
+  <meta name="description" content="About Quality Care Services — a home care and caregiver agency in Kota. Who we are, how we verify caregivers before placement, and how we match them to a family." />
+
+  <!-- Canonical per PROJECT.md §9: /about/ is a directory index, so it carries the
+       trailing slash — the same asymmetry already applied to /services/, /careers/
+       and every /knowledge/ path. Leaf pages take no slash. -->
+  <link rel="canonical" href="https://qualitycareservices.in/about/" />
+
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://qualitycareservices.in/about/" />
+  <meta property="og:title" content="About Quality Care Services | Home Care Company in Kota" />
+  <meta property="og:description" content="A home care and caregiver agency in Kota. Who we are, how we verify every caregiver before placement, and how we match them to a family." />
+  <meta property="og:image" content="https://qualitycareservices.in/images/logo-optimized.png" />
+  <meta property="og:image:alt" content="Quality Care Services logo" />
+  <meta property="og:locale" content="en_IN" />
+  <meta property="og:site_name" content="Quality Care Services" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="About Quality Care Services | Home Care Company in Kota" />
+  <meta name="twitter:description" content="A home care and caregiver agency in Kota. Who we are, how we verify every caregiver before placement, and how we match them to a family." />
+  <meta name="twitter:image" content="https://qualitycareservices.in/images/logo-optimized.png" />
+  <meta name="twitter:image:alt" content="Quality Care Services logo" />
+
+  <link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+  <!-- Root-relative asset paths: this page sits one level deep, so the relative
+       forms used by root pages would resolve to /about/assets/… The ?v= token is
+       bumped to 20260802 across ALL 42 pages because style.css changed in this
+       commit; /assets/* is served immutable for a year, so an unbumped token
+       would never deliver the fix to a returning visitor (P0-3). -->
+  <link rel="stylesheet" href="/assets/css/style.css?v=20260802">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="msapplication-config" content="/browserconfig.xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/logo-optimized.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/logo-optimized.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/logo-optimized.png">
+
+  <!-- Google tag (gtag.js) — MANDATORY on every page. main.js ships the event
+       layer but no-ops without this tag, so a page missing it collects nothing. -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-NT5DDR1ET5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-NT5DDR1ET5');
+  </script>
+
+  <!-- Breadcrumb — matches the visible breadcrumb exactly. Two items: /about/ is a
+       top-level page, not a child of /services/. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Home",
+        "item": "https://qualitycareservices.in/" },
+      { "@type": "ListItem", "position": 2, "name": "About",
+        "item": "https://qualitycareservices.in/about/" }
+    ]
+  }
+  </script>
+
+  <!-- AboutPage — declares what this page IS and points its mainEntity at the
+       canonical business node defined on the homepage. This is the LocalBusiness
+       reference: an @id pointer, never a duplicated LocalBusiness block (the same
+       rule the seven service pages follow for `provider`). -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "@id": "https://qualitycareservices.in/about/#aboutpage",
+    "url": "https://qualitycareservices.in/about/",
+    "name": "About Quality Care Services",
+    "description": "Who Quality Care Services is, why it exists, how caregivers are verified and matched to a family, and how a placement works from the first call onwards.",
+    "inLanguage": "en-IN",
+    "mainEntity": { "@id": "https://qualitycareservices.in/#business" }
+  }
+  </script>
+
+  <!-- Organization — deliberately reuses the SAME @id as the homepage LocalBusiness
+       (#business) so the two merge into one entity rather than creating a second,
+       competing business node. LocalBusiness is a subtype of Organization, so the
+       types are compatible. Only properties the homepage node does not already
+       carry are added here — `logo` (a Google requirement that `image` does not
+       satisfy), `description`, `knowsAbout`, and a `contactPoint`. NAP values are
+       restated identically so no merge conflict is possible.
+       NOTE: no `sameAs`, `foundingDate`, `numberOfEmployees`, `award` or
+       `hasCredential` — none of those is business-verified, and an unverified
+       property is worse than an absent one. `sameAs` gets added on the commit that
+       follows Google Business Profile creation. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "@id": "https://qualitycareservices.in/#business",
+    "name": "Quality Care Services",
+    "url": "https://qualitycareservices.in/",
+    "logo": "https://qualitycareservices.in/images/logo-optimized.png",
+    "image": "https://qualitycareservices.in/images/logo-optimized.png",
+    "description": "Quality Care Services arranges verified caregivers, nurses and domestic staff for families in Kota, Rajasthan across seven services: Patient Care, Elder Care, Mother & Newborn Care, Child Care, Maid Services, Home Cook Services, and Housekeeping / Dusting & Cleaning.",
+    "telephone": "+918302482096",
+    "email": "qualitycareserviceskota@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Flat No. 221, Akansha Deep Homes Corner",
+      "addressLocality": "Kota",
+      "addressRegion": "Rajasthan",
+      "postalCode": "324005",
+      "addressCountry": "IN"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Kota" },
+      { "@type": "Place", "name": "Talwandi, Kota" },
+      { "@type": "Place", "name": "Vigyan Nagar, Kota" },
+      { "@type": "Place", "name": "Mahaveer Nagar, Kota" },
+      { "@type": "Place", "name": "Kunhari, Kota" },
+      { "@type": "Place", "name": "Landmark City, Kota" }
+    ],
+    "knowsAbout": [
+      "Patient care at home",
+      "Elder care at home",
+      "Mother and newborn care",
+      "Child care at home",
+      "Maid services",
+      "Home cook services",
+      "Housekeeping and cleaning"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "contactType": "customer service",
+      "telephone": "+918302482096",
+      "email": "qualitycareserviceskota@gmail.com",
+      "areaServed": "IN",
+      "availableLanguage": ["en"]
+    }
+  }
+  </script>
+
+  <!-- Mirrors the visible FAQ 1:1 — seven questions, same wording, nothing more. -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "What kind of company is Quality Care Services?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We are a home care and domestic support agency based in Kota. We do not run a hospital, a clinic or a care home. What we do is find, verify and place the right person in your home — a nurse, a caregiver, a maid, a cook or housekeeping help — and stay reachable while that arrangement runs."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Are you a medical provider?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "No. We arrange qualified nurses where a patient's care genuinely requires nursing training, but we do not diagnose, prescribe, or change any treatment plan — that stays with the patient's own doctor. We are not a hospital, an ICU or a high-dependency setup at home, and we are not an ambulance or emergency medical service. If a situation needs one of those, we will say so on the first call."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How do you verify the people you place?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Every placement goes through identity verification, background checks, reference and experience review, and a briefing about your specific requirement before the person starts. We share the relevant details with the family before the service begins, not on the day someone arrives. What verification establishes is who a person is and that nothing adverse is on record — it is not a guarantee of how they will work, and anyone presenting it as one is overstating it."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Why do you not publish your prices?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Because the charge depends on things we cannot know before we speak to you: the level of care needed, hours per day and days per week, the shift pattern, and the specific requirements of the situation. A number set before we know those would not be an honest one. We discuss the exact charge once we understand the situation, and there is no obligation to go ahead after that conversation."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What happens if the person you send is not the right fit?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Tell us, and we arrange a replacement. A placement that is not working is ours to solve, not something you should have to manage around. We would rather hear about it in the first week than find out at the end of the month."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Which areas of Kota do you serve?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We arrange staff across Kota, including Talwandi, Vigyan Nagar, Mahaveer Nagar, Kunhari and Landmark City. For locations slightly outside the city, call us and we will tell you honestly whether we can cover it rather than accept the work and struggle."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "Who will I actually be speaking to?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Our team is in Kota. When you call the number on this site, you reach the people who arrange the placement — not a call centre in another city working from a script. If something needs sorting out while care is running, you reach the same team."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <header class="site-header">
+    <div class="container nav-shell">
+      <a class="brand" href="/" aria-label="Quality Care Services home">
+        <img src="/images/logo-optimized.png" alt="Quality Care Services logo" width="68" height="68" decoding="async">
+        <span>Quality Care Services</span>
+      </a>
+
+      <button class="menu-toggle" id="menuToggle" type="button" aria-label="Open navigation menu" aria-controls="primaryNavigation" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+
+      <nav class="nav-links" id="primaryNavigation" aria-label="Primary navigation">
+        <a href="/#trust">Trust</a>
+        <a href="/#services">Services</a>
+        <a href="/about/" aria-current="page">About</a>
+        <a href="/#process">How It Works</a>
+        <a href="/#reviews">Reviews</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#inquiry">Inquiry</a>
+        <a href="/#contact">Contact</a>
+        <a href="/knowledge/">Knowledge</a>
+        <a href="/careers/">Careers</a>
+      </nav>
+
+      <a class="header-call btn-call" href="tel:+918302482096">
+        <i class="fa-solid fa-phone" aria-hidden="true"></i>
+        Call Us
+      </a>
+    </div>
+  </header>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li aria-current="page">About</li>
+      </ol>
+    </div>
+  </nav>
+
+  <main id="main-content">
+
+    <!-- 1 · Hero. Uses the text-only hub-hero component (the same one /services/,
+         /knowledge/ and every knowledge category page use) rather than the image
+         hero: there is no photograph of this team, and a stock image of strangers
+         on the page that explains who we are would undo the page's own argument. -->
+    <section class="hub-hero" id="about-hero" aria-labelledby="aboutTitle">
+      <div class="container">
+        <div class="hub-hero-inner">
+          <p class="eyebrow">About us</p>
+          <h1 id="aboutTitle">About Quality Care Services</h1>
+          <p class="hub-hero-lede">We are a home care and caregiver agency in Kota. Families come to us when someone at home needs looking after, or when a household needs dependable hands. This page sets out who we are, how we choose the people we place, and exactly what happens from your first call onwards.</p>
+
+          <div class="hub-hero-actions" aria-label="Primary contact actions">
+            <a class="btn btn-primary btn-call" href="tel:+918302482096">
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              Call Now
+            </a>
+            <a class="btn btn-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20was%20reading%20about%20your%20company%20and%20I%20need%20some%20help%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Quality Care Services">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              WhatsApp Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2 · Our Story.
+         MAINTENANCE CONSTRAINT: no founding year, headcount, "families served"
+         figure, award or credential appears here until it is business-verified.
+         Every sentence in this section must be checkable today. -->
+    <section class="section about-section" id="our-story" aria-labelledby="storyTitle">
+      <div class="container about-grid">
+        <div class="about-content">
+          <p class="eyebrow">Our story</p>
+          <h2 id="storyTitle">Why This Business Exists</h2>
+          <p>Almost every family who calls us is doing this for the first time, and usually in a difficult week. A parent has stopped managing on their own. A discharge date has been set and nobody is sure what happens after the ambulance leaves. A baby has arrived and the house is not coping. Or the household simply cannot keep running without reliable help, and the last three arrangements did not last.</p>
+          <p>What those situations have in common is not a lack of options. Kota has no shortage of people offering staff. What families struggle to find is a straight answer — who is this person, has anyone actually checked them, what will they do and what will they not do, and who do I call when something goes wrong at eight in the evening.</p>
+          <p>Quality Care Services exists to answer those questions before they become problems. We are a local business in Kota, run by people who live here, and the work is deliberately narrow: find the right person, verify them properly, brief them about your specific situation, and stay reachable while the arrangement runs.</p>
+
+          <h3>What we chose not to be</h3>
+          <p>We are not a marketplace that forwards your number and steps back. We are not a medical provider either. Where a patient's care needs nursing training we arrange a qualified nurse, but the treatment plan belongs to the patient's own doctor, and it always will.</p>
+          <p>Those are limits, not modesty. Knowing exactly where our work stops is what lets us be precise about the part we do.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Future Founder Story Section
+         Intended insertion point: immediately after Our Story, before
+         Our Mission. Ships only when there is a real name, a consented
+         photograph and a story the owner has approved. Until then this
+         marker stays empty — no visible placeholder, no grey box, no
+         unnamed "our team" block.
+         When it ships, also add `founder` / `employee` to the
+         Organization node in <head>.
+         ============================================================ -->
+
+    <!-- 3 · Our Mission -->
+    <section class="section section--tinted" id="mission" aria-labelledby="missionTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Our mission</p>
+          <h2 id="missionTitle">Our Mission</h2>
+          <p>To make arranging care at home in Kota a clear, honest and unhurried decision — so that a family in a hard week is not also fighting the process.</p>
+        </div>
+
+        <ul class="pricing-factors">
+          <li>
+            <i class="fa-solid fa-ear-listen" aria-hidden="true"></i>
+            <span><strong>Listen before suggesting anything.</strong> The first conversation is about the situation, not about a package. We ask what is actually happening at home before we propose a single thing.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-user-check" aria-hidden="true"></i>
+            <span><strong>Match a person, not a slot.</strong> We place someone whose experience fits the requirement. If we do not have the right person available, we tell you instead of sending whoever is free.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            <span><strong>Verify before, not after.</strong> Checks are finished and the person's details are shared with you before anyone is placed — not once the arrangement has already started.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+            <span><strong>Be plain about limits and costs.</strong> We state what a service does not cover, and we explain exactly what the charge depends on before you commit to anything.</span>
+          </li>
+          <li>
+            <i class="fa-solid fa-headset" aria-hidden="true"></i>
+            <span><strong>Stay reachable afterwards.</strong> A placement is the start of the relationship, not the end of it. The same local team answers while the arrangement is running.</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 4 · Our Vision -->
+    <section class="section" id="vision" aria-labelledby="visionTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Our vision</p>
+          <h2 id="visionTitle">Our Vision</h2>
+          <p>To be the home care provider that families in Kota recommend to each other — earned through placements that worked, not through advertising.</p>
+        </div>
+
+        <div class="scope-grid">
+          <div class="scope-col">
+            <h3>What we are working towards</h3>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> A standard of verification that families in Kota come to expect from anyone placing staff in a home</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Enough depth across all seven services that a household can arrange everything it needs through one team it already trusts</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Work that caregivers, cooks and housekeeping staff in Kota actively want, on terms agreed before they start</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> A written record — in our <a href="/knowledge/">Knowledge Center</a> — of what we have learned, useful even to families who never call us</li>
+            </ul>
+          </div>
+
+          <div class="scope-col">
+            <h3>How we will know it is working</h3>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Placements that run for months rather than being replaced in the first fortnight</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Families who came to us for one service arranging a second one later</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> Caregivers who finish a placement and ask us for the next one</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> New families arriving because a neighbour told them to call, not because we advertised</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 · Our Values -->
+    <section class="section section--tinted" id="values" aria-labelledby="valuesTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">What we believe</p>
+          <h2 id="valuesTitle">The Values We Actually Work To</h2>
+          <p>These are the commitments that decide how every placement is arranged.</p>
+        </div>
+
+        <div class="trust-grid">
+          <article class="trust-card">
+            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            <h3>Verified Before Placement</h3>
+            <p>Nobody reaches your home without identity and background verification. Where a duty involves someone vulnerable, experience is matched to that reality rather than approximated.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-scale-balanced" aria-hidden="true"></i>
+            <h3>Honest Communication</h3>
+            <p>If a situation needs a hospital rather than home care, or a service we do not provide, we tell you on the first call — including when that costs us the work.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-list-check" aria-hidden="true"></i>
+            <h3>Transparent Process</h3>
+            <p>What the duty includes, what it excludes, what the charge depends on, and who is coming to your home — all settled before anything begins.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-user-check" aria-hidden="true"></i>
+            <h3>Timelines We Can Hold</h3>
+            <p>If a start date is not achievable, we give you the real one rather than the one you want to hear and then miss it.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-hand-holding-heart" aria-hidden="true"></i>
+            <h3>Respect on Both Sides</h3>
+            <p>Dignity for the person being cared for and for the person doing the caring. Neither side discovers the arrangement on day one.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-heart" aria-hidden="true"></i>
+            <h3>Compassion</h3>
+            <p>Most people reach us on a difficult day. The job of that conversation is to make the situation feel manageable; the arranging comes second.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 · How We Work. Six stages on the existing process-grid / process-card
+         component (same one the homepage, careers page and the seven service
+         journeys use). Copy is deliberately short — one heading plus one or two
+         sentences per card — so the sequence reads as a flow at a glance rather
+         than as prose broken into boxes. -->
+    <section class="section" id="how-we-work" aria-labelledby="howTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">How we work</p>
+          <h2 id="howTitle">From Your First Call to an Arrangement That Holds</h2>
+          <p>Six stages, in order, from the first message to the weeks after someone starts.</p>
+        </div>
+
+        <div class="process-grid">
+          <article class="process-card">
+            <span><i class="fa-solid fa-phone" aria-hidden="true"></i></span>
+            <h3>1 · Inquiry</h3>
+            <p>Call, message on WhatsApp, or send the form. Tell us what is happening and when help needs to start.</p>
+          </article>
+          <article class="process-card">
+            <span><i class="fa-solid fa-comments" aria-hidden="true"></i></span>
+            <h3>2 · Understanding your requirement</h3>
+            <p>We ask about the condition or routine, the hours, and whether the need is clinical. Then we tell you which service actually fits.</p>
+          </article>
+          <article class="process-card">
+            <span><i class="fa-solid fa-user-check" aria-hidden="true"></i></span>
+            <h3>3 · Matching the right caregiver</h3>
+            <p>We shortlist staff whose experience fits your situation and share their details. You decide who comes to your home.</p>
+          </article>
+          <article class="process-card">
+            <span><i class="fa-solid fa-clipboard-check" aria-hidden="true"></i></span>
+            <h3>4 · Identity &amp; background verification</h3>
+            <p>Identity, background, references and experience are checked before the placement is confirmed — never alongside it.</p>
+          </article>
+          <article class="process-card">
+            <span><i class="fa-solid fa-house-chimney-user" aria-hidden="true"></i></span>
+            <h3>5 · Service begins</h3>
+            <p>The caregiver arrives already briefed on your routine and the agreed duty. Hours and expectations are settled on both sides beforehand.</p>
+          </article>
+          <article class="process-card">
+            <span><i class="fa-solid fa-headset" aria-hidden="true"></i></span>
+            <h3>6 · Follow-up &amp; support</h3>
+            <p>We stay reachable for the length of the arrangement. If the requirement changes or the fit is wrong, tell us and we arrange a replacement.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 · Verification. The Evidence Block pattern from SERVICE_PAGE_SPEC §3.4 —
+         qualitative practices only. NO certification claim: the careers page states
+         plainly that preparation is "practical preparation for the specific duty
+         rather than a formal certification course", and this page must not quietly
+         upgrade that into something it is not. -->
+    <section class="section section--tinted" id="verification" aria-labelledby="verificationTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Verification</p>
+          <h2 id="verificationTitle">How We Verify the People We Place</h2>
+          <p>Someone is coming into your home, often to look after a person who cannot fully look after themselves. This is what happens before that.</p>
+        </div>
+
+        <div class="evidence-grid">
+          <div class="evidence-item">
+            <h3>Identity verification</h3>
+            <p>Government photo identity and address proof are collected and checked against the person in front of us. Nobody is placed on the strength of a phone number and a recommendation.</p>
+          </div>
+          <div class="evidence-item">
+            <h3>Background verification</h3>
+            <p>We check whether anything adverse appears on record. Where an applicant already holds a police verification certificate, we take it; where they do not, we do not treat its absence as a substitute for our own checks.</p>
+          </div>
+          <div class="evidence-item">
+            <h3>Reference checks</h3>
+            <p>Previous placements are contacted where they exist. We ask about reliability and conduct in a real household, which tells us more than any document can.</p>
+          </div>
+          <div class="evidence-item">
+            <h3>Experience review</h3>
+            <p>We assess what someone has actually done against what your duty requires. Experience with an elderly parent who still moves around unaided is not the same as experience with a bedridden patient, and we do not treat them as interchangeable.</p>
+          </div>
+          <div class="evidence-item">
+            <h3>Briefing before placement</h3>
+            <p>Where the role needs it, the person is briefed on the specific duty before starting — the routine, the household, the boundaries. This is practical preparation for your situation, not a formal certification course.</p>
+          </div>
+          <div class="evidence-item">
+            <h3>Details shared with you first</h3>
+            <p>You see the relevant details of the person coming to your home before the service begins, so the first time you learn who they are is not the morning they arrive.</p>
+          </div>
+        </div>
+
+        <div class="scope-grid scope-grid--secondary">
+          <div class="scope-col scope-col--boundary">
+            <h3>What verification does not tell you</h3>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> It confirms who someone is and what their record shows — it is not a guarantee of how they will work</li>
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> It says nothing certain about character, patience, or how someone behaves on a hard day</li>
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> It is not a clinical credential, and we never present a verified caregiver as a substitute for medical judgement</li>
+            </ul>
+          </div>
+          <div class="scope-col scope-col--boundary">
+            <h3>What covers the rest</h3>
+            <p class="scope-col-note">Verification lowers the risk of the wrong person reaching your home. The replacement commitment covers what verification cannot: if the fit turns out to be wrong once someone has actually started, sorting it out is our job, not yours. Together those two are the protection you are being offered, and both are real.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 · Who We Serve -->
+    <section class="section" id="who-we-serve" aria-labelledby="serveTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Who we serve</p>
+          <h2 id="serveTitle">The Families and Households We Work With</h2>
+          <p>Almost everyone who reaches us is in one of these situations. The full list of what we arrange is on our <a href="/services/">services page</a>.</p>
+        </div>
+
+        <div class="trust-grid">
+          <article class="trust-card">
+            <i class="fa-solid fa-hospital-user" aria-hidden="true"></i>
+            <h3>Patients recovering at home</h3>
+            <p>After a hospital stay, an operation, or during a long illness — where mobility, hygiene, feeding and daily routine need handling by someone who has done it before. See <a href="/services/patient-care">Patient Care</a>.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-person-cane" aria-hidden="true"></i>
+            <h3>Elderly parents</h3>
+            <p>Daily support that protects independence rather than replacing it, for a parent who is generally well but no longer managing everything alone. See <a href="/services/elder-care">Elder Care</a>.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-people-arrows" aria-hidden="true"></i>
+            <h3>Families arranging from another city</h3>
+            <p>Adult children who cannot be in Kota every day and need someone reliable at the house, plus a local team they can actually reach when something needs sorting out.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-briefcase" aria-hidden="true"></i>
+            <h3>Working professionals</h3>
+            <p>Households where both adults work and the day does not stretch far enough — cooking, cleaning and daily upkeep arranged around a real schedule. See <a href="/services/maid-services">Maid Services</a>.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-baby" aria-hidden="true"></i>
+            <h3>New mothers and young children</h3>
+            <p>The weeks after a delivery, and the ordinary weeks afterwards when a child needs looking after while parents are at work. See <a href="/services/mother-newborn-care">Mother &amp; Newborn Care</a> and <a href="/services/child-care">Child Care</a>.</p>
+          </article>
+          <article class="trust-card">
+            <i class="fa-solid fa-house-chimney" aria-hidden="true"></i>
+            <h3>Homes that need running</h3>
+            <p>Dependable everyday help with meals, cleaning and upkeep, part-time or full-time. See <a href="/services/home-cook-services">Home Cook Services</a> and <a href="/services/housekeeping-cleaning">Housekeeping / Dusting &amp; Cleaning</a>.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 · Why Families Choose Us — practical reasons only. No adjective survives
+         here unless a concrete behaviour sits behind it. -->
+    <section class="section section--tinted" id="why-us" aria-labelledby="whyTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Why families choose us</p>
+          <h2 id="whyTitle">The Practical Reasons, Not the Slogans</h2>
+          <p>What you get that is uncommon, and what we cannot do — set out in the same place so you can weigh both before you call.</p>
+        </div>
+
+        <div class="scope-grid">
+          <div class="scope-col">
+            <h3>What you get that is uncommon</h3>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> <strong>An honest "no".</strong> If your situation needs a hospital, an ICU setup, or a service outside our seven, we tell you on the first call rather than taking the booking</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> <strong>You choose the person.</strong> We suggest and share details; we do not assign someone and inform you afterwards</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> <strong>Written boundaries per service.</strong> Every service page states what the duty does not cover, so nobody discovers a gap on day one</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> <strong>A replacement commitment.</strong> If the fit is wrong, sorting it out is our job, not yours</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> <strong>One local team throughout.</strong> The people who arrange the placement are the people who answer while it runs</li>
+              <li><i class="fa-solid fa-check" aria-hidden="true"></i> <strong>Guidance with nothing attached.</strong> Our <a href="/knowledge/">Knowledge Center</a> is written to be useful even if you never call us</li>
+            </ul>
+          </div>
+
+          <div class="scope-col scope-col--boundary">
+            <h3>What we are not going to pretend</h3>
+            <ul class="service-points">
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> We are not the cheapest option in Kota, and we do not compete on being it</li>
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> We cannot always place someone the same day. For urgent needs we usually manage 24 to 48 hours; for a standard requirement, 2 to 3 days to match properly</li>
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> We do not provide clinical services beyond arranging qualified nurses — no ICU setup, no equipment hire, no emergency medical response</li>
+              <li><i class="fa-solid fa-minus" aria-hidden="true"></i> We have no control over how a person feels on a given day. What we control is who we send, what we check, and how fast we fix it</li>
+            </ul>
+            <p class="scope-col-note">If any of the above rules us out for your situation, that is a useful thing to know now rather than three weeks in.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 · Mid-page CTA — trust precedes the ask (PROJECT.md §12). -->
+    <section class="cta-band" id="mid-cta" aria-labelledby="midCtaTitle">
+      <div class="container">
+        <div class="cta-band-inner">
+          <h2 id="midCtaTitle">Tell us what is happening at home</h2>
+          <p>One conversation is usually enough to work out what kind of help fits. We listen first, and there is no obligation after that call.</p>
+          <div class="cta-band-actions">
+            <a class="btn btn-primary btn-call" href="tel:+918302482096">
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              Call Now
+            </a>
+            <a class="btn btn-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20was%20reading%20about%20your%20company%20and%20I%20need%20some%20help%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Quality Care Services">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              WhatsApp Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 · Areas Served — the six localities already named sitewide, unchanged. -->
+    <section class="section service-area-section" id="service-areas" aria-labelledby="serviceAreaTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Where we serve</p>
+          <h2 id="serviceAreaTitle">Areas We Serve in Kota</h2>
+          <p>All seven services are arranged across these areas in and around Kota. For locations just outside the city, call and we will confirm availability.</p>
+        </div>
+
+        <div class="area-grid">
+          <div class="area-card"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Kota City</span></div>
+          <div class="area-card"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Talwandi</span></div>
+          <div class="area-card"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Vigyan Nagar</span></div>
+          <div class="area-card"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Mahaveer Nagar</span></div>
+          <div class="area-card"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Kunhari</span></div>
+          <div class="area-card"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Landmark City</span></div>
+          <div class="area-card"><i class="fa-solid fa-location-dot" aria-hidden="true"></i><span>Nearby Areas</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 · FAQ — mirrored 1:1 by the FAQPage node in <head> -->
+    <section class="section faq-section" id="faq" aria-labelledby="faqTitle">
+      <div class="container">
+        <div class="section-header">
+          <p class="eyebrow">Common questions</p>
+          <h2 id="faqTitle">Questions Families Ask About Us</h2>
+          <p>The things people want to know before they decide whether to call.</p>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>What kind of company is Quality Care Services?</summary>
+            <p>We are a home care and domestic support agency based in Kota. We do not run a hospital, a clinic or a care home. What we do is find, verify and place the right person in your home — a nurse, a caregiver, a maid, a cook or housekeeping help — and stay reachable while that arrangement runs.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Are you a medical provider?</summary>
+            <p>No. We arrange qualified nurses where a patient's care genuinely requires nursing training, but we do not diagnose, prescribe, or change any treatment plan — that stays with the patient's own doctor. We are not a hospital, an ICU or a high-dependency setup at home, and we are not an ambulance or emergency medical service. If a situation needs one of those, we will say so on the first call.</p>
+          </details>
+          <details class="faq-item">
+            <summary>How do you verify the people you place?</summary>
+            <p>Every placement goes through identity verification, background checks, reference and experience review, and a briefing about your specific requirement before the person starts. We share the relevant details with the family before the service begins, not on the day someone arrives. What verification establishes is who a person is and that nothing adverse is on record — it is not a guarantee of how they will work, and anyone presenting it as one is overstating it.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Why do you not publish your prices?</summary>
+            <p>Because the charge depends on things we cannot know before we speak to you: the level of care needed, hours per day and days per week, the shift pattern, and the specific requirements of the situation. A number set before we know those would not be an honest one. We discuss the exact charge once we understand the situation, and there is no obligation to go ahead after that conversation.</p>
+          </details>
+          <details class="faq-item">
+            <summary>What happens if the person you send is not the right fit?</summary>
+            <p>Tell us, and we arrange a replacement. A placement that is not working is ours to solve, not something you should have to manage around. We would rather hear about it in the first week than find out at the end of the month.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Which areas of Kota do you serve?</summary>
+            <p>We arrange staff across Kota, including Talwandi, Vigyan Nagar, Mahaveer Nagar, Kunhari and Landmark City. For locations slightly outside the city, call us and we will tell you honestly whether we can cover it rather than accept the work and struggle.</p>
+          </details>
+          <details class="faq-item">
+            <summary>Who will I actually be speaking to?</summary>
+            <p>Our team is in Kota. When you call the number on this site, you reach the people who arrange the placement — not a call centre in another city working from a script. If something needs sorting out while care is running, you reach the same team.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         Future Team & Office Section
+         Intended insertion point: between the FAQ and the end CTA.
+         Ships only with real, consented photographs of the people and
+         the office — never stock imagery and never an unnamed "our
+         team" block. Empty until then, by design.
+         (The Founder Story has its own marker after Our Story above.)
+         ============================================================ -->
+
+    <!-- 13 · End CTA — Tier-1 pair plus the Tier-2 inquiry-form path. -->
+    <section class="prefooter-section" aria-labelledby="endCtaTitle">
+      <div class="container">
+        <div class="prefooter-inner">
+          <h2 id="endCtaTitle">Ready When You Are</h2>
+          <p>Call us, message on WhatsApp, or send an inquiry and we will get back to you. If you would rather work out what you need first, our <a href="/knowledge/">Knowledge Center</a> covers that — and if you are looking for work rather than help, see <a href="/careers/">Careers</a>.</p>
+          <div class="prefooter-actions">
+            <a class="btn btn-primary btn-call" href="tel:+918302482096">
+              <i class="fa-solid fa-phone" aria-hidden="true"></i>
+              Call Now
+            </a>
+            <a class="btn btn-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20was%20reading%20about%20your%20company%20and%20I%20need%20some%20help%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp Quality Care Services">
+              <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+              WhatsApp
+            </a>
+            <a class="btn" href="/#inquiry">
+              <i class="fa-solid fa-envelope" aria-hidden="true"></i>
+              Send an Inquiry
+            </a>
+          </div>
+          <p class="prefooter-trust">
+            <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            Identity and background verified before placement, matched to your situation, across Kota.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <div>
+        <h2>Quality Care Services</h2>
+        <p>Helping Kota families find reliable patient care, elder care, mother &amp; newborn care, child care, and home support services.</p>
+      </div>
+      <div>
+        <h3>Quick Links</h3>
+        <a href="/#home">Home</a>
+        <a href="/about/">About Us</a>
+        <a href="/services/">Services</a>
+        <a href="/knowledge/">Knowledge</a>
+        <a href="/careers/">Careers</a>
+        <a href="/#reviews">Reviews</a>
+        <a href="/#faq">FAQ</a>
+        <a href="/#inquiry">Inquiry</a>
+        <a href="/#contact">Contact</a>
+      </div>
+      <div>
+        <h3>Services</h3>
+        <a href="/services/patient-care">Patient Care</a>
+        <a href="/services/elder-care">Elder Care</a>
+        <a href="/services/mother-newborn-care">Mother &amp; Newborn Care</a>
+        <a href="/services/child-care">Child Care</a>
+        <a href="/services/maid-services">Maid Services</a>
+        <a href="/services/home-cook-services">Home Cook Services</a>
+        <a href="/services/housekeeping-cleaning">Housekeeping / Dusting &amp; Cleaning</a>
+      </div>
+      <div>
+        <h3>Service Areas</h3>
+        <span>Kota</span>
+        <span>Talwandi</span>
+        <span>Vigyan Nagar</span>
+        <span>Nearby Areas</span>
+      </div>
+      <div>
+        <h3>Contact</h3>
+        <a href="tel:+918302482096"><i class="fa-solid fa-phone" aria-hidden="true"></i> +91 8302482096</a>
+        <a href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20need%20some%20help%20at%20home." class="footer-wa-link"><i class="fa-brands fa-whatsapp" aria-hidden="true"></i> WhatsApp</a>
+        <a href="mailto:qualitycareserviceskota@gmail.com"><i class="fa-solid fa-envelope" aria-hidden="true"></i> qualitycareserviceskota@gmail.com</a>
+      </div>
+      <div class="footer-hours">
+        <h3>Business Hours</h3>
+        <p>Mon – Sat: 8:00 AM – 8:00 PM</p>
+        <p>Sunday: 9:00 AM – 2:00 PM</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span id="footer-copyright">&copy; 2025 Quality Care Services. All Rights Reserved.</span>
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/terms/">Terms &amp; Conditions</a>
+      <script>
+        (function () {
+          var el = document.getElementById('footer-copyright');
+          if (el) el.textContent = '© ' + new Date().getFullYear() + ' Quality Care Services. All Rights Reserved.';
+        })();
+      </script>
+    </div>
+  </footer>
+
+  <a class="floating-whatsapp btn-wa" href="https://wa.me/918302482096?text=Hi%20Quality%20Care%20Services%2C%20I%20was%20reading%20about%20your%20company%20and%20I%20need%20some%20help%20at%20home.%20Can%20we%20talk%3F" target="_blank" rel="noopener noreferrer" aria-label="Chat with Quality Care Services on WhatsApp">
+    <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+  </a>
+
+  <a class="sticky-call-mobile btn-call" href="tel:+918302482096">
+    <i class="fa-solid fa-phone" aria-hidden="true"></i>
+    Call Now
+  </a>
+
+  <script src="/assets/js/main.js?v=20260802" defer></script>
+</body>
+</html>
