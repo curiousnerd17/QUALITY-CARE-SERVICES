@@ -196,6 +196,44 @@
   status = 404
   force = true
 
+# ── Publish restriction: repository tooling is never public ──────────────────
+# tools/ holds the internal crawl-architecture test (tools/seo-crawl-test.mjs).
+# publish = "." would otherwise serve it. Same CONVENTION as the doc blocklist
+# above: any NEW file under tools/ is covered by this wildcard automatically.
+
+[[redirects]]
+  from = "/tools/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+# ── Publish restriction: assistant working files are never public ────────────
+# CLAUDE.md is the repository's engineering-instruction file and "Claude outputs/"
+# holds internal audit reports written by the desktop assistant. Both sit in the
+# publish root (publish = "."), so without these rules a CLI deploy would serve
+# them. Same CONVENTION as the doc blocklist above. The folder name contains a
+# space, so BOTH the literal and percent-encoded forms are listed.
+# NOTE: the preferred fix for "Claude outputs/" is to move it out of the
+# repository entirely; these rules are the defence-in-depth fallback.
+
+[[redirects]]
+  from = "/CLAUDE.md"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/Claude outputs/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
+[[redirects]]
+  from = "/Claude%20outputs/*"
+  to = "/404.html"
+  status = 404
+  force = true
+
 
 # ── Canonical URL strategy (SP-T1) ───────────────────────────────────────────
 # DECISION (SP-T1, spec §4.3 gate 3, 2026-07-21):

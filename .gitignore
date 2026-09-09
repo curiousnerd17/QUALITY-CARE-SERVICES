@@ -13,3 +13,6 @@ Thumbs.db
 
 # Local Netlify folder
 .netlify
+
+# Assistant-generated audit reports (internal; must never reach the publish tree)
+Claude outputs/
