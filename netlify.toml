@@ -1034,6 +1034,23 @@
   status = 200
 
 
+# ── Branded short links to external destinations ──────────────────────────────
+# /feedback is the client feedback form handed out in WhatsApp messages, on
+# invoices and verbally. It points at a Google Form, which is a URL the business
+# does not control: the form can be rebuilt or replaced and its /e/<id> changes
+# when it is. So this is 302, NOT 301 — a 301 is cached indefinitely by browsers
+# and would strand anyone who ever loaded the old target. No file exists at
+# /feedback and no other rule matches it, so `force` is deliberately omitted:
+# without it the rule applies only when nothing is served at that path, which is
+# the safer default. Not added to sitemap.xml — it is an off-site destination,
+# not an indexable page.
+
+[[redirects]]
+  from = "/feedback"
+  to = "https://docs.google.com/forms/d/e/1FAIpQLSd9AoDF49LKKhU-fj5nmNzxTp7TSNF02B1W1-z2mb4cuaZLOQ/viewform?usp=dialog"
+  status = 302
+
+
 # ── Security headers (all pages) ──────────────────────────────────────────────
 
 [[headers]]
