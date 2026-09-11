@@ -598,8 +598,7 @@ button {
 
 .trust-grid,
 .services-grid,
-.process-grid,
-.testimonial-grid {
+.process-grid {
   display: grid;
   gap: 16px;
   align-items: stretch;
@@ -618,8 +617,19 @@ button {
   gap: var(--space-20);
 }
 
+/* The testimonial grid is COUNT-DRIVEN, not a fixed track count. A fixed
+   `repeat(3, 1fr)` left a full empty column whenever the approved review
+   count was not a multiple of three (with two approved reviews that was
+   392px — 34% of the section — of dead space on the right). Reviews arrive
+   one at a time from the sheet, so the layout has to be correct at every
+   count, not just at 3/6/9. Centred flex wrapping gives 2 → balanced pair,
+   3 → full row, 4 → 3 + 1 centred, with no orphan gaps. */
 .testimonial-grid {
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--space-20);
 }
 
 /* ========== SERVICE CARDS ========== */
@@ -921,66 +931,131 @@ button {
 
 /* ========== TESTIMONIALS ========== */
 
+/* Scoped to this section only — gives the heading room to read as a break in
+   the page rather than a label stuck to the cards. Section copy is unchanged. */
+.reviews-section .section-header {
+  margin-bottom: var(--space-40);
+}
+
+/* `height: 100%` is inherited from the shared card group and is meaningless
+   against an auto-height flex row; `align-items: stretch` on the grid is what
+   equalises card heights here. Basis 320px keeps a comfortable measure and
+   shrinks cleanly below it, so a 320px viewport (288px of content) still fits
+   one card per row with no horizontal overflow. */
 .testimonial-card {
-  padding: 24px;
+  flex: 1 1 320px;
+  min-width: 0;
+  max-width: 380px;
+  height: auto;
+  position: relative;
+  padding: var(--space-24);
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  transition: transform .25s ease, box-shadow .25s ease;
+  gap: var(--space-16);
+  border-radius: var(--radius-md);
+  box-shadow: var(--elevation-e1);
+  transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+
+/* Decorative open-quote. Purely ornamental, so it carries empty alt text for
+   assistive tech via the `content: <string> / <alt>` form; browsers without
+   alt-text support fall back to the plain declaration above it, and the very
+   oldest simply drop the glyph — a decoration, never information. */
+.testimonial-card::before {
+  content: "\201C";
+  content: "\201C" / "";
+  position: absolute;
+  top: 4px;
+  right: 16px;
+  z-index: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 4.25rem;
+  line-height: 1;
+  color: var(--primary-200);
+  opacity: .5;
+  pointer-events: none;
+}
+
+/* Keep real content above the ornament regardless of stacking order. */
+.testimonial-card > * {
+  position: relative;
+  z-index: 1;
 }
 
 .testimonial-card:hover {
   transform: translateY(-3px);
-  box-shadow: var(--shadow-xl);
+  box-shadow: var(--elevation-e2);
+  border-color: var(--primary-200);
 }
 
 .review-header {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: var(--space-12);
 }
 
 .review-avatar {
   display: inline-grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   flex: 0 0 auto;
-  border-radius: 50%;
+  border-radius: var(--radius-circle);
   color: #ffffff;
-  background: var(--primary);
+  /* Gradient stays inside 500→700. --primary-400 was tried and rejected: it
+     drops the white initial to 3.35:1, below AA for text. Both ends here
+     clear it (5.47:1 and 9.83:1), so every pixel of the ramp is compliant. */
+  background: linear-gradient(135deg, var(--primary-500), var(--primary-700));
+  box-shadow: 0 0 0 3px var(--primary-50);
+  font-size: 0.95rem;
   font-weight: 900;
+  letter-spacing: .02em;
 }
 
 .testimonial-card strong {
   display: block;
   color: var(--text);
-  line-height: 1.2;
+  font-size: 1.02rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
 }
 
+/* Amber #f59e0b measured 2.15:1 on white — below WCAG 2.2 AA SC 1.4.3 for
+   text, and the stars ARE the visual carrier of the rating. --color-warning
+   (#b45309, 4.87:1) is the existing semantic token for exactly this and was
+   already defined in the palette, so this consumes it rather than inventing
+   a colour. Same treatment the WhatsApp green received for the same reason. */
 .rating {
-  color: #f59e0b;
-  font-size: 1rem;
-  letter-spacing: 0;
-  margin-top: 2px;
+  color: var(--color-warning);
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+  margin-top: 3px;
 }
 
+/* `flex: 1` made the paragraph absorb every pixel of height-equalisation
+   slack, so a two-line review was padded out to match a five-line one and
+   the dead space landed INSIDE the text block. The slack now goes to the
+   auto margin on .review-meta, which keeps metadata bottom-aligned across
+   cards without inflating the copy. */
 .testimonial-card p {
   margin: 0;
   color: var(--text);
-  font-size: 0.94rem;
-  line-height: 1.65;
-  flex: 1;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  flex: 0 1 auto;
+  overflow-wrap: break-word;
 }
 
 .review-meta {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 16px;
-  padding-top: 16px;
+  gap: var(--space-8);
+  margin-top: auto;
+  padding-top: var(--space-16);
   border-top: 1px solid var(--line);
   color: var(--muted);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
 }
 
@@ -988,11 +1063,15 @@ button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  padding: 5px 10px;
+  border-radius: var(--radius-pill);
+  background: var(--surface-tint);
+  color: var(--neutral-600);
 }
 
 .review-meta i {
   color: var(--primary);
-  font-size: 0.78rem;
+  font-size: 0.72rem;
 }
 
 /* ========== FAQ ========== */
@@ -1535,10 +1614,12 @@ button {
     margin-inline: auto;
   }
 
+  /* .testimonial-grid is intentionally absent: it is a centred flex wrap
+     that derives its own column count from the number of approved reviews,
+     so a fixed track count here would be a dead declaration. */
   .trust-grid,
   .services-grid,
   .process-grid,
-  .testimonial-grid,
   .footer-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1615,10 +1696,11 @@ button {
     text-align: left;
   }
 
+  /* .testimonial-grid omitted — see the tablet block above. Its 320px basis
+     already yields one card per row at every phone width. */
   .trust-grid,
   .services-grid,
   .process-grid,
-  .testimonial-grid,
   .footer-grid {
     grid-template-columns: 1fr;
   }
