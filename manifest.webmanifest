@@ -9,8 +9,8 @@
   "lang": "en-IN",
   "icons": [
     {
-      "src": "images/logo-optimized.png",
-      "sizes": "any",
+      "src": "/images/favicon.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "any"
     }
